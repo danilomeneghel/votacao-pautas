@@ -43,6 +43,7 @@ public class UserService {
     	loaded.password = user.password;
     	loaded.role = user.role;
     	loaded.status = user.status;
+    	loaded.persist();
         return loaded;
     }
 

@@ -35,6 +35,7 @@ public class PautaService {
     	loaded.titulo = pauta.titulo;
     	loaded.descricao = pauta.descricao;
     	loaded.status = pauta.status;
+    	loaded.persist();
         return loaded;
     }
 
@@ -44,6 +45,7 @@ public class PautaService {
     		pauta.votoSim = pauta.votoSim + 1;
     	else 
     		pauta.votoNao = pauta.votoNao + 1;
+    	pauta.persist();
     	return pauta;
     }
     
