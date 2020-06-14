@@ -2,6 +2,7 @@ package app.service;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 import static javax.transaction.Transactional.TxType.REQUIRED;
 import static javax.transaction.Transactional.TxType.SUPPORTS;
@@ -31,22 +32,9 @@ public class VotacaoService {
     			Parameters.with("idpauta", idpauta).and("iduser", iduser)).firstResult();
     }
 
-    public Votacao insert(Votacao votacao) {
+    public Votacao insert(@Valid Votacao votacao) {
     	votacao.persist();
         return votacao;
     }
 
-    public Votacao update(Votacao loaded, Votacao votacao) {
-    	loaded.idpauta = votacao.idpauta;
-    	//loaded.iduser = votacao.iduser;
-    	loaded.voto = votacao.voto;
-        return loaded;
-    }
-
-    public void delete(Long id) {
-        Votacao votacao = Votacao.findById(id);
-        if(votacao!=null) {
-            votacao.delete();
-        }
-    }
 }

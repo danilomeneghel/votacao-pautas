@@ -2,6 +2,8 @@ package app.service;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
+
 import java.util.List;
 
 import static javax.transaction.Transactional.TxType.REQUIRED;
@@ -23,12 +25,12 @@ public class PautaService {
         return Pauta.findById(id);
     }
 
-    public Pauta insert(Pauta pauta) {
+    public Pauta insert(@Valid Pauta pauta) {
     	pauta.persist();
         return pauta;
     }
 
-    public Pauta update(Pauta loaded, Pauta pauta) {
+    public Pauta update(Pauta loaded, @Valid Pauta pauta) {
     	//loaded.iduser = pauta.iduser;
     	loaded.titulo = pauta.titulo;
     	loaded.descricao = pauta.descricao;

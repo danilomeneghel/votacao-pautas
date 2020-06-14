@@ -6,6 +6,7 @@ Avaliação técnica de um sistema de votação de Pautas, desenvolvido em Java 
 
 - CRUD
 - API RESTful
+- Validation
 - Filter
 - Responsive
 - JUnit
@@ -21,6 +22,8 @@ Avaliação técnica de um sistema de votação de Pautas, desenvolvido em Java 
 - JPA
 - Maven
 - Quarkus
+- Hibernate
+- Qute
 - OpenAPI
 - Swagger
 - CSS
@@ -51,19 +54,11 @@ http://localhost:8080/
 
 https://votacao-pautas.herokuapp.com/ <br>
 
-- Login
-    - Username: admin
-    - Password: admin
-
 ## Swagger 
 
 Documentação da API RESTful: <br>
 
 https://votacao-pautas.herokuapp.com/swagger-ui
-
-- Login
-    - Username: admin
-    - Password: admin
 
 ## Licença
 
@@ -73,18 +68,6 @@ Projeto licenciado sob <a href="LICENSE">Apache License</a>.
 
 ![Screenshots](screenshots/screenshot01.png)<br><br>
 ![Screenshots](screenshots/screenshot02.png)<br><br>
-![Screenshots](screenshots/screenshot03.png)<br><br>
-![Screenshots](screenshots/screenshot04.png)<br><br>
-![Screenshots](screenshots/screenshot05.png)<br><br>
-![Screenshots](screenshots/screenshot06.png)<br><br>
-![Screenshots](screenshots/screenshot07.png)<br><br>
-![Screenshots](screenshots/screenshot08.png)<br><br>
-
-## Testes
-
-![Screenshots](screenshots/test01.png)<br><br>
-![Screenshots](screenshots/test02.png)<br><br>
-![Screenshots](screenshots/test03.png)<br><br>
 
 
 Desenvolvido por<br>

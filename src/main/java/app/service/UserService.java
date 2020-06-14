@@ -2,6 +2,8 @@ package app.service;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
+
 import java.util.List;
 
 import static javax.transaction.Transactional.TxType.REQUIRED;
@@ -28,12 +30,12 @@ public class UserService {
     	return User.find("cpf", cpf).firstResult();
     }
 
-    public User insert(User user) {
+    public User insert(@Valid User user) {
     	user.persist();
         return user;
     }
 
-    public User update(User loaded, User user) {
+    public User update(User loaded, @Valid User user) {
     	loaded.name = user.name;
     	loaded.email = user.email;
     	loaded.cpf = user.cpf;
