@@ -1,4 +1,4 @@
-# Prova Sicredi
+# Votação Pautas
 
 Avaliação técnica de um sistema de votação de Pautas, desenvolvido em Java com Quarkus.
 
@@ -34,6 +34,9 @@ Avaliação técnica de um sistema de votação de Pautas, desenvolvido em Java 
 $ git clone https://github.com/danilomeneghel/votacao-pautas.git
 
 $ cd votacao-pautas
+```
+
+Para rodar a aplicação digite:
 
 ```
 $ mvn quarkus:dev
