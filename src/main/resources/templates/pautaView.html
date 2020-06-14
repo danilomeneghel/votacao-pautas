@@ -1,0 +1,25 @@
+{@app.model.Pauta pauta}
+{#include base.html} 
+{#contents}
+<div class="modalenabled">
+  <h2>Pauta #{pauta.id}</h2>
+  <div class="panel panel-default">
+      <div class="form-panel">
+        <h2>{pauta.titulo}</h2>
+        <div class="form-group">
+            {pauta.descricao}
+        </div>
+        <form action="/votacao/votar" method="POST" name="votacaoForm" up-target=".container" enctype="multipart/form-data">
+	      	<input type="hidden" name="idpauta" value="{pauta.id}">
+	      	<input type="hidden" name="cpf" value="1">
+	        <div class="form-group">Voto<br>
+               	<input type="radio" name="voto" value="1">Sim 
+				<input type="radio" name="voto" value="0">Não
+            </div>
+	        <button type="submit" class="btn btn-primary">Votar</button>
+        </form>
+      </div>
+  </div>
+</div>
+{/contents}
+{/include}

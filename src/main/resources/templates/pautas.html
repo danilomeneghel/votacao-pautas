@@ -1,0 +1,61 @@
+{#include base.html}
+{#title}Pautas{/}
+{#contents}
+<h2>Pautas</h2>
+
+<div class="row">
+  <a class="btn btn-primary btn-sm" href="/pautas/new" role="button" up-modal=".modalenabled">Adicionar</a>
+  <div class="search-right">
+    <form action="/pautas" method="GET" name="search" up-target=".container">
+       <input type="text" name="filter" class="form-control" id="filter" placeholder="Localizar por Titulo" {#if filtered}value="{filter}"{/if}>
+       <button class="btn btn-primary" type="submit">Ok</button>
+    </form>
+  </div>
+</div>
+
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th scope="col" class="fit">Id</th>
+      <th scope="col" >Titulo</th>
+      <th scope="col" class="fit">Votos Sim</th>
+      <th scope="col" class="fit">Votos Não</th>
+      <th scope="col" class="fit">Data</th>
+      <th scope="col" class="fit text-center">Ações</th>
+    </tr>
+  </thead>
+
+  {#if pautas.size == 0}
+  <tr>
+    <td colspan="6">Nenhum registro cadastrado.</td>
+  </tr>
+  {#else}
+
+  {#for pauta in pautas}
+  <tr>
+    <th scope="row">#{pauta.id}</th>
+    <td>
+      {pauta.titulo}
+    </td>
+    <td>
+      {pauta.votoSim}
+    </td>
+    <td>
+      {pauta.votoNao}
+    </td>
+    <td>
+      {pauta.dtCreated}
+    </td>
+    <td class="fit">
+      <form action="/pautas/{pauta.id}/delete" method="POST" name="delete-{pauta.id}" up-target=".container">
+        <a class="btn btn-default btn-sm" href="/pautas/{pauta.id}" role="button" up-modal=".modalenabled">Votar</a>
+        <a class="btn btn-primary btn-sm" href="/pautas/{pauta.id}/edit" role="button" up-modal=".modalenabled">Editar</a>
+        <input class="btn btn-danger btn-sm" value="Excluir" type="submit">
+      </form>
+    </td>
+  </tr>
+  {/for}
+  {/if}
+</table>
+{/contents}
+{/include}

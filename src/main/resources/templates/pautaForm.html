@@ -1,0 +1,31 @@
+{@app.model.Pauta pauta}
+{#include base.html} 
+{#contents}
+<div class="modalenabled">
+  <h2>{#if update}Editar Pauta #{pauta.id}{#else}Adicionar{/if}</h2>
+  <div class="panel panel-default">
+    <form action="/pautas/{#if update}{pauta.id}/edit{#else}new{/if}" method="POST" name="pautaForm" up-target=".container" enctype="multipart/form-data">
+      <div class="form-panel">
+        <div class="form-group">
+            <label class="sr-only" for="titulo">Titulo</label>
+            <input type="text" name="titulo" class="form-control" id="titulo" placeholder="Titulo" required autofocus {#if update}value="{pauta.titulo}"{/if}>
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="descricao">Descrição</label>
+            <textarea name="descricao" class="form-control" id="descricao" placeholder="Descricao" required autofocus>{#if update}{pauta.descricao}{/if}</textarea>
+        </div>
+        <div class="form-group">
+	        <select class="custom-select" name="status" id="status">
+	          <option disabled value="">Status</option>
+	          {#for st in status}
+	          <option value="{st}" {#if pauta.status == st}selected{/if}>{st}</option>
+	          {/for}
+	        </select>
+        </div>
+        <button type="submit" class="btn btn-primary">{#if update}Editar{#else}Adicionar{/if}</button>
+      </div>
+    </form>
+  </div>
+</div>
+{/contents}
+{/include}
