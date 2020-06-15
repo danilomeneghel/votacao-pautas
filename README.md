@@ -13,13 +13,12 @@ Avaliação técnica de um sistema de votação de Pautas, desenvolvido em Java 
 
 ## Requisitos
 
-- Java JDK 1.8
+- Java JDK 14
 - Apache Maven >= 3.6.3
 
 ## Tecnologias
 
 - Java
-- JPA
 - Maven
 - Quarkus
 - Hibernate
@@ -50,15 +49,15 @@ Após concluído, abra o seu navegador o seguinte endereço: <br>
 
 http://localhost:8080/
 
-## Demonstração
-
-http://votacao-pautas.herokuapp.com/ <br>
-
 ## Swagger 
 
 Documentação da API RESTful: <br>
 
-http://votacao-pautas.herokuapp.com/swagger-ui
+http://localhost:8080/swagger-ui
+
+## Demonstração
+
+http://votacao-pautas.herokuapp.com/ <br>
 
 ## Licença
 
