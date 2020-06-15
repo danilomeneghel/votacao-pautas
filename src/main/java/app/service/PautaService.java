@@ -15,22 +15,27 @@ import app.model.Pauta;
 @Transactional(REQUIRED)
 public class PautaService {
 	
-	@Transactional(SUPPORTS)
+	@Transactional()
     public List<Pauta> findAllPautas() {
         return Pauta.listAll();
     }
 
-    @Transactional(SUPPORTS)
+    @Transactional()
     public Pauta findPauta(Long id) {
         return Pauta.findById(id);
     }
+    
+    @Transactional()
+    public Pauta findPautaTitulo(String titulo) {
+    	return Pauta.find("titulo", titulo).firstResult();
+    }
 
-    public Pauta insert(@Valid Pauta pauta) {
+    public Pauta insert(Pauta pauta) {
     	pauta.persist();
         return pauta;
     }
 
-    public Pauta update(Pauta loaded, @Valid Pauta pauta) {
+    public Pauta update(Pauta loaded, Pauta pauta) {
     	//loaded.iduser = pauta.iduser;
     	loaded.titulo = pauta.titulo;
     	loaded.descricao = pauta.descricao;

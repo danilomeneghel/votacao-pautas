@@ -43,7 +43,7 @@ Para rodar a aplicação digite:
 
 ```
 $ mvn quarkus:dev
-``` 
+```
 
 Aguarde carregar todo o serviço web. <br>
 Após concluído, abra o seu navegador o seguinte endereço: <br>
@@ -64,10 +64,12 @@ https://votacao-pautas.herokuapp.com/swagger-ui
 
 Projeto licenciado sob <a href="LICENSE">Apache License</a>.
 
-## Screenshots
+## Melhorias
 
-![Screenshots](screenshots/screenshot01.png)<br><br>
-![Screenshots](screenshots/screenshot02.png)<br><br>
+- Criação da tela de Login
+- Autenticação de usuário
+- Permissões de acesso
+- Pegar o CPF do usuário logado para votar
 
 
 Desenvolvido por<br>

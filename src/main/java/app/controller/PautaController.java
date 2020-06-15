@@ -7,6 +7,7 @@ import io.quarkus.qute.TemplateInstance;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -50,6 +51,14 @@ public class PautaController {
             .data("filtered", filter != null && !filter.isEmpty());
     }
 
+    @GET
+    @Path("/list")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Pauta> listPautasJson() {
+        return pautaService.findAllPautas();
+    }
+    
     private List<Pauta> find(String filter) {
         Sort sort = Sort.ascending("titulo");
 
@@ -61,6 +70,19 @@ public class PautaController {
         }
     }
 
+    @GET
+    @Path("/id/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Object getIdJson(@PathParam("id") Long id) {
+    	Pauta pauta = pautaService.findPauta(id);
+    	if (pauta == null) {
+            return error.data("error", "Pauta com id " + id + " não encontrado.");
+        }
+    	
+        return Response.status(Response.Status.OK).build();
+    }
+    
     @GET
     @Path("/{id}")
     public TemplateInstance getId(@PathParam("id") Long id) {
@@ -83,7 +105,12 @@ public class PautaController {
     @Produces(MediaType.TEXT_HTML)
     @Transactional
     @Path("/new")
-    public Response addPauta(@MultipartForm Pauta pauta) {
+    public Object addPauta(@MultipartForm @Valid Pauta pauta) {
+    	Pauta loaded = pautaService.findPautaTitulo(pauta.titulo);
+    	if (loaded != null) {
+            return error.data("error", "Pauta com título '" + pauta.titulo + "' já cadastrada.");
+        }
+    	
     	pautaService.insert(pauta);
 
     	return Response.seeOther(URI.create("/pautas")).build();
@@ -94,7 +121,7 @@ public class PautaController {
     public TemplateInstance updateForm(@PathParam("id") long id) {
         Pauta loaded = pautaService.findPauta(id);
         if (loaded == null) {
-            return error.data("error", "Pauta com id " + id + " não encontrado.");
+            return error.data("error", "Pauta com id " + id + " não encontrada.");
         }
 		
         return pautaForm.data("pauta", loaded)
@@ -107,11 +134,10 @@ public class PautaController {
     @Produces(MediaType.TEXT_HTML)
     @Transactional
     @Path("/{id}/edit")
-    public Object updatePauta(@PathParam("id") long id, @MultipartForm Pauta pauta) {
-    	Pauta loaded = pautaService.findPauta(id);
-    	
-        if (pauta == null) {
-            return error.data("error", "Pauta com id " + id + " não encontrado.");
+    public Object updatePauta(@PathParam("id") long id, @MultipartForm @Valid Pauta pauta) {
+    	Pauta loaded = pautaService.findPauta(id);    	
+        if (loaded == null) {
+            return error.data("error", "Pauta com id " + id + " não encontrada.");
         }
 
         pautaService.update(loaded, pauta);

@@ -16,23 +16,23 @@ import io.quarkus.panache.common.Parameters;
 @Transactional(REQUIRED)
 public class VotacaoService {
 	
-	@Transactional(SUPPORTS)
+	@Transactional()
     public List<Votacao> findAllVotacaos() {
         return Votacao.listAll();
     }
 
-    @Transactional(SUPPORTS)
+    @Transactional()
     public Votacao findVotacao(Long id) {
         return Votacao.findById(id);
     }
     
-    @Transactional(SUPPORTS)
+    @Transactional()
     public Votacao findByIdpautaAndIduser(Long idpauta, Long iduser) {
     	return Votacao.find("idpauta = :idpauta and iduser = :iduser", 
     			Parameters.with("idpauta", idpauta).and("iduser", iduser)).firstResult();
     }
 
-    public Votacao insert(@Valid Votacao votacao) {
+    public Votacao insert(Votacao votacao) {
     	votacao.persist();
         return votacao;
     }

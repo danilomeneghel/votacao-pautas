@@ -7,6 +7,7 @@ import io.quarkus.qute.TemplateInstance;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -54,6 +55,14 @@ public class UserController {
             .data("filtered", filter != null && !filter.isEmpty());
     }
 
+    @GET
+    @Path("/list")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<User> listPautasJson() {
+        return userService.findAllUsers();
+    }
+    
     private List<User> find(String filter) {
         Sort sort = Sort.ascending("name");
 
@@ -66,14 +75,17 @@ public class UserController {
     }
 
     @GET
-    @Path("/id/{id}")
-    public TemplateInstance getId(@PathParam("id") Long id) {
-        User user = userService.findUser(id);
-        if (user == null) {
-            return error.data("error", "Usuário com id " + id + " não encontrado.");
+    @Path("/cpf/{cpf}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Object getIdJson(@PathParam("cpf") Long cpf) {
+    	User user = userService.findUserCpf(cpf);
+    	if (user == null) {
+            return error.data("error", "Usuário com cpf " + cpf + " não encontrado.");
         }
-        
-        return userView.data("user", user);
+    	
+        return Response.ok(user)
+        		.status(Response.Status.OK).build();
     }
     
     @GET
@@ -99,7 +111,12 @@ public class UserController {
     @Produces(MediaType.TEXT_HTML)
     @Transactional
     @Path("/new")
-    public Response addUser(@MultipartForm User user) {
+    public Object addUser(@MultipartForm @Valid User user) {
+    	User loaded = userService.findUserCpf(user.cpf);
+    	if (loaded != null) {
+            return error.data("error", "Usuário com cpf " + user.cpf + " já cadastrado.");
+        }
+    	
     	userService.insert(user);
 
     	return Response.seeOther(URI.create("/users")).build();
@@ -124,10 +141,9 @@ public class UserController {
     @Produces(MediaType.TEXT_HTML)
     @Transactional
     @Path("/{id}/edit")
-    public Object updateUser(@PathParam("id") long id, @MultipartForm User user) {
-    	User loaded = userService.findUser(id);
-    	
-        if (user == null) {
+    public Object updateUser(@PathParam("id") long id, @MultipartForm @Valid User user) {
+    	User loaded = userService.findUser(id);    	
+        if (loaded == null) {
             return error.data("error", "Usuário com id " + id + " não encontrado.");
         }
 

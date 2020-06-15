@@ -15,27 +15,27 @@ import app.model.User;
 @Transactional(REQUIRED)
 public class UserService {
 	
-	@Transactional(SUPPORTS)
+	@Transactional()
     public List<User> findAllUsers() {
         return User.listAll();
     }
 
-    @Transactional(SUPPORTS)
+    @Transactional()
     public User findUser(Long id) {
         return User.findById(id);
     }
     
-    @Transactional(SUPPORTS)
+    @Transactional()
     public User findUserCpf(Long cpf) {
     	return User.find("cpf", cpf).firstResult();
     }
 
-    public User insert(@Valid User user) {
+    public User insert(User user) {
     	user.persist();
         return user;
     }
 
-    public User update(User loaded, @Valid User user) {
+    public User update(User loaded, User user) {
     	loaded.name = user.name;
     	loaded.email = user.email;
     	loaded.cpf = user.cpf;
