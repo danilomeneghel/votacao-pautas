@@ -52,13 +52,13 @@ http://localhost:8080/
 
 ## Demonstração
 
-https://votacao-pautas.herokuapp.com/ <br>
+http://votacao-pautas.herokuapp.com/ <br>
 
 ## Swagger 
 
 Documentação da API RESTful: <br>
 
-https://votacao-pautas.herokuapp.com/swagger-ui
+http://votacao-pautas.herokuapp.com/swagger-ui
 
 ## Licença
 
