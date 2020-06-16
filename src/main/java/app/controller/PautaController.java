@@ -12,11 +12,12 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
 
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
+import app.enumerator.StatusPautaEnum;
+import app.enumerator.VotoEnum;
 import app.model.Pauta;
 import app.service.PautaService;
 
@@ -39,8 +40,6 @@ public class PautaController {
     
     @Inject
     Template pautas;
-
-    public List<String> status = Arrays.asList("Ativo", "Inativo");
     
     @GET
     @Consumes(MediaType.TEXT_HTML)
@@ -91,13 +90,14 @@ public class PautaController {
             return error.data("error", "Pauta com id " + id + " não encontrado.");
         }
         
-        return pautaView.data("pauta", pauta);
+        return pautaView.data("pauta", pauta)
+        		.data("voto", VotoEnum.values());
     }
 
     @GET
     @Path("/new")
     public TemplateInstance addForm() {
-        return pautaForm.data("status", status);
+        return pautaForm.data("status", StatusPautaEnum.values());
     }
 
     @POST
@@ -125,7 +125,7 @@ public class PautaController {
         }
 		
         return pautaForm.data("pauta", loaded)
-        	.data("status", status)
+        	.data("status", StatusPautaEnum.values())
             .data("update", true);
     }
 

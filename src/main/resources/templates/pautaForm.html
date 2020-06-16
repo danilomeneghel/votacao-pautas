@@ -18,7 +18,7 @@
 	        <select class="custom-select" name="status" id="status">
 	          <option disabled value="">Status</option>
 	          {#for st in status}
-	          <option value="{st}" {#if pauta.status == st}selected{/if}>{st}</option>
+	          <option value="{st}" {#if pauta.status == st}selected{/if}>{st.descricao}</option>
 	          {/for}
 	        </select>
         </div>

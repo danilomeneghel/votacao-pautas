@@ -30,7 +30,7 @@
 	        <select class="custom-select" name="role" id="role">
 	          <option disabled value="">Funçăo</option>
 	          {#for rl in role}
-	          <option value="{rl}" {#if user.role == rl}selected{/if}>{rl}</option>
+	          <option value="{rl}" {#if user.role == rl}selected{/if}>{rl.descricao}</option>
 	          {/for}
 	        </select>
         </div>
@@ -38,7 +38,7 @@
 	        <select class="custom-select" name="status" id="status">
 	          <option disabled value="">Status</option>
 	          {#for st in status}
-	          <option value="{st.key}" {#if user.status == st.key}selected{/if}>{st.value}</option>
+	          <option value="{st}" {#if user.status == st}selected{/if}>{st.descricao}</option>
 	          {/for}
 	        </select>
         </div>

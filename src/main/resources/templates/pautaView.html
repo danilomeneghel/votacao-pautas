@@ -13,8 +13,9 @@
 	      	<input type="hidden" name="idpauta" value="{pauta.id}">
 	      	<input type="hidden" name="cpf" value="91745424008"> <!-- CPF Teste -->
 	        <div class="form-group">Voto<br>
-               	<input type="radio" name="voto" value="1">Sim 
-				<input type="radio" name="voto" value="0">Não
+	        {#for vt in voto}
+               	<input type="radio" name="voto" value="{vt}">{vt.descricao} 
+			{/for}
             </div>
 	        <button type="submit" class="btn btn-primary">Votar</button>
         </form>

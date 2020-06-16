@@ -44,17 +44,17 @@ public class VotacaoController {
     @Produces(MediaType.TEXT_HTML)
     @Transactional
     @Path("/votar")
-    public Object efetuarVoto(@MultipartForm @Valid Votacao votacao) {
+    public Object votar(@MultipartForm @Valid Votacao votacao) {
     	User user = userService.findUserCpf(votacao.cpf);
     	
-		if(user.status.equals("ABLE_TO_VOTE")) {
+		if(user.status.getValor().equals("ABLE_TO_VOTE")) {
 			Votacao votacaoDetalhes = votacaoService.findByIdpautaAndIduser(votacao.idpauta, user.id);
 			if (votacaoDetalhes != null) {
 				return error.data("error", "Pauta já votada!");
 			} else {
 				votacao.iduser = user.id;								
 				votacaoService.insert(votacao);
-				pautaService.updateVoto(votacao.idpauta, votacao.voto);
+				pautaService.updateVoto(votacao.idpauta, votacao.voto.getValor());
 			}
 		} else {
 			return error.data("error", "Usuário não habilitado para votar.");

@@ -12,14 +12,12 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
-import com.google.common.collect.ImmutableMap;
-
+import app.enumerator.RoleUserEnum;
+import app.enumerator.StatusUserEnum;
 import app.model.User;
 import app.service.UserService;
 
@@ -42,9 +40,6 @@ public class UserController {
     
     @Inject
     Template users;
-
-    public List<String> role = Arrays.asList("Administrador", "Usuário", "Associado");
-    public Map<String, String> status = ImmutableMap.of("ABLE_TO_VOTE", "Ativo", "UNABLE_TO_VOTE", "Inativo");
     
     @GET
     @Consumes(MediaType.TEXT_HTML)
@@ -102,8 +97,8 @@ public class UserController {
     @GET
     @Path("/new")
     public TemplateInstance addForm() {
-        return userForm.data("role", role)
-        	.data("status", status);
+        return userForm.data("role", RoleUserEnum.values())
+        	.data("status", StatusUserEnum.values());
     }
 
     @POST
@@ -131,8 +126,8 @@ public class UserController {
         }
 		
         return userForm.data("user", loaded)
-        	.data("role", role)
-        	.data("status", status)
+        	.data("role", RoleUserEnum.values())
+        	.data("status", StatusUserEnum.values())
             .data("update", true);
     }
 

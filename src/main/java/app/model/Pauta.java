@@ -10,6 +10,9 @@ import javax.ws.rs.FormParam;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import app.enumerator.StatusPautaEnum;
+import app.enumerator.converter.StatusPautaEnumConverter;
+
 import java.util.Date;
 
 @Entity
@@ -33,8 +36,9 @@ public class Pauta extends PanacheEntity {
 	@FormParam("votoNao")
 	public Integer votoNao = 0;
 
+	@Convert(converter = StatusPautaEnumConverter.class)
 	@FormParam("status")
-	public String status;
+	public StatusPautaEnum status;
 	
 	@CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -89,11 +93,11 @@ public class Pauta extends PanacheEntity {
 		this.votoNao = votoNao;
 	}
 
-	public String getStatus() {
+	public StatusPautaEnum getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(StatusPautaEnum status) {
 		this.status = status;
 	}
 }

@@ -20,6 +20,7 @@
       <th scope="col" >Titulo</th>
       <th scope="col" class="fit">Votos Sim</th>
       <th scope="col" class="fit">Votos Não</th>
+      <th scope="col" class="fit">Status</th>
       <th scope="col" class="fit">Data</th>
       <th scope="col" class="fit text-center">Ações</th>
     </tr>
@@ -27,7 +28,7 @@
 
   {#if pautas.size == 0}
   <tr>
-    <td colspan="6">Nenhum registro cadastrado.</td>
+    <td colspan="7">Nenhum registro cadastrado.</td>
   </tr>
   {#else}
 
@@ -42,6 +43,9 @@
     </td>
     <td>
       {pauta.votoNao}
+    </td>
+    <td>
+      {pauta.status.descricao}
     </td>
     <td>
       {pauta.dtCreated}

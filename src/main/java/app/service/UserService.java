@@ -2,12 +2,9 @@ package app.service;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
-import javax.validation.Valid;
-
 import java.util.List;
 
 import static javax.transaction.Transactional.TxType.REQUIRED;
-import static javax.transaction.Transactional.TxType.SUPPORTS;
 
 import app.model.User;
 

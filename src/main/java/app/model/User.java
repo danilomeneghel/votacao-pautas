@@ -11,6 +11,11 @@ import javax.ws.rs.FormParam;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import app.enumerator.RoleUserEnum;
+import app.enumerator.StatusUserEnum;
+import app.enumerator.converter.RoleUserEnumConverter;
+import app.enumerator.converter.StatusUserEnumConverter;
+
 import java.util.Date;
 
 @Entity
@@ -43,11 +48,13 @@ public class User extends PanacheEntity {
 	@FormParam("passwordCheck")
 	public String passwordCheck;
 
+	@Convert(converter = RoleUserEnumConverter.class)
 	@FormParam("role")
-	public String role;
+	public RoleUserEnum role;
 
+	@Convert(converter = StatusUserEnumConverter.class)
 	@FormParam("status")
-	public String status;
+	public StatusUserEnum status;
 
 	@CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -60,26 +67,6 @@ public class User extends PanacheEntity {
     public Date dtUpdated;
     
 	public User() {
-	}
-
-	public User(String username, String password, String role) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.role = role;
-	}
-
-	public User(@Size(min = 3, max = 100) String name, @Size(min = 3, max = 100) String email, @NotNull Long cpf,
-			@Size(min = 3, max = 50) String username, @Size(min = 4, max = 80) String password, String role,
-			String status) {
-		super();
-		this.name = name;
-		this.email = email;
-		this.cpf = cpf;
-		this.username = username;
-		this.password = password;
-		this.role = role;
-		this.status = status;
 	}
 
 	public String getName() {
@@ -130,19 +117,19 @@ public class User extends PanacheEntity {
 		this.passwordCheck = passwordCheck;
 	}
 
-	public String getRole() {
+	public RoleUserEnum getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(RoleUserEnum role) {
 		this.role = role;
 	}
 
-	public String getStatus() {
+	public StatusUserEnum getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(StatusUserEnum status) {
 		this.status = status;
 	}
 }

@@ -46,10 +46,10 @@
       {user.cpf}
     </td>
     <td>
-      {user.role}
+      {user.role.descricao}
     </td>
     <td>
-      {#if user.status == 'ABLE_TO_VOTE'}Ativo{#else}Inativo{/if}
+      {user.status.descricao}
     </td>
     <td>
       {user.dtCreated}

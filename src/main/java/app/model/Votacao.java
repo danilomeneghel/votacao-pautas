@@ -4,9 +4,14 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.FormParam;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import app.enumerator.VotoEnum;
+import app.enumerator.converter.VotoEnumConverter;
+
 import java.util.Date;
 
 @Entity
@@ -26,9 +31,10 @@ public class Votacao extends PanacheEntity {
 	@FormParam("cpf")
 	public Long cpf;
 	
-	@Column(name = "voto", nullable = false)
+	@NotNull
+	@Convert(converter = VotoEnumConverter.class)
 	@FormParam("voto")
-	public Integer voto;
+	public VotoEnum voto;
 
 	@CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -36,13 +42,6 @@ public class Votacao extends PanacheEntity {
 	public Date dtCreated;
 
 	public Votacao() {
-	}
-
-	public Votacao(Long idpauta, Long iduser, Integer voto) {
-		super();
-		this.idpauta = idpauta;
-		this.iduser = iduser;
-		this.voto = voto;
 	}
 
 	public Long getId() {
@@ -77,11 +76,11 @@ public class Votacao extends PanacheEntity {
 		this.cpf = cpf;
 	}
 
-	public Integer getVoto() {
+	public VotoEnum getVoto() {
 		return voto;
 	}
 
-	public void setVoto(Integer voto) {
+	public void setVoto(VotoEnum voto) {
 		this.voto = voto;
 	}
 
