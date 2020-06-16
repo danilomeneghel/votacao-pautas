@@ -52,3 +52,5 @@ release.properties
 lsp/
 
 /.java-version
+
+*.sts4-cache
