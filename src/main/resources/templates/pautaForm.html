@@ -2,7 +2,7 @@
 {#include base.html} 
 {#contents}
 <div class="modalenabled">
-  <h2>{#if update}Editar Pauta #{pauta.id}{#else}Adicionar{/if}</h2>
+  <h2>{#if update}Editar #{pauta.id}{#else}Adicionar{/if} Pauta</h2>
   <div class="panel panel-default">
     <form action="/pautas/{#if update}{pauta.id}/edit{#else}new{/if}" method="POST" name="pautaForm" up-target=".container" enctype="multipart/form-data">
       <div class="form-panel">

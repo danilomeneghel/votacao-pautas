@@ -76,7 +76,7 @@ public class PautaController {
     public Object getIdJson(@PathParam("id") Long id) {
     	Pauta pauta = pautaService.findPauta(id);
     	if (pauta == null) {
-            return error.data("error", "Pauta com id " + id + " não encontrado.");
+            return error.data("error", "Pauta com id " + id + " não encontrada.");
         }
     	
         return Response.status(Response.Status.OK).build();
@@ -87,7 +87,7 @@ public class PautaController {
     public TemplateInstance getId(@PathParam("id") Long id) {
         Pauta pauta = pautaService.findPauta(id);
         if (pauta == null) {
-            return error.data("error", "Pauta com id " + id + " não encontrado.");
+            return error.data("error", "Pauta com id " + id + " não encontrada.");
         }
         
         return pautaView.data("pauta", pauta)

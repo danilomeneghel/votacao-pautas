@@ -18,10 +18,7 @@ import java.util.Date;
 @Entity
 @RegisterForReflection
 public class Pauta extends PanacheEntity {
-	
-	@FormParam("iduser")
-	public Long iduser;
-
+    
 	@Size(min = 3, max = 100)
 	@FormParam("titulo")
 	public String titulo;
@@ -51,14 +48,6 @@ public class Pauta extends PanacheEntity {
     public Date dtUpdated;
 
 	public Pauta() {
-	}
-
-	public Long getIduser() {
-		return iduser;
-	}
-
-	public void setIduser(Long iduser) {
-		this.iduser = iduser;
 	}
 
 	public String getTitulo() {

@@ -1,0 +1,28 @@
+{@app.model.Sessao sessao}
+{#include base.html} 
+{#contents}
+<div class="modalenabled">
+  <h2>Sessão #{sessao.id}</h2>
+  <div class="panel panel-default">
+      <div class="form-panel">
+        <h2>{sessao.nome}</h2>
+        <div class="form-group">
+            {sessao.duracao}
+        </div>
+        <div class="form-group">
+            {sessao.dataInicioSessao}
+        </div>
+        <div class="form-group">
+            {sessao.dataFimSessao}
+        </div>
+        <div class="form-group">
+            {sessao.idPauta}
+        </div>
+        <div class="form-group">
+            {sessao.status.descricao}
+        </div>
+      </div>
+  </div>
+</div>
+{/contents}
+{/include}

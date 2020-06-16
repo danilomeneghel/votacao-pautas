@@ -1,12 +1,12 @@
 {#include base.html}
-{#title}Pautas{/}
+{#title}Sessões{/}
 {#contents}
-<h2>Pautas</h2>
+<h2>Sessões</h2>
 
 <div class="row">
-  <a class="btn btn-primary btn-sm" href="/pautas/new" role="button" up-modal=".modalenabled">Adicionar</a>
+  <a class="btn btn-primary btn-sm" href="/sessoes/new" role="button" up-modal=".modalenabled">Adicionar</a>
   <div class="search-right">
-    <form action="/pautas" method="GET" name="search" up-target=".container">
+    <form action="/sessoes" method="GET" name="search" up-target=".container">
        <input type="text" name="filter" class="form-control" id="filter" placeholder="Localizar por Titulo" {#if filtered}value="{filter}"{/if}>
        <button class="btn btn-primary" type="submit">Ok</button>
     </form>
@@ -17,43 +17,46 @@
   <thead>
     <tr>
       <th scope="col" class="fit">Id</th>
-      <th scope="col" >Titulo</th>
-      <th scope="col" class="fit">Votos Sim</th>
-      <th scope="col" class="fit">Votos NÃ£o</th>
+      <th scope="col" >Nome</th>
+      <th scope="col" class="fit">Data Início</th>
+      <th scope="col" class="fit">Data Fim</th>
+      <th scope="col" class="fit">ID Pauta</th>
       <th scope="col" class="fit">Status</th>
       <th scope="col" class="fit">Data Criação</th>
       <th scope="col" class="fit text-center">AÃ§Ãµes</th>
     </tr>
   </thead>
 
-  {#if pautas.size == 0}
+  {#if sessoes.size == 0}
   <tr>
     <td colspan="7">Nenhum registro cadastrado.</td>
   </tr>
   {#else}
 
-  {#for pauta in pautas}
+  {#for sessao in sessoes}
   <tr>
-    <th scope="row">#{pauta.id}</th>
+    <th scope="row">#{sessao.id}</th>
     <td>
-      {pauta.titulo}
+      {sessao.nome}
     </td>
     <td>
-      {pauta.votoSim}
+      {sessao.dataInicioSessao}
     </td>
     <td>
-      {pauta.votoNao}
+      {sessao.dataFimSessao}
     </td>
     <td>
-      {pauta.status.descricao}
+      {sessao.idPauta}
     </td>
     <td>
-      {pauta.dtCreated}
+      {sessao.status.descricao}
+    </td>
+    <td>
+      {sessao.dtCreated}
     </td>
     <td class="fit">
-      <form action="/pautas/{pauta.id}/delete" method="POST" name="delete-{pauta.id}" up-target=".container">
-        <a class="btn btn-default btn-sm" href="/pautas/{pauta.id}" role="button" up-modal=".modalenabled">Votar</a>
-        <a class="btn btn-primary btn-sm" href="/pautas/{pauta.id}/edit" role="button" up-modal=".modalenabled">Editar</a>
+      <form action="/sessoes/{sessao.id}/delete" method="POST" name="delete-{sessao.id}" up-target=".container">
+        <a class="btn btn-primary btn-sm" href="/sessoes/{sessao.id}/edit" role="button" up-modal=".modalenabled">Editar</a>
         <input class="btn btn-danger btn-sm" value="Excluir" type="submit">
       </form>
     </td>

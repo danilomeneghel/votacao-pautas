@@ -34,7 +34,6 @@ public class PautaService {
     }
 
     public Pauta update(Pauta loaded, Pauta pauta) {
-    	//loaded.iduser = pauta.iduser;
     	loaded.titulo = pauta.titulo;
     	loaded.descricao = pauta.descricao;
     	loaded.status = pauta.status;

@@ -2,7 +2,7 @@
 {#include base.html} 
 {#contents}
 <div class="modalenabled">
-  <h2>{#if update}Editar User #{user.id}{#else}Adicionar{/if}</h2>
+  <h2>{#if update}Editar #{user.id}{#else}Adicionar{/if} Usu·rio</h2>
   <div class="panel panel-default">
     <form action="/users/{#if update}{user.id}/edit{#else}new{/if}" method="POST" name="userForm" up-target=".container" enctype="multipart/form-data">
       <div class="form-panel">
@@ -16,7 +16,7 @@
         </div>
         <div class="form-group">
             <label class="sr-only" for="cpf">CPF</label>
-            <input type="text" name="cpf" class="form-control" id="cpf" placeholder="CPF" value="91745424008" readonly="readonly"> <!-- CPF Teste -->
+            <input type="text" name="cpf" class="form-control" id="cpf" placeholder="CPF" value="91745424008" readonly="readonly"> (CPF Teste)
         </div>
         <div class="form-group">
             <label class="sr-only" for="username">Usu√°rio</label>
