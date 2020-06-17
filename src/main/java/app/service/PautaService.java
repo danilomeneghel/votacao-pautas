@@ -7,6 +7,7 @@ import java.util.List;
 
 import static javax.transaction.Transactional.TxType.REQUIRED;
 
+import app.enumerator.StatusPautaEnum;
 import app.model.Pauta;
 
 @ApplicationScoped
@@ -21,6 +22,11 @@ public class PautaService {
     @Transactional()
     public Pauta findPauta(Long id) {
         return Pauta.findById(id);
+    }
+    
+    @Transactional()
+    public List<Pauta> findPautasAtivas() {
+    	return Pauta.find("status", StatusPautaEnum.ATIVO).list();
     }
     
     @Transactional()

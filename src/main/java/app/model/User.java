@@ -66,7 +66,4 @@ public class User extends PanacheEntity {
     @Column(name = "data_alteracao")
     public Date dtUpdated;
     
-	public User() {
-	}
-
 }

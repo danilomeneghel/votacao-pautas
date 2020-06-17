@@ -3,6 +3,7 @@ package app.model;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.FormParam;
@@ -17,7 +18,7 @@ import java.util.Date;
 @Entity
 @RegisterForReflection
 public class Votacao extends PanacheEntity {
-	
+
 	@Column(name = "idpauta", nullable = false)
 	@FormParam("idpauta")
 	public Long idpauta;
@@ -30,18 +31,21 @@ public class Votacao extends PanacheEntity {
 	@Column(updatable = false)
 	@FormParam("cpf")
 	public Long cpf;
-	
+
 	@NotNull
 	@Convert(converter = VotoEnumConverter.class)
 	@FormParam("voto")
 	public VotoEnum voto;
 
 	@CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "data_criacao")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "data_criacao")
 	public Date dtCreated;
 
-	public Votacao() {
-	}
+	@ManyToOne
+	private Pauta pauta;
+
+	@OneToOne
+	private User user;
 
 }

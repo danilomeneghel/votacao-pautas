@@ -52,7 +52,7 @@ public class Sessao extends PanacheEntity {
 	@Column(name = "data_alteracao")
 	public Date dtUpdated;
 
-	public Sessao() {
-	}
-
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	public Pauta pauta;
+	
 }

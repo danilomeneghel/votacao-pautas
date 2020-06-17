@@ -101,7 +101,10 @@ public class SessaoController {
     @GET
     @Path("/new")
     public TemplateInstance addForm() {
-    	List<Pauta> pautas = pautaService.findAllPautas();
+    	List<Pauta> pautas = pautaService.findPautasAtivas();
+    	if(pautas.isEmpty()) {
+    		return error.data("error", "É preciso ter pelo menos uma Pauta ativa");
+    	}
         return sessaoForm.data("status", StatusSessaoEnum.values())
         		.data("pautas", pautas);
     }
@@ -119,7 +122,7 @@ public class SessaoController {
 	        }    	
 	    	sessaoService.insert(sessao);
     	} else {
-    		return error.data("error", "É necessário criar primeiro uma Pauta.");
+    		return error.data("error", "É necessário ter uma Pauta selecionada");
     	}
     	
     	return Response.seeOther(URI.create("/sessoes")).build();
@@ -128,7 +131,11 @@ public class SessaoController {
     @GET
     @Path("/{id}/edit")
     public TemplateInstance updateForm(@PathParam("id") long id) {
-    	List<Pauta> pautas = pautaService.findAllPautas();
+    	List<Pauta> pautas = pautaService.findPautasAtivas();
+    	if(pautas.isEmpty()) {
+    		return error.data("error", "É preciso ter pelo menos uma Pauta ativa");
+    	}
+    	
         Sessao loaded = sessaoService.findSessao(id);
         if (loaded == null) {
             return error.data("error", "Sessao com id " + id + " não encontrada.");

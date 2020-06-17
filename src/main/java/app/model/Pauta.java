@@ -19,7 +19,7 @@ import java.util.Date;
 @Entity
 @RegisterForReflection
 public class Pauta extends PanacheEntity {
-    
+
 	@Size(min = 3, max = 100)
 	@FormParam("titulo")
 	public String titulo;
@@ -37,20 +37,20 @@ public class Pauta extends PanacheEntity {
 	@Convert(converter = StatusPautaEnumConverter.class)
 	@FormParam("status")
 	public StatusPautaEnum status;
-	
+
 	@JsonbDateFormat(value = "dd/MM/yyyy")
 	@CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "data_criacao")
-    public Date dtCreated;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "data_criacao")
+	public Date dtCreated;
 
 	@JsonbDateFormat(value = "dd/MM/yyyy")
-    @UpdateTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "data_alteracao")
-    public Date dtUpdated;
+	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "data_alteracao")
+	public Date dtUpdated;
 
-	public Pauta() {
-	}
+	@OneToOne(mappedBy = "pauta", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	public Sessao sessao;
 
 }
