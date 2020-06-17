@@ -23,10 +23,10 @@
             <input type="date" name="data_fim_sessao" class="form-control" id="data_fim_sessao" placeholder="Data Fim" required autofocus {#if update}value="{sessao.dataFimSessao}"{/if}>
         </div>
         <div class="form-group">
-	        <select class="custom-select" name="idPauta" id="idPauta">
+	        <select class="custom-select" name="idpauta" id="idpauta" {#if update}disabled{/if}>
 	          <option disabled value="">Pautas</option>
 	          {#for pt in pautas}
-	          <option value="{pt.id}" {#if sessao.idPauta == pt.id}selected{/if}>{pt.titulo}</option>
+	          <option value="{pt.id}" {#if sessao.idpauta == pt.id}selected{/if}>{pt.titulo}</option>
 	          {/for}
 	        </select>
         </div>

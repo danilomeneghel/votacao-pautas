@@ -111,14 +111,17 @@ public class SessaoController {
     @Produces(MediaType.TEXT_HTML)
     @Transactional
     @Path("/new")
-    public Response addSessao(@MultipartForm @Valid Sessao sessao) {
-    	Sessao loaded = sessaoService.findSessaoNome(sessao.nome);
-    	if (loaded != null) {
-            return (Response) error.data("error", "Sessao com nome '" + sessao.nome + "' já cadastrada.");
-        }
+    public Object addSessao(@MultipartForm @Valid Sessao sessao) {
+    	if(sessao.idpauta != null) {
+	    	Sessao loaded = sessaoService.findSessaoPauta(sessao.idpauta);
+	    	if (loaded != null) {
+	            return error.data("error", "Sessao já criada para essa Pauta de id " + sessao.idpauta);
+	        }    	
+	    	sessaoService.insert(sessao);
+    	} else {
+    		return error.data("error", "É necessário criar primeiro uma Pauta.");
+    	}
     	
-    	sessaoService.insert(sessao);
-
     	return Response.seeOther(URI.create("/sessoes")).build();
     }
     

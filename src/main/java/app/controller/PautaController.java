@@ -19,7 +19,9 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import app.enumerator.StatusPautaEnum;
 import app.enumerator.VotoEnum;
 import app.model.Pauta;
+import app.model.User;
 import app.service.PautaService;
+import app.service.UserService;
 
 @Path("/pautas")
 @Produces(MediaType.TEXT_HTML)
@@ -29,6 +31,9 @@ public class PautaController {
     @Inject
     PautaService pautaService;
 
+    @Inject
+    UserService userService;
+    
     @Inject
     Template error;
     
@@ -106,13 +111,17 @@ public class PautaController {
     @Transactional
     @Path("/new")
     public Object addPauta(@MultipartForm @Valid Pauta pauta) {
-    	Pauta loaded = pautaService.findPautaTitulo(pauta.titulo);
-    	if (loaded != null) {
-            return error.data("error", "Pauta com título '" + pauta.titulo + "' já cadastrada.");
-        }
+    	List<User> user = userService.findAllUsers();
+    	if(user.isEmpty()) {
+    		return error.data("error", "É necessário primeiro criar um usuário para depois votar na Pauta.");
+    	} else {
+	    	Pauta loaded = pautaService.findPautaTitulo(pauta.titulo);
+	    	if (loaded != null) {
+	            return error.data("error", "Pauta com título '" + pauta.titulo + "' já cadastrada.");
+	        }
+	    	pautaService.insert(pauta);    		
+    	}
     	
-    	pautaService.insert(pauta);
-
     	return Response.seeOther(URI.create("/pautas")).build();
     }
     

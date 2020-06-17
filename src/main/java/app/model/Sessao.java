@@ -19,8 +19,9 @@ import java.util.Date;
 @RegisterForReflection
 public class Sessao extends PanacheEntity {
 
-	@FormParam("idPauta")
-	public Long idPauta;
+	@Column(name = "idpauta", nullable = false)
+	@FormParam("idpauta")
+	public Long idpauta;
 
 	@FormParam("nome")
 	public String nome;

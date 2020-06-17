@@ -25,6 +25,11 @@ public class SessaoService extends DateParamConverter {
     }
     
     @Transactional()
+    public Sessao findSessaoPauta(Long idpauta) {
+        return Sessao.find("idpauta", idpauta).firstResult();
+    }
+    
+    @Transactional()
     public Sessao findSessaoNome(String nome) {
     	return Sessao.find("nome", nome).firstResult();
     }
