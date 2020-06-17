@@ -3,19 +3,16 @@ package app.service;
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 
-import org.apache.james.mime4j.dom.datetime.DateTime;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static javax.transaction.Transactional.TxType.REQUIRED;
 
 import app.model.Sessao;
+import app.util.DateParamConverter;
 
 @ApplicationScoped
 @Transactional(REQUIRED)
-public class SessaoService {
+public class SessaoService extends DateParamConverter {
 	
 	@Transactional()
     public List<Sessao> findAllSessoes() {
@@ -28,29 +25,18 @@ public class SessaoService {
     }
     
     @Transactional()
-    public Sessao findSessaoTitulo(String nome) {
+    public Sessao findSessaoNome(String nome) {
     	return Sessao.find("nome", nome).firstResult();
     }
     
-    public Sessao convertDate(Sessao sessao) {
-    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate dataInicioSessao = LocalDate.parse(sessao.dataInicioSessao.toString(), formatter);
-        LocalDate dataFimSessao = LocalDate.parse(sessao.dataFimSessao.toString(), formatter);
-        
-        sessao.dataInicioSessao = dataInicioSessao;
-        sessao.dataFimSessao = dataFimSessao;    	
-    	return sessao;
-    }
-    
     public Sessao insert(Sessao sessao) {
-    	sessao = convertDate(sessao);
     	sessao.persist();
         return sessao;
     }
 
     public Sessao update(Sessao loaded, Sessao sessao) {
-    	loaded.dataInicioSessao = convertDate(sessao).dataInicioSessao;
-    	loaded.dataFimSessao = convertDate(sessao).dataFimSessao;
+    	loaded.dataInicioSessao = sessao.dataInicioSessao;
+    	loaded.dataFimSessao = sessao.dataFimSessao;
     	loaded.nome = sessao.nome;
     	loaded.duracao = sessao.duracao;
     	loaded.status = sessao.status;

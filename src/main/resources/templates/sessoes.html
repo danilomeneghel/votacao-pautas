@@ -1,13 +1,13 @@
 {#include base.html}
-{#title}Sessıes{/}
+{#title}Sess√µes{/}
 {#contents}
-<h2>Sessıes</h2>
+<h2>Sess√µes</h2>
 
 <div class="row">
   <a class="btn btn-primary btn-sm" href="/sessoes/new" role="button" up-modal=".modalenabled">Adicionar</a>
   <div class="search-right">
     <form action="/sessoes" method="GET" name="search" up-target=".container">
-       <input type="text" name="filter" class="form-control" id="filter" placeholder="Localizar por Titulo" {#if filtered}value="{filter}"{/if}>
+       <input type="text" name="filter" class="form-control" id="filter" placeholder="Localizar por Nome" {#if filtered}value="{filter}"{/if}>
        <button class="btn btn-primary" type="submit">Ok</button>
     </form>
   </div>
@@ -18,11 +18,10 @@
     <tr>
       <th scope="col" class="fit">Id</th>
       <th scope="col" >Nome</th>
-      <th scope="col" class="fit">Data InÌcio</th>
-      <th scope="col" class="fit">Data Fim</th>
+      <th scope="col" class="fit">Data In√≠cio Sess√£o</th>
+      <th scope="col" class="fit">Data Fim Sess√£o</th>
       <th scope="col" class="fit">ID Pauta</th>
       <th scope="col" class="fit">Status</th>
-      <th scope="col" class="fit">Data CriaÁ„o</th>
       <th scope="col" class="fit text-center">A√ß√µes</th>
     </tr>
   </thead>
@@ -50,9 +49,6 @@
     </td>
     <td>
       {sessao.status.descricao}
-    </td>
-    <td>
-      {sessao.dtCreated}
     </td>
     <td class="fit">
       <form action="/sessoes/{sessao.id}/delete" method="POST" name="delete-{sessao.id}" up-target=".container">

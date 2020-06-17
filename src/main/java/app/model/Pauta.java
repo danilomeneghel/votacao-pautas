@@ -3,6 +3,7 @@ package app.model;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import javax.ws.rs.FormParam;
@@ -37,11 +38,13 @@ public class Pauta extends PanacheEntity {
 	@FormParam("status")
 	public StatusPautaEnum status;
 	
+	@JsonbDateFormat(value = "dd/MM/yyyy")
 	@CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "data_criacao")
     public Date dtCreated;
 
+	@JsonbDateFormat(value = "dd/MM/yyyy")
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "data_alteracao")
@@ -50,43 +53,4 @@ public class Pauta extends PanacheEntity {
 	public Pauta() {
 	}
 
-	public String getTitulo() {
-		return titulo;
-	}
-
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public Integer getVotoSim() {
-		return votoSim;
-	}
-
-	public void setVotoSim(Integer votoSim) {
-		this.votoSim = votoSim;
-	}
-
-	public Integer getVotoNao() {
-		return votoNao;
-	}
-
-	public void setVotoNao(Integer votoNao) {
-		this.votoNao = votoNao;
-	}
-
-	public StatusPautaEnum getStatus() {
-		return status;
-	}
-
-	public void setStatus(StatusPautaEnum status) {
-		this.status = status;
-	}
 }

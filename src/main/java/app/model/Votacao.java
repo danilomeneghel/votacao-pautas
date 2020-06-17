@@ -44,44 +44,4 @@ public class Votacao extends PanacheEntity {
 	public Votacao() {
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Long getIdpauta() {
-		return idpauta;
-	}
-
-	public void setIdpauta(Long idpauta) {
-		this.idpauta = idpauta;
-	}
-
-	public Long getIduser() {
-		return iduser;
-	}
-
-	public void setIduser(Long iduser) {
-		this.iduser = iduser;
-	}
-
-	public Long getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(Long cpf) {
-		this.cpf = cpf;
-	}
-
-	public VotoEnum getVoto() {
-		return voto;
-	}
-
-	public void setVoto(VotoEnum voto) {
-		this.voto = voto;
-	}
-
 }

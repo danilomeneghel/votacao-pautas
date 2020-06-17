@@ -87,8 +87,8 @@
 			<artifactId>quarkus-resteasy-jsonb</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>resteasy-jaxb-provider</artifactId>
+    		<groupId>io.quarkus</groupId>
+    		<artifactId>quarkus-resteasy-jaxb</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>

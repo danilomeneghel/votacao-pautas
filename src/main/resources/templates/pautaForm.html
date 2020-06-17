@@ -2,7 +2,7 @@
 {#include base.html} 
 {#contents}
 <div class="modalenabled">
-  <h2>{#if update}Editar #{pauta.id}{#else}Adicionar{/if} Pauta</h2>
+  <h2>{#if update}Editar Pauta #{pauta.id}{#else}Adicionar Pauta{/if}</h2>
   <div class="panel panel-default">
     <form action="/pautas/{#if update}{pauta.id}/edit{#else}new{/if}" method="POST" name="pautaForm" up-target=".container" enctype="multipart/form-data">
       <div class="form-panel">
@@ -12,7 +12,7 @@
         </div>
         <div class="form-group">
             <label class="sr-only" for="descricao">Descrição</label>
-            <textarea name="descricao" class="form-control" id="descricao" placeholder="Descricao" required autofocus>{#if update}{pauta.descricao}{/if}</textarea>
+            <textarea name="descricao" class="form-control" id="descricao" placeholder="Descrição" required autofocus>{#if update}{pauta.descricao}{/if}</textarea>
         </div>
         <div class="form-group">
 	        <select class="custom-select" name="status" id="status">

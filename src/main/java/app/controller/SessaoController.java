@@ -44,7 +44,7 @@ public class SessaoController {
     
     @Inject
     Template sessoes;
-    
+        
     @GET
     @Consumes(MediaType.TEXT_HTML)
     @Produces(MediaType.TEXT_HTML)
@@ -111,10 +111,10 @@ public class SessaoController {
     @Produces(MediaType.TEXT_HTML)
     @Transactional
     @Path("/new")
-    public Object addSessao(@MultipartForm @Valid Sessao sessao) {
-    	Sessao loaded = sessaoService.findSessaoTitulo(sessao.nome);
+    public Response addSessao(@MultipartForm @Valid Sessao sessao) {
+    	Sessao loaded = sessaoService.findSessaoNome(sessao.nome);
     	if (loaded != null) {
-            return error.data("error", "Sessao com título '" + sessao.nome + "' já cadastrada.");
+            return (Response) error.data("error", "Sessao com nome '" + sessao.nome + "' já cadastrada.");
         }
     	
     	sessaoService.insert(sessao);

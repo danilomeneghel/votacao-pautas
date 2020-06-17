@@ -2,25 +2,25 @@
 {#include base.html} 
 {#contents}
 <div class="modalenabled">
-  <h2>{#if update}Editar #{sessao.id}{#else}Adicionar{/if} Sess�o</h2>
+  <h2>{#if update}Editar Sessão #{sessao.id}{#else}Adicionar Sessão{/if}</h2>
   <div class="panel panel-default">
     <form action="/sessoes/{#if update}{sessao.id}/edit{#else}new{/if}" method="POST" name="sessaoForm" up-target=".container" enctype="multipart/form-data">
       <div class="form-panel">
         <div class="form-group">
             <label class="sr-only" for="nome">Nome</label>
-            <input type="text" name="nome" class="form-control" id="nome" placeholder="Nome" required autofocus {#if update}value="{sessao.nome}"{/if}>
+            <input type="text" name="nome" class="form-control" id="nome" placeholder="Nome da Sessão" required autofocus {#if update}value="{sessao.nome}"{/if}>
         </div>
         <div class="form-group">
-            <label class="sr-only" for="duracao">Duração</label>
-            <input type="text" name="duracao" class="form-control" id="duracao" placeholder="Dura��o" required autofocus {#if update}value="{sessao.duracao}"{/if}>
+            <label class="sr-only" for="duracao">DuraÃ§Ã£o</label>
+            <input type="number" name="duracao" class="form-control" id="duracao" placeholder="Duração em Minutos" required autofocus {#if update}value="{sessao.duracao}"{/if}>
         </div>
         <div class="form-group">
             <label class="sr-only" for="data_inicio_sessao">Data Inicio</label>
-            <input type="text" name="data_inicio_sessao" class="form-control" id="data_inicio_sessao" placeholder="Data Inicio" required autofocus {#if update}value="{sessao.dataInicioSessao}"{/if}>
+            <input type="date" name="data_inicio_sessao" class="form-control" id="data_inicio_sessao" placeholder="Data Inicio" required autofocus {#if update}value="{sessao.dataInicioSessao}"{/if}>
         </div>
         <div class="form-group">
             <label class="sr-only" for="data_fim_sessao">Data Fim</label>
-            <input type="text" name="data_fim_sessao" class="form-control" id="data_fim_sessao" placeholder="Data Fim" required autofocus {#if update}value="{sessao.dataFimSessao}"{/if}>
+            <input type="date" name="data_fim_sessao" class="form-control" id="data_fim_sessao" placeholder="Data Fim" required autofocus {#if update}value="{sessao.dataFimSessao}"{/if}>
         </div>
         <div class="form-group">
 	        <select class="custom-select" name="idPauta" id="idPauta">

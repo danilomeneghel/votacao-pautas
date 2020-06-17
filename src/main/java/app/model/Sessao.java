@@ -13,7 +13,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import app.enumerator.StatusSessaoEnum;
 import app.enumerator.converter.StatusSessaoEnumConverter;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -30,15 +29,13 @@ public class Sessao extends PanacheEntity {
 	@NotNull(message = "Informe a duração")
 	public Integer duracao;
 
-	@NotNull(message = "Informe a data de inicio da sessão")
 	@Column(name = "data_inicio_sessao")
 	@FormParam("data_inicio_sessao")
-	public LocalDate dataInicioSessao;
+	public String dataInicioSessao;
 
-	@NotNull(message = "Informe a data de fim da sessão")
 	@Column(name = "data_fim_sessao")
 	@FormParam("data_fim_sessao")
-	public LocalDate dataFimSessao;
+	public String dataFimSessao;
 
 	@Convert(converter = StatusSessaoEnumConverter.class)
 	@FormParam("status")
@@ -55,54 +52,6 @@ public class Sessao extends PanacheEntity {
 	public Date dtUpdated;
 
 	public Sessao() {
-	}
-
-	public Long getIdPauta() {
-		return idPauta;
-	}
-
-	public void setIdPauta(Long idPauta) {
-		this.idPauta = idPauta;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public Integer getDuracao() {
-		return duracao;
-	}
-
-	public void setDuracao(Integer duracao) {
-		this.duracao = duracao;
-	}
-
-	public LocalDate getDataInicioSessao() {
-		return dataInicioSessao;
-	}
-
-	public void setDataInicioSessao(LocalDate dataInicioSessao) {
-		this.dataInicioSessao = dataInicioSessao;
-	}
-
-	public LocalDate getDataFimSessao() {
-		return dataFimSessao;
-	}
-
-	public void setDataFimSessao(LocalDate dataFimSessao) {
-		this.dataFimSessao = dataFimSessao;
-	}
-
-	public StatusSessaoEnum getStatus() {
-		return status;
-	}
-
-	public void setStatus(StatusSessaoEnum status) {
-		this.status = status;
 	}
 
 }
