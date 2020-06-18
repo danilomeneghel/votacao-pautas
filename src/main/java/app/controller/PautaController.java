@@ -106,6 +106,11 @@ public class PautaController {
     @GET
     @Path("/new")
     public TemplateInstance addForm() {
+    	List<User> user = userService.findAllUsers();
+    	if(user.isEmpty()) {
+    		return error.data("error", "É necessário primeiro criar um usuário para depois votar na Pauta.");
+    	}
+    	
         return pautaForm.data("status", StatusPautaEnum.values());
     }
 
@@ -115,16 +120,11 @@ public class PautaController {
     @Transactional
     @Path("/new")
     public Object addPauta(@MultipartForm @Valid Pauta pauta) {
-    	List<User> user = userService.findAllUsers();
-    	if(user.isEmpty()) {
-    		return error.data("error", "É necessário primeiro criar um usuário para depois votar na Pauta.");
-    	} else {
-	    	Pauta loaded = pautaService.findPautaTitulo(pauta.titulo);
-	    	if (loaded != null) {
-	            return error.data("error", "Pauta com título '" + pauta.titulo + "' já cadastrada.");
-	        }
-	    	pautaService.insert(pauta);    		
-    	}
+    	Pauta loaded = pautaService.findPautaTitulo(pauta.titulo);
+    	if (loaded != null) {
+            return error.data("error", "Pauta com título '" + pauta.titulo + "' já cadastrada.");
+        }
+    	pautaService.insert(pauta);    	
     	
     	return Response.seeOther(URI.create("/pautas")).build();
     }

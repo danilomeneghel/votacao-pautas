@@ -19,15 +19,15 @@ import app.model.Sessao;
 import app.model.User;
 
 import app.service.VotacaoService;
-import app.util.ExternalApi;
 import app.service.PautaService;
 import app.service.SessaoService;
 import app.service.UserService;
+import app.util.ExternalApi;
 
 @Path("/votacao")
 @Produces(MediaType.TEXT_HTML)
 @ApplicationScoped
-public class VotacaoController extends ExternalApi {
+public class VotacaoController {
 
     @Inject
     VotacaoService votacaoService;
@@ -58,7 +58,7 @@ public class VotacaoController extends ExternalApi {
     	
     	if(sessao != null && sessao.status.getValor() == 1) {
     		//Pega o status do CPF da API externa para verificar se está habilitado para votar
-    		StatusUserEnum statusCpf = getStatusCpf(votacao.cpf);
+    		StatusUserEnum statusCpf = ExternalApi.getStatusCpf(votacao.cpf);
     		
 			if(statusCpf != null && statusCpf.toString().equals("ABLE_TO_VOTE")) {
 				Votacao votacaoDetalhes = votacaoService.findByIdpautaAndIduser(votacao.idpauta, user.id);

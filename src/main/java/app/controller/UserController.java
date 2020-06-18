@@ -19,12 +19,13 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import app.enumerator.StatusUserEnum;
 import app.model.User;
 import app.service.UserService;
+import app.util.CpfValidate;
 import app.util.ExternalApi;
 
 @Path("/users")
 @Produces(MediaType.TEXT_HTML)
 @ApplicationScoped
-public class UserController extends ExternalApi {
+public class UserController {
 
     @Inject
     UserService userService;
@@ -78,7 +79,7 @@ public class UserController extends ExternalApi {
     	if (user == null) {
             return error.data("error", "Usuário com cpf " + cpf + " não encontrado.");
         }
-    	StatusUserEnum statusCpf = getStatusCpf(user.cpf);
+    	StatusUserEnum statusCpf = ExternalApi.getStatusCpf(user.cpf);
     	user.status = statusCpf;
     	
         return Response.ok(user).status(Response.Status.OK).build();
@@ -91,7 +92,7 @@ public class UserController extends ExternalApi {
     	if (user == null) {
             return error.data("error", "Usuário com id " + id + " não encontrado.");
         }
-    	StatusUserEnum statusCpf = getStatusCpf(user.cpf);
+    	StatusUserEnum statusCpf = ExternalApi.getStatusCpf(user.cpf);
     	user.status = statusCpf;
     	
     	return userView.data("user", user);
@@ -112,10 +113,14 @@ public class UserController extends ExternalApi {
     	User loaded = userService.findUserCpf(user.cpf);
     	if (loaded != null) {
             return error.data("error", "Usuário com cpf " + user.cpf + " já cadastrado.");
+        } else {
+        	boolean validaCpf = CpfValidate.isCPF(user.cpf.toString());
+        	if(validaCpf)
+        		userService.insert(user);
+        	else
+        		return error.data("error", "Usuário com CPF inválido!");
         }
     	
-    	userService.insert(user);
-
     	return Response.seeOther(URI.create("/users")).build();
     }
     
@@ -140,10 +145,14 @@ public class UserController extends ExternalApi {
     	User loaded = userService.findUser(id);    	
         if (loaded == null) {
             return error.data("error", "Usuário com id " + id + " não encontrado.");
+        } else {
+        	boolean validaCpf = CpfValidate.isCPF(user.cpf.toString());
+        	if(validaCpf)
+        		userService.update(loaded, user);
+        	else
+        		return error.data("error", "Usuário com CPF inválido!");
         }
-
-        userService.update(loaded, user);
-
+    	
         return Response.seeOther(URI.create("/users")).build();
     }
 
