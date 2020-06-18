@@ -23,6 +23,11 @@ public class UserService {
     }
     
     @Transactional()
+    public User findFirstUser() {
+    	return User.find("1=1").firstResult();
+    }
+    
+    @Transactional()
     public User findUserCpf(Long cpf) {
     	return User.find("cpf", cpf).firstResult();
     }
@@ -36,10 +41,6 @@ public class UserService {
     	loaded.name = user.name;
     	loaded.email = user.email;
     	loaded.cpf = user.cpf;
-    	loaded.username = user.username;
-    	loaded.password = user.password;
-    	loaded.role = user.role;
-    	loaded.status = user.status;
     	loaded.persist();
         return loaded;
     }

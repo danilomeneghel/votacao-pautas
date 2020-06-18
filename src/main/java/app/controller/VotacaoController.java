@@ -14,10 +14,12 @@ import java.net.URI;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import app.model.Votacao;
+import app.enumerator.StatusUserEnum;
 import app.model.Sessao;
 import app.model.User;
 
 import app.service.VotacaoService;
+import app.util.ExternalApi;
 import app.service.PautaService;
 import app.service.SessaoService;
 import app.service.UserService;
@@ -25,7 +27,7 @@ import app.service.UserService;
 @Path("/votacao")
 @Produces(MediaType.TEXT_HTML)
 @ApplicationScoped
-public class VotacaoController {
+public class VotacaoController extends ExternalApi {
 
     @Inject
     VotacaoService votacaoService;
@@ -44,7 +46,7 @@ public class VotacaoController {
     
     @Inject
     Template pautas;
-    
+        
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.TEXT_HTML)
@@ -55,7 +57,10 @@ public class VotacaoController {
     	User user = userService.findUserCpf(votacao.cpf);
     	
     	if(sessao != null && sessao.status.getValor() == 1) {
-			if(user.status.getValor().equals("ABLE_TO_VOTE")) {
+    		//Pega o status do CPF da API externa para verificar se está habilitado para votar
+    		StatusUserEnum statusCpf = getStatusCpf(votacao.cpf);
+    		
+			if(statusCpf != null && statusCpf.toString().equals("ABLE_TO_VOTE")) {
 				Votacao votacaoDetalhes = votacaoService.findByIdpautaAndIduser(votacao.idpauta, user.id);
 				if (votacaoDetalhes != null) {
 					return error.data("error", "Pauta já votada!");

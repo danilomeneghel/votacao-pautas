@@ -34,24 +34,7 @@ public class User extends PanacheEntity {
 	@FormParam("cpf")
 	public Long cpf;
 
-	@Size(min = 3, max = 50)
-	@FormParam("username")
-	public String username;
-
-	@Size(min = 4, max = 80)
-	@FormParam("password")
-	public String password;
-
 	@Transient
-	@Size(min = 4, max = 80)
-	@Column(nullable = false)
-	@FormParam("passwordCheck")
-	public String passwordCheck;
-
-	@Convert(converter = RoleUserEnumConverter.class)
-	@FormParam("role")
-	public RoleUserEnum role;
-
 	@Convert(converter = StatusUserEnumConverter.class)
 	@FormParam("status")
 	public StatusUserEnum status;

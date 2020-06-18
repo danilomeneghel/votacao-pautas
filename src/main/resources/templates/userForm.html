@@ -16,31 +16,7 @@
         </div>
         <div class="form-group">
             <label class="sr-only" for="cpf">CPF</label>
-            <input type="number" name="cpf" class="form-control" id="cpf" placeholder="CPF" value="91745424008" readonly="readonly"> (CPF Teste)
-        </div>
-        <div class="form-group">
-            <label class="sr-only" for="username">Usuário</label>
-            <input type="text" name="username" class="form-control" id="username" placeholder="Usuário" required autofocus {#if update}value="{user.username}"{/if}>
-        </div>
-        <div class="form-group">
-            <label class="sr-only" for="password">Senha</label>
-            <input type="text" name="password" class="form-control" id="password" placeholder="Senha" required autofocus {#if update}value="{user.password}"{/if}>
-        </div>
-        <div class="form-group">
-	        <select class="custom-select" name="role" id="role">
-	          <option disabled value="">Função</option>
-	          {#for rl in role}
-	          <option value="{rl}" {#if user.role == rl}selected{/if}>{rl.descricao}</option>
-	          {/for}
-	        </select>
-        </div>
-        <div class="form-group">
-	        <select class="custom-select" name="status" id="status">
-	          <option disabled value="">Status</option>
-	          {#for st in status}
-	          <option value="{st}" {#if user.status == st}selected{/if}>{st.descricao}</option>
-	          {/for}
-	        </select>
+            <input type="number" name="cpf" class="form-control" id="cpf" placeholder="CPF" required autofocus {#if update}value="{user.cpf}"{/if}>
         </div>
         <button type="submit" class="btn btn-primary">{#if update}Editar{#else}Adicionar{/if}</button>
       </div>

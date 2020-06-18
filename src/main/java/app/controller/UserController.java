@@ -16,15 +16,15 @@ import java.util.List;
 
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
-import app.enumerator.RoleUserEnum;
 import app.enumerator.StatusUserEnum;
 import app.model.User;
 import app.service.UserService;
+import app.util.ExternalApi;
 
 @Path("/users")
 @Produces(MediaType.TEXT_HTML)
 @ApplicationScoped
-public class UserController {
+public class UserController extends ExternalApi {
 
     @Inject
     UserService userService;
@@ -78,18 +78,21 @@ public class UserController {
     	if (user == null) {
             return error.data("error", "Usuário com cpf " + cpf + " não encontrado.");
         }
+    	StatusUserEnum statusCpf = getStatusCpf(user.cpf);
+    	user.status = statusCpf;
     	
-        return Response.ok(user)
-        		.status(Response.Status.OK).build();
+        return Response.ok(user).status(Response.Status.OK).build();
     }
     
     @GET
-    @Path("/{cpf}")
-    public TemplateInstance getCpf(@PathParam("cpf") Long cpf) {
-    	User user = userService.findUserCpf(cpf);
+    @Path("/{id}")
+    public TemplateInstance getCpf(@PathParam("id") Long id) {
+    	User user = userService.findUser(id);
     	if (user == null) {
-            return error.data("error", "Usuário com cpf " + cpf + " não encontrado.");
+            return error.data("error", "Usuário com id " + id + " não encontrado.");
         }
+    	StatusUserEnum statusCpf = getStatusCpf(user.cpf);
+    	user.status = statusCpf;
     	
     	return userView.data("user", user);
     }
@@ -97,8 +100,7 @@ public class UserController {
     @GET
     @Path("/new")
     public TemplateInstance addForm() {
-        return userForm.data("role", RoleUserEnum.values())
-        	.data("status", StatusUserEnum.values());
+        return userForm.instance();
     }
 
     @POST
@@ -126,8 +128,6 @@ public class UserController {
         }
 		
         return userForm.data("user", loaded)
-        	.data("role", RoleUserEnum.values())
-        	.data("status", StatusUserEnum.values())
             .data("update", true);
     }
 
@@ -155,4 +155,5 @@ public class UserController {
 
         return Response.seeOther(URI.create("/users")).build();
     }
+    
 }

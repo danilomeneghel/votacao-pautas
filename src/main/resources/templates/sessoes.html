@@ -18,9 +18,9 @@
     <tr>
       <th scope="col" class="fit">Id</th>
       <th scope="col" >Nome</th>
+      <th scope="col" class="fit">Id Pauta</th>
       <th scope="col" class="fit">Data Início Sessão</th>
       <th scope="col" class="fit">Data Fim Sessão</th>
-      <th scope="col" class="fit">ID Pauta</th>
       <th scope="col" class="fit">Status</th>
       <th scope="col" class="fit text-center">Ações</th>
     </tr>
@@ -39,13 +39,13 @@
       {sessao.nome}
     </td>
     <td>
+      {sessao.idpauta}
+    </td>
+    <td>
       {sessao.dataInicioSessao}
     </td>
     <td>
       {sessao.dataFimSessao}
-    </td>
-    <td>
-      {sessao.idpauta}
     </td>
     <td>
       {sessao.status.descricao}

@@ -95,7 +95,11 @@ public class PautaController {
             return error.data("error", "Pauta com id " + id + " não encontrada.");
         }
         
+        //Localiza o primeiro usuário cadastrado para pegar o CPF (teste para votar)
+        User user = userService.findFirstUser();
+        
         return pautaView.data("pauta", pauta)
+        		.data("cpf", user.cpf)
         		.data("voto", VotoEnum.values());
     }
 
