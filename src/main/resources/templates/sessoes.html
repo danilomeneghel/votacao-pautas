@@ -51,8 +51,8 @@
       {sessao.status.descricao}
     </td>
     <td class="fit">
-      <form action="/sessoes/{sessao.id}/delete" method="POST" name="delete-{sessao.id}" up-target=".container">
-        <a class="btn btn-primary btn-sm" href="/sessoes/{sessao.id}/edit" role="button" up-modal=".modalenabled">Editar</a>
+      <form action="/sessoes/delete/{sessao.id}" method="POST" name="delete-{sessao.id}" up-target=".container">
+        <a class="btn btn-primary btn-sm" href="/sessoes/edit/{sessao.id}" role="button" up-modal=".modalenabled">Editar</a>
         <input class="btn btn-danger btn-sm" value="Excluir" type="submit">
       </form>
     </td>

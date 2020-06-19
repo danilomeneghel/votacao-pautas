@@ -86,7 +86,7 @@ public class UserController {
     }
     
     @GET
-    @Path("/{id}")
+    @Path("/view/{id}")
     public TemplateInstance getCpf(@PathParam("id") Long id) {
     	User user = userService.findUser(id);
     	if (user == null) {
@@ -106,7 +106,7 @@ public class UserController {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces(MediaType.TEXT_HTML)
+    @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     @Path("/new")
     public Object addUser(@MultipartForm @Valid User user) {
@@ -125,7 +125,7 @@ public class UserController {
     }
     
     @GET
-    @Path("/{id}/edit")
+    @Path("/edit/{id}")
     public TemplateInstance updateForm(@PathParam("id") long id) {
         User loaded = userService.findUser(id);
         if (loaded == null) {
@@ -138,9 +138,9 @@ public class UserController {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces(MediaType.TEXT_HTML)
+    @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    @Path("/{id}/edit")
+    @Path("/edit/{id}")
     public Object updateUser(@PathParam("id") long id, @MultipartForm @Valid User user) {
     	User loaded = userService.findUser(id);    	
         if (loaded == null) {
@@ -157,8 +157,9 @@ public class UserController {
     }
 
     @POST
+    @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    @Path("/{id}/delete")
+    @Path("/delete/{id}")
     public Response deleteUser(@PathParam("id") long id) {
         User.delete("id", id);
 

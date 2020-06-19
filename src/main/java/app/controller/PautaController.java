@@ -84,11 +84,11 @@ public class PautaController {
             return error.data("error", "Pauta com id " + id + " não encontrada.");
         }
     	
-        return Response.status(Response.Status.OK).build();
+        return pauta;
     }
     
     @GET
-    @Path("/{id}")
+    @Path("/view/{id}")
     public TemplateInstance getId(@PathParam("id") Long id) {
         Pauta pauta = pautaService.findPauta(id);
         if (pauta == null) {
@@ -97,7 +97,7 @@ public class PautaController {
         
         //Localiza o primeiro usuário cadastrado para pegar o CPF (teste para votar)
         User user = userService.findFirstUser();
-        
+                
         return pautaView.data("pauta", pauta)
         		.data("cpf", user.cpf)
         		.data("voto", VotoEnum.values());
@@ -116,7 +116,7 @@ public class PautaController {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces(MediaType.TEXT_HTML)
+    @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     @Path("/new")
     public Object addPauta(@MultipartForm @Valid Pauta pauta) {
@@ -130,7 +130,7 @@ public class PautaController {
     }
     
     @GET
-    @Path("/{id}/edit")
+    @Path("/edit/{id}")
     public TemplateInstance updateForm(@PathParam("id") long id) {
         Pauta loaded = pautaService.findPauta(id);
         if (loaded == null) {
@@ -144,9 +144,9 @@ public class PautaController {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces(MediaType.TEXT_HTML)
+    @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    @Path("/{id}/edit")
+    @Path("/edit/{id}")
     public Object updatePauta(@PathParam("id") long id, @MultipartForm @Valid Pauta pauta) {
     	Pauta loaded = pautaService.findPauta(id);    	
         if (loaded == null) {
@@ -159,8 +159,9 @@ public class PautaController {
     }
 
     @POST
+    @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    @Path("/{id}/delete")
+    @Path("/delete/{id}")
     public Response deletePauta(@PathParam("id") long id) {
         Pauta.delete("id", id);
 

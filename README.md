@@ -23,6 +23,7 @@ Avaliação técnica de um sistema de votação de Pautas, desenvolvido em Java 
 - Quarkus
 - Hibernate
 - Qute
+- JAX-WS
 - OpenAPI
 - Swagger
 - CSS
@@ -63,12 +64,20 @@ http://votacao-pautas.herokuapp.com/ <br>
 
 Projeto licenciado sob <a href="LICENSE">Apache License</a>.
 
-## Melhorias
+## Melhorias a fazer
 
 - Criação da tela de Login
 - Autenticação de usuário
 - Permissões de acesso
 - Pegar o CPF do usuário logado para votar
+
+## Testes
+
+Execute o seguinte comando no terminal: <br>
+
+```
+$ mvn test
+```
 
 
 Desenvolvido por<br>

@@ -28,7 +28,7 @@ public class Sessao extends PanacheEntity {
 
 	@FormParam("duracao")
 	@NotNull(message = "Informe a duração")
-	public Integer duracao;
+	public Integer duracao = 1;
 
 	@Column(name = "data_inicio_sessao")
 	@FormParam("data_inicio_sessao")

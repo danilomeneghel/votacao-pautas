@@ -11,9 +11,7 @@ import javax.ws.rs.FormParam;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import app.enumerator.RoleUserEnum;
 import app.enumerator.StatusUserEnum;
-import app.enumerator.converter.RoleUserEnumConverter;
 import app.enumerator.converter.StatusUserEnumConverter;
 
 import java.util.Date;

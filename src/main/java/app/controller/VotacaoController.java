@@ -42,14 +42,17 @@ public class VotacaoController {
     UserService userService;
 
     @Inject
-    Template error;
+	Template error;
+	
+    @Inject
+    Template success;
     
     @Inject
     Template pautas;
-        
+	
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces(MediaType.TEXT_HTML)
+    @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     @Path("/votar")
     public Object votar(@MultipartForm @Valid Votacao votacao) {
@@ -68,6 +71,7 @@ public class VotacaoController {
 					votacao.iduser = user.id;					
 					votacaoService.insert(votacao);
 					pautaService.updateVoto(votacao.idpauta, votacao.voto.getValor());
+					return success.data("success", "Voto realizado com sucesso!");
 				}
 			} else {
 				return error.data("error", "Usuário não habilitado para votar.");
@@ -75,8 +79,6 @@ public class VotacaoController {
     	} else {
     		return error.data("error", "Sessão não está aberta para votar.");
     	}
-
-		return Response.seeOther(URI.create("/pautas")).build();
     }
     
 }

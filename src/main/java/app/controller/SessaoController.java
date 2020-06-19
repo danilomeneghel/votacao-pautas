@@ -87,7 +87,7 @@ public class SessaoController {
     }
     
     @GET
-    @Path("/{id}")
+    @Path("/view/{id}")
     public TemplateInstance getId(@PathParam("id") Long id) {
         Sessao sessao = sessaoService.findSessao(id);
         if (sessao == null) {
@@ -111,7 +111,7 @@ public class SessaoController {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces(MediaType.TEXT_HTML)
+    @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     @Path("/new")
     public Object addSessao(@MultipartForm @Valid Sessao sessao) {
@@ -129,7 +129,7 @@ public class SessaoController {
     }
     
     @GET
-    @Path("/{id}/edit")
+    @Path("/edit/{id}")
     public TemplateInstance updateForm(@PathParam("id") long id) {
     	List<Pauta> pautas = pautaService.findPautasAtivas();
     	if(pautas.isEmpty()) {
@@ -149,9 +149,9 @@ public class SessaoController {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces(MediaType.TEXT_HTML)
+    @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    @Path("/{id}/edit")
+    @Path("/edit/{id}")
     public Object updateSessao(@PathParam("id") long id, @MultipartForm @Valid Sessao sessao) {
     	Sessao loaded = sessaoService.findSessao(id);    	
         if (loaded == null) {
@@ -164,8 +164,9 @@ public class SessaoController {
     }
 
     @POST
+    @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    @Path("/{id}/delete")
+    @Path("/delete/{id}")
     public Response deleteSessao(@PathParam("id") long id) {
         Sessao.delete("id", id);
 
