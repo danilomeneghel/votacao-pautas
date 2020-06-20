@@ -59,7 +59,7 @@ public class UserController {
         return userService.findAllUsers();
     }
     
-    private List<User> find(String filter) {
+    public List<User> find(String filter) {
         Sort sort = Sort.ascending("name");
 
         if (filter != null && !filter.isEmpty()) {

@@ -63,7 +63,7 @@ public class PautaController {
         return pautaService.findAllPautas();
     }
     
-    private List<Pauta> find(String filter) {
+    public List<Pauta> find(String filter) {
         Sort sort = Sort.ascending("titulo");
 
         if (filter != null && !filter.isEmpty()) {

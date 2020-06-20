@@ -62,7 +62,7 @@ public class SessaoController {
         return sessaoService.findAllSessoes();
     }
     
-    private List<Sessao> find(String filter) {
+    public List<Sessao> find(String filter) {
         Sort sort = Sort.ascending("nome");
 
         if (filter != null && !filter.isEmpty()) {
