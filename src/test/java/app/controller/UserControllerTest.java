@@ -12,15 +12,15 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 
 @QuarkusTestResource(H2DatabaseTestResource.class)
-public class PautaControllerTest {
+public class UserControllerTest {
     
     @Test
     public void testAdd() {
         given()
-            .body("{\"titulo\": \"Pauta Nova\", \"descricao\": \"qweqweweqe\", \"status\": \"ATIVO\"}")
+            .body("{\"name\": \"Carlos\", \"email\": \"carlos@carlos.com\", \"cpf\": \"39828275074\"}")
             .header("Content-Type", MediaType.APPLICATION_JSON)
         .when()
-            .post("/pautas/new")
+            .post("/user/new")
         .then()
             .statusCode(200)
             .body("$.size()", is(1));
@@ -30,50 +30,50 @@ public class PautaControllerTest {
     public void testList() {
         given()
           .when()
-             .get("/pautas/list")
+             .get("/user/list")
           .then()
              .statusCode(200)
              .body("$.size()", is(1),
-                     "titulo", containsInAnyOrder("Pauta Nova"),
-                     "descricao", containsInAnyOrder("qweqweweqe"),
-                     "status", containsInAnyOrder("ATIVO"));
+                     "name", containsInAnyOrder("Carlos"),
+                     "email", containsInAnyOrder("carlos@carlos.com"),
+                     "cpf", containsInAnyOrder("39828275074"));
     }
     
     @Test
     public void testView() {
         given()
           .when()
-             .get("/pautas/view/1")
+             .get("/user/view/1")
           .then()
              .statusCode(200)
              .body("$.size()", is(1),
-                     "titulo", containsInAnyOrder("Pauta Nova"),
-                     "descricao", containsInAnyOrder("qweqweweqe"),
-                     "status", containsInAnyOrder("ATIVO"));
+                    "name", containsInAnyOrder("Carlos"),
+                    "email", containsInAnyOrder("carlos@carlos.com"),
+                    "cpf", containsInAnyOrder("39828275074"));
     }
 
 	@Test
     public void testEdit() {
         given()
-            .body("{\"titulo\": \"Pauta Editada\", \"descricao\": \"qweqweweqe\", \"status\": \"ATIVO\"}")
+            .body("{\"name\": \"Carlos\", \"email\": \"carlos@sssss.com\", \"cpf\": \"39828275074\"}")
             .header("Content-Type", MediaType.APPLICATION_JSON)
         .when()
-            .post("/pautas/edit/1")
+            .post("/user/edit/1")
         .then()
             .statusCode(200)
             .body("$.size()", is(1),
-                    "titulo", containsInAnyOrder("Pauta Editada"),
-                    "descricao", containsInAnyOrder("bmnbnmbbm"),
-                    "status", containsInAnyOrder("ATIVO"));
+                    "name", containsInAnyOrder("Carlos"),
+                    "email", containsInAnyOrder("carlos@sssss.com"),
+                    "cpf", containsInAnyOrder("71179454006"));
 	}
 
 	@Test
     public void testDelete() {
         given()
-            .body("{\"titulo\": \"Pauta Editada\", \"descricao\": \"qweqweweqe\", \"status\": \"ATIVO\"}")
+            .body("{\"name\": \"Carlos\", \"email\": \"carlos@sssss.com\", \"cpf\": \"71179454006\"}")
             .header("Content-Type", MediaType.APPLICATION_JSON)
         .when()
-            .post("/pautas/delete/1")
+            .post("/user/delete/1")
         .then()
             .statusCode(200)
             .body("$.size()", is(1));
