@@ -82,7 +82,7 @@ public class UserController {
     	StatusUserEnum statusCpf = ExternalApi.getStatusCpf(user.cpf);
     	user.status = statusCpf;
     	
-        return Response.ok(user).status(Response.Status.OK).build();
+        return user;
     }
     
     @GET
@@ -122,6 +122,17 @@ public class UserController {
         }
     	
     	return Response.seeOther(URI.create("/users")).build();
+    }
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    @Path("/add")
+    public Object add(User user) {
+    	userService.insert(user);    	
+    	
+    	return user;
     }
     
     @GET

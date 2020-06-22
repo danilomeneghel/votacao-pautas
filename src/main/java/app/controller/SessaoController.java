@@ -78,12 +78,7 @@ public class SessaoController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Object getIdJson(@PathParam("id") Long id) {
-    	Sessao sessao = sessaoService.findSessao(id);
-    	if (sessao == null) {
-            return error.data("error", "Sessao com id " + id + " não encontrada.");
-        }
-    	
-        return Response.status(Response.Status.OK).build();
+    	return sessaoService.findSessao(id);
     }
     
     @GET
@@ -126,6 +121,17 @@ public class SessaoController {
     	}
     	
     	return Response.seeOther(URI.create("/sessoes")).build();
+    }
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    @Path("/add")
+    public Object add(Sessao sessao) {
+    	sessaoService.insert(sessao);    	
+    	
+    	return sessao;
     }
     
     @GET

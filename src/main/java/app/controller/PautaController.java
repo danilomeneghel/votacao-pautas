@@ -79,12 +79,7 @@ public class PautaController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Object getIdJson(@PathParam("id") Long id) {
-    	Pauta pauta = pautaService.findPauta(id);
-    	if (pauta == null) {
-            return error.data("error", "Pauta com id " + id + " não encontrada.");
-        }
-    	
-        return pauta;
+    	return pautaService.findPauta(id);
     }
     
     @GET
@@ -127,6 +122,17 @@ public class PautaController {
     	pautaService.insert(pauta);    	
     	
     	return Response.seeOther(URI.create("/pautas")).build();
+    }
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    @Path("/add")
+    public Object add(Pauta pauta) {
+    	pautaService.insert(pauta);    	
+    	
+    	return pauta;
     }
     
     @GET
