@@ -16,19 +16,28 @@ import java.util.List;
 
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
+
+import app.enumerator.RoleUserEnum;
 import app.enumerator.StatusUserEnum;
 import app.model.User;
 import app.service.UserService;
 import app.util.CpfValidate;
 import app.util.ExternalApi;
+import app.security.TokenService;
 
 @Path("/users")
-@Produces(MediaType.TEXT_HTML)
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class UserController {
 
     @Inject
     UserService userService;
+
+    @Inject
+    TokenService service;
 
     @Inject
     Template error;
@@ -41,12 +50,25 @@ public class UserController {
     
     @Inject
     Template users;
+
+    @Inject
+    Template usersList;
     
     @GET
+    @PermitAll
     @Consumes(MediaType.TEXT_HTML)
     @Produces(MediaType.TEXT_HTML)
-    public TemplateInstance listUsers(@QueryParam("filter") String filter) {
-        return users.data("users", find(filter))
+    public TemplateInstance pautas() {
+        return users.instance();
+    }
+    
+    @GET
+    @Path("/content")
+    @RolesAllowed("ASSOC")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Object listUsers(@QueryParam("filter") String filter) {
+        return usersList.data("users", find(filter))
             .data("filter", filter)
             .data("filtered", filter != null && !filter.isEmpty());
     }
@@ -55,7 +77,7 @@ public class UserController {
     @Path("/list")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<User> listPautasJson() {
+    public List<User> listUsersJson() {
         return userService.findAllUsers();
     }
     
@@ -77,7 +99,7 @@ public class UserController {
     public Object getIdJson(@PathParam("cpf") Long cpf) {
     	User user = userService.findUserCpf(cpf);
     	if (user == null) {
-            return error.data("error", "Usuário com cpf " + cpf + " não encontrado.");
+            return error.data("error", "Usuário com CPF " + cpf + " não encontrado.");
         }
     	StatusUserEnum statusCpf = ExternalApi.getStatusCpf(user.cpf);
     	user.status = statusCpf;
@@ -101,7 +123,7 @@ public class UserController {
     @GET
     @Path("/new")
     public TemplateInstance addForm() {
-        return userForm.instance();
+        return userForm.data("roles", RoleUserEnum.values());
     }
 
     @POST
@@ -112,7 +134,7 @@ public class UserController {
     public Object addUser(@MultipartForm @Valid User user) {
     	User loaded = userService.findUserCpf(user.cpf);
     	if (loaded != null) {
-            return error.data("error", "Usuário com cpf " + user.cpf + " já cadastrado.");
+            return error.data("error", "CPF " + user.cpf + " já cadastrado.");
         } else {
         	boolean validaCpf = CpfValidate.isCPF(user.cpf.toString());
         	if(validaCpf)

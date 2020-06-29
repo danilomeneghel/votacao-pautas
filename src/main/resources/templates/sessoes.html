@@ -2,63 +2,6 @@
 {#title}Sessões{/}
 {#contents}
 <h2>Sessões</h2>
-
-<div class="row">
-  <a class="btn btn-primary btn-sm" href="/sessoes/new" role="button" up-modal=".modalenabled">Adicionar</a>
-  <div class="search-right">
-    <form action="/sessoes" method="GET" name="search" up-target=".container">
-       <input type="text" name="filter" class="form-control" id="filter" placeholder="Localizar por Nome" {#if filtered}value="{filter}"{/if}>
-       <button class="btn btn-primary" type="submit">Ok</button>
-    </form>
-  </div>
-</div>
-
-<table class="table table-striped table-bordered">
-  <thead>
-    <tr>
-      <th scope="col" class="fit">Id</th>
-      <th scope="col" >Nome</th>
-      <th scope="col" class="fit">Id Pauta</th>
-      <th scope="col" class="fit">Data Início Sessão</th>
-      <th scope="col" class="fit">Data Fim Sessão</th>
-      <th scope="col" class="fit">Status</th>
-      <th scope="col" class="fit text-center">Ações</th>
-    </tr>
-  </thead>
-
-  {#if sessoes.size == 0}
-  <tr>
-    <td colspan="7">Nenhum registro cadastrado.</td>
-  </tr>
-  {#else}
-
-  {#for sessao in sessoes}
-  <tr>
-    <th scope="row">#{sessao.id}</th>
-    <td>
-      {sessao.nome}
-    </td>
-    <td>
-      {sessao.idpauta}
-    </td>
-    <td>
-      {sessao.dataInicioSessao}
-    </td>
-    <td>
-      {sessao.dataFimSessao}
-    </td>
-    <td>
-      {sessao.status.descricao}
-    </td>
-    <td class="fit">
-      <form action="/sessoes/delete/{sessao.id}" method="POST" name="delete-{sessao.id}" up-target=".container">
-        <a class="btn btn-primary btn-sm" href="/sessoes/edit/{sessao.id}" role="button" up-modal=".modalenabled">Editar</a>
-        <input class="btn btn-danger btn-sm" value="Excluir" type="submit">
-      </form>
-    </td>
-  </tr>
-  {/for}
-  {/if}
-</table>
+<div id="content"></div>
 {/contents}
 {/include}

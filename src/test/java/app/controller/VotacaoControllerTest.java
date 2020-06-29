@@ -6,9 +6,9 @@ import io.quarkus.test.h2.H2DatabaseTestResource;
 
 import org.junit.jupiter.api.Test;
 
-import javax.ws.rs.core.MediaType;
+//import javax.ws.rs.core.MediaType;
 
-import static io.restassured.RestAssured.given;
+//import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 @QuarkusTestResource(H2DatabaseTestResource.class)

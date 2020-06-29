@@ -4,6 +4,8 @@ import io.quarkus.panache.common.Sort;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -44,12 +46,25 @@ public class SessaoController {
     
     @Inject
     Template sessoes;
-        
+    
+    @Inject
+    Template sessoesList;
+    
     @GET
+    @PermitAll
     @Consumes(MediaType.TEXT_HTML)
     @Produces(MediaType.TEXT_HTML)
-    public TemplateInstance listSessoes(@QueryParam("filter") String filter) {
-        return sessoes.data("sessoes", find(filter))
+    public TemplateInstance sessoes() {
+        return sessoes.instance();
+    }
+    
+    @GET
+    @Path("/content")
+    @RolesAllowed("ASSOC")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Object listSessoes(@QueryParam("filter") String filter) {
+        return sessoesList.data("sessoes", find(filter))
             .data("filter", filter)
             .data("filtered", filter != null && !filter.isEmpty());
     }

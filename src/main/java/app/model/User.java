@@ -7,20 +7,24 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.ws.rs.FormParam;
+import javax.json.bind.annotation.JsonbTransient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import app.enumerator.RoleUserEnum;
 import app.enumerator.StatusUserEnum;
+import app.enumerator.converter.RoleUserEnumConverter;
 import app.enumerator.converter.StatusUserEnumConverter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @RegisterForReflection
 public class User extends PanacheEntity {
 
-	@Size(min = 3, max = 100)
+	@Size(min = 3, max = 60)
 	@FormParam("name")
 	public String name;
 
@@ -31,6 +35,18 @@ public class User extends PanacheEntity {
 	@NotNull(message = "Digite o CPF (somente números)")
 	@FormParam("cpf")
 	public Long cpf;
+
+	@Size(min = 3, max = 60)
+	@FormParam("username")
+	public String username;
+
+	@Size(min = 3, max = 60)
+	@FormParam("password")
+	public String password;
+
+	@Convert(converter = RoleUserEnumConverter.class)
+	@FormParam("role")
+	public RoleUserEnum role;
 
 	@Transient
 	@Convert(converter = StatusUserEnumConverter.class)
@@ -46,5 +62,8 @@ public class User extends PanacheEntity {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "data_alteracao")
     public Date dtUpdated;
-    
+	
+	@JsonbTransient
+    @OneToMany
+    public List<Pauta> pautas;
 }

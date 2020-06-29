@@ -4,12 +4,10 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 import java.util.List;
 
-import static javax.transaction.Transactional.TxType.REQUIRED;
-
 import app.model.User;
 
 @ApplicationScoped
-@Transactional(REQUIRED)
+@Transactional()
 public class UserService {
 	
 	@Transactional()
@@ -25,6 +23,11 @@ public class UserService {
     @Transactional()
     public User findFirstUser() {
     	return User.find("1=1").firstResult();
+    }
+    
+    @Transactional()
+    public User findUsername(String username) {
+    	return User.find("username", username).firstResult();
     }
     
     @Transactional()

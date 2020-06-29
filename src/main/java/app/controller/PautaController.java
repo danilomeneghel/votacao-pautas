@@ -4,6 +4,8 @@ import io.quarkus.panache.common.Sort;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -11,9 +13,13 @@ import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.SecurityContext;
+
 import java.net.URI;
 import java.util.List;
 
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import app.enumerator.StatusPautaEnum;
@@ -46,11 +52,30 @@ public class PautaController {
     @Inject
     Template pautas;
     
+    @Inject
+    Template pautasList;
+    
+    @Context
+    SecurityContext securityContext;
+
+    @Inject
+    JsonWebToken jwt;
+    
     @GET
+    @PermitAll
     @Consumes(MediaType.TEXT_HTML)
     @Produces(MediaType.TEXT_HTML)
-    public TemplateInstance listPautas(@QueryParam("filter") String filter) {
-        return pautas.data("pautas", find(filter))
+    public TemplateInstance pautas() {
+        return pautas.instance();
+    }
+    
+    @GET
+    @Path("/content")
+    @RolesAllowed("ASSOC")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Object listPautas(@QueryParam("filter") String filter) {
+        return pautasList.data("pautas", find(filter))
             .data("filter", filter)
             .data("filtered", filter != null && !filter.isEmpty());
     }
@@ -115,6 +140,8 @@ public class PautaController {
     @Transactional
     @Path("/new")
     public Object addPauta(@MultipartForm @Valid Pauta pauta) {
+        //String username = jwt.getName();
+
     	Pauta loaded = pautaService.findPautaTitulo(pauta.titulo);
     	if (loaded != null) {
             return error.data("error", "Pauta com título '" + pauta.titulo + "' já cadastrada.");

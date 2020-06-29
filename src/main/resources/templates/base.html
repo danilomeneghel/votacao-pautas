@@ -7,7 +7,6 @@
     
     <!-- CSS -->
     <link type="text/css" rel="stylesheet" href="/assets/css/bootstrap.min.css" />
-    <link type="text/css" rel="stylesheet" href="/assets/css/font-awesome.min.css" />
     <link type="text/css" rel="stylesheet" href="/assets/css/unpoly.min.css" />
     <link type="text/css" rel="stylesheet" href="/assets/css/style.css" />
     
@@ -16,18 +15,16 @@
     <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/assets/js/unpoly.min.js"></script>
 
+	<script type="text/javascript">
+		$(document).ready(function() {
+			if(localStorage.getItem("token") == null) {
+				location.replace("/auth/login");
+				return false;
+			}
+		});
+	</script>
+	
     <title>{#insert title}Votação de Pautas{/}</title>
-
-    <style>
-      .table td.fit, .table th.fit {
-        white-space: nowrap;
-        width: 1%;
-      }
-
-      .completed {
-        text-decoration: line-through;
-      }
-    </style>
   </head>
 <body>
 	<div>
@@ -38,9 +35,10 @@
 					<!-- Collapsed Hamburger -->
 					<button type="button" class="navbar-toggle collapsed"
 						data-toggle="collapse" data-target="#app-navbar-collapse">
-						<span class="sr-only">Toggle Navigation</span> <span
-							class="icon-bar"></span> <span class="icon-bar"></span> <span
-							class="icon-bar"></span>
+						<span class="sr-only">Toggle Navigation</span> 
+						<span class="icon-bar"></span> 
+						<span class="icon-bar"></span> 
+						<span class="icon-bar"></span>
 					</button>
 
 					<!-- Branding Image -->
@@ -62,7 +60,7 @@
 							<a href="#" class="dropdown-toggle"
 								data-toggle="dropdown" role="button" aria-expanded="false">
 								<img src="/assets/images/avatar-placeholder.svg" alt="" width="30" class="img-circle">
-								User <span class="caret"></span>
+								<span class="username"></span><span class="caret"></span>
 							</a>
 	
 							<ul class="dropdown-menu" role="menu">
@@ -79,4 +77,30 @@
       {#insert contents}{/}
     </div>
 </body>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	if(localStorage.getItem("token") != null) {
+		$(".username").text(localStorage.getItem("username"));
+		if(location.pathname != "/") {
+			$.ajax({
+				url: location.href+"/content/",
+				type: "GET",
+				contentType: "application/json",
+				headers: {
+					"Authorization": "Bearer "+localStorage.getItem("token")
+				},
+				success: function(result) { 
+					$("#content").html(result);
+				},
+				error: function() { 
+					$("#content").text("Erro ao carregar ou você não possui autorização para visualizar.");
+				}
+			});
+		}
+	} else {
+      $("#content").html("Você não possui autorização para visualizar.");
+    }
+});
+</script>
 </html>

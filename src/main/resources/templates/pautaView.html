@@ -10,8 +10,8 @@
             {pauta.descricao}
         </div>
         <form action="/votacao/votar" method="POST" name="votacaoForm" up-target=".container" enctype="multipart/form-data">
-	      	<input type="hidden" name="idpauta" value="{pauta.id}">
-	      	<input type="hidden" name="cpf" value="{cpf}"> <!-- Primeiro CPF para testar a votação -->
+	      	<input type="hidden" name="idpauta" id="idpauta" value="{pauta.id}">
+	      	<input type="hidden" name="cpf" id="cpf" value="">
 	        <div class="form-group">Voto<br>
 	        {#for vt in voto}
                	<input type="radio" name="voto" value="{vt}">{vt.descricao} 
@@ -22,5 +22,12 @@
       </div>
   </div>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	if(localStorage.getItem("cpf") != null) 
+		$("#cpf").prev('input').val(localStorage.getItem("cpf"));
+});
+</script>
 {/contents}
 {/include}

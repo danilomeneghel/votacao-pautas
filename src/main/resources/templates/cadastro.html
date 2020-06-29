@@ -1,0 +1,43 @@
+{#include baseLogin.html}
+{#title}Cadastro{/}
+{#contents}
+<div class="bg-login">
+    <div class="container-cadastro">
+        <div class="panel panel-default">
+            <div class="panel-body box-login">
+                <h2>{#if update}Editar Perfil #{user.id}{#else}Cadastro{/if}</h2>
+                {#if error != null}<div class="alert alert-danger" role="alert">{error}</div>{/if}
+                <div class="panel panel-default">
+                    <form action="/auth/{#if update}edit/{user.id}{#else}cadastrar{/if}" method="POST" name="userForm" enctype="multipart/form-data">
+                    <div class="form-panel">
+                        <div class="form-group">
+                            <label class="sr-only" for="name">Nome</label>
+                            <input type="text" name="name" class="form-control" id="name" placeholder="Nome" required autofocus {#if update}value="{user.name}"{/if}>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="cpf">CPF</label>
+                            <input type="number" name="cpf" class="form-control" id="cpf" placeholder="CPF" required autofocus {#if update}value="{user.cpf}"{/if}>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="email">E-mail</label>
+                            <input type="text" name="email" class="form-control" id="email" placeholder="E-mail" required autofocus {#if update}value="{user.email}"{/if}>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="username">Usuário</label>
+                            <input type="text" name="username" class="form-control" id="username" placeholder="Usuário" required autofocus {#if update}value="{user.username}"{/if}>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="password">Senha</label>
+                            <input type="password" name="password" class="form-control" id="password" placeholder="Senha" required autofocus value="">
+                        </div>
+                        <a class="btn btn-default" href="#" onclick="history.go(-1);" role="button" up-target=".container">Voltar</a>
+                        <button type="submit" class="btn btn-primary">{#if update}Editar{#else}Cadastrar{/if}</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/contents}
+{/include}

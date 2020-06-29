@@ -53,4 +53,7 @@ public class Pauta extends PanacheEntity {
 	@OneToOne(mappedBy = "pauta", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public Sessao sessao;
 
+	@ManyToOne
+    @JoinColumn(name = "iduser")
+    public User user;
 }
