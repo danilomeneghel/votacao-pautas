@@ -47,9 +47,9 @@
     </td>
     <td class="fit">
       <form action="/pautas/delete/{pauta.id}" method="POST" name="delete-{pauta.id}" up-target=".container">
-        <a class="btn btn-default btn-sm" href="/pautas/view/{pauta.id}" role="button" up-modal=".modalenabled">Votar</a>
+        <a class="btn btn-default btn-sm" href="/pautas/view/{pauta.id}/{cpf}" role="button" up-modal=".modalenabled">Votar</a>
         <a class="btn btn-primary btn-sm" href="/pautas/edit/{pauta.id}" role="button" up-modal=".modalenabled">Editar</a>
-        <input class="btn btn-danger btn-sm" value="Excluir" type="submit">
+        <button type="submit" onClick="location.href='/pautas'" class="btn btn-danger btn-sm">Excluir</button>
       </form>
     </td>
   </tr>

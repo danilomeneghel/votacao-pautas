@@ -48,7 +48,7 @@
     <td class="fit">
       <form action="/sessoes/delete/{sessao.id}" method="POST" name="delete-{sessao.id}" up-target=".container">
         <a class="btn btn-primary btn-sm" href="/sessoes/edit/{sessao.id}" role="button" up-modal=".modalenabled">Editar</a>
-        <input class="btn btn-danger btn-sm" value="Excluir" type="submit">
+        <button type="submit" onClick="location.href='/sessoes'" class="btn btn-danger btn-sm">Excluir</button>
       </form>
     </td>
   </tr>

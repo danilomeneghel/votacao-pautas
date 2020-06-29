@@ -45,7 +45,7 @@
       <form action="/users/delete/{user.id}" method="POST" name="delete-{user.id}" up-target=".container">
       	<a class="btn btn-default btn-sm" href="/users/view/{user.id}" role="button" up-modal=".modalenabled">Visualizar</a>
         <a class="btn btn-primary btn-sm" href="/users/edit/{user.id}" role="button" up-modal=".modalenabled">Editar</a>
-        <input class="btn btn-danger btn-sm" value="Excluir" type="submit">
+        <button type="submit" onClick="location.href='/users'" class="btn btn-danger btn-sm">Excluir</button>
       </form>
     </td>
   </tr>

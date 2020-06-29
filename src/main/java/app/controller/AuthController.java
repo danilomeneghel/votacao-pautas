@@ -1,7 +1,5 @@
 package app.controller;
 
-import java.security.Principal;
-
 import javax.annotation.security.PermitAll;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -12,10 +10,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.SecurityContext;
 
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import io.quarkus.qute.Template;
@@ -46,10 +43,11 @@ public class AuthController {
     @Inject
     Template login;
     
-    @Context
-    SecurityContext securityContext;
-    
+    @Inject
+    JsonWebToken jwt;
+        
     @GET
+    @PermitAll
     @Path("/cadastro")
     public TemplateInstance cadastroForm() {
         return cadastro.instance();
@@ -103,11 +101,14 @@ public class AuthController {
     }
 
     @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/user")
     public Object userLogged() {
-        Principal caller =  securityContext.getUserPrincipal(); 
-        String username = caller == null ? "anonymous" : caller.getName();
+        Login log = new Login();
+        log.username = jwt.getName();
+        log.token = jwt.getRawToken();
 
-        return username;
+        return log;
     }
 }

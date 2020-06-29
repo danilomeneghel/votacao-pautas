@@ -17,6 +17,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.SecurityContext;
 
 import java.net.URI;
+import java.security.Principal;
 import java.util.List;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
@@ -75,7 +76,12 @@ public class PautaController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Object listPautas(@QueryParam("filter") String filter) {
+        Principal caller =  securityContext.getUserPrincipal(); 
+        String username = caller == null ? "anonymous" : caller.getName();
+        User user = userService.findUsername(username);
+
         return pautasList.data("pautas", find(filter))
+            .data("cpf", user.cpf)
             .data("filter", filter)
             .data("filtered", filter != null && !filter.isEmpty());
     }
@@ -108,18 +114,15 @@ public class PautaController {
     }
     
     @GET
-    @Path("/view/{id}")
-    public TemplateInstance getId(@PathParam("id") Long id) {
+    @Path("/view/{id}/{cpf}")
+    public TemplateInstance getId(@PathParam("id") Long id, @PathParam("cpf") Long cpf) {
         Pauta pauta = pautaService.findPauta(id);
         if (pauta == null) {
             return error.data("error", "Pauta com id " + id + " não encontrada.");
         }
         
-        //Localiza o primeiro usuário cadastrado para pegar o CPF (teste para votar)
-        User user = userService.findFirstUser();
-                
         return pautaView.data("pauta", pauta)
-        		.data("cpf", user.cpf)
+                .data("cpf", cpf)
         		.data("voto", VotoEnum.values());
     }
 
@@ -140,8 +143,6 @@ public class PautaController {
     @Transactional
     @Path("/new")
     public Object addPauta(@MultipartForm @Valid Pauta pauta) {
-        //String username = jwt.getName();
-
     	Pauta loaded = pautaService.findPautaTitulo(pauta.titulo);
     	if (loaded != null) {
             return error.data("error", "Pauta com título '" + pauta.titulo + "' já cadastrada.");
