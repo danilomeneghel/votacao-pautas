@@ -1,0 +1,1 @@
+INSERT INTO "user" ('name', 'email', 'cpf', 'username', 'password', 'role', 'data_criacao', 'data_alteracao') VALUES ('Administrador', 'admin@admin.com', 24405779015, 'admin', '$2a$12$ugS3CQsngLNVwIWvcCaXO.AeIXJ6tUF9xeslg6wzuHy2ekpr8D0zG', 'ADMIN', '2020-06-30T06:26:54.959Z[UTC]', '2020-06-30T06:26:54.959Z[UTC]');

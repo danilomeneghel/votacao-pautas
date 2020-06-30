@@ -16,6 +16,7 @@ import app.enumerator.converter.StatusSessaoEnumConverter;
 import java.util.Date;
 
 @Entity
+@Table(name = "sessao")
 @RegisterForReflection
 public class Sessao extends PanacheEntity {
 

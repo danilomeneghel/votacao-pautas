@@ -17,8 +17,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.SecurityContext;
 
 import java.net.URI;
-import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
@@ -71,25 +71,28 @@ public class PautaController {
     }
     
     @GET
-    @Path("/content")
-    @RolesAllowed("ASSOC")
+    @RolesAllowed({"ADMIN", "ASSOC"})
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("/content")
     public Object listPautas(@QueryParam("filter") String filter) {
-        Principal caller =  securityContext.getUserPrincipal(); 
-        String username = caller == null ? "anonymous" : caller.getName();
+        String username = jwt.getName();
+        Set<String> groups = jwt.getGroups();
+        String role = String.join(", ", groups);
+        
         User user = userService.findUsername(username);
 
         return pautasList.data("pautas", find(filter))
+            .data("role", role)
             .data("cpf", user.cpf)
             .data("filter", filter)
             .data("filtered", filter != null && !filter.isEmpty());
     }
 
     @GET
-    @Path("/list")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("/list")
     public List<Pauta> listPautasJson() {
         return pautaService.findAllPautas();
     }
@@ -106,9 +109,9 @@ public class PautaController {
     }
 
     @GET
-    @Path("/id/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("/id/{id}")
     public Object getIdJson(@PathParam("id") Long id) {
     	return pautaService.findPauta(id);
     }

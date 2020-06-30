@@ -16,7 +16,7 @@ import io.quarkus.panache.common.Parameters;
 public class VotacaoService {
 	
 	@Transactional()
-    public List<Votacao> findAllVotacaos() {
+    public List<Votacao> findAllVotacoes() {
         return Votacao.listAll();
     }
 

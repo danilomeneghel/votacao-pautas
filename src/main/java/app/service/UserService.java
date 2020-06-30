@@ -4,6 +4,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 import java.util.List;
 
+import app.enumerator.RoleUserEnum;
 import app.model.User;
 
 @ApplicationScoped
@@ -42,8 +43,11 @@ public class UserService {
 
     public User update(User loaded, User user) {
     	loaded.name = user.name;
-    	loaded.email = user.email;
     	loaded.cpf = user.cpf;
+    	loaded.email = user.email;
+    	loaded.username = user.username;
+    	loaded.password = user.password;
+    	loaded.role = (user.role == null) ? RoleUserEnum.ASSOC : user.role;
     	loaded.persist();
         return loaded;
     }

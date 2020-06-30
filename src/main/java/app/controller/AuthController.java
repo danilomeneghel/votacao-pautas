@@ -1,5 +1,7 @@
 package app.controller;
 
+import java.util.Set;
+
 import javax.annotation.security.PermitAll;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -14,6 +16,8 @@ import javax.ws.rs.core.MediaType;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
+
+import at.favre.lib.crypto.bcrypt.BCrypt;
 
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
@@ -45,7 +49,7 @@ public class AuthController {
     
     @Inject
     JsonWebToken jwt;
-        
+    
     @GET
     @PermitAll
     @Path("/cadastro")
@@ -66,6 +70,7 @@ public class AuthController {
         } else {
         	boolean validaCpf = CpfValidate.isCPF(user.cpf.toString());
         	if(validaCpf) {
+                user.password = BCrypt.withDefaults().hashToString(12, user.password.toCharArray());
                 user.role = RoleUserEnum.ASSOC;
                 userService.insert(user);
                 return login.data("success", "Cadastro realizado com sucesso!");
@@ -90,13 +95,19 @@ public class AuthController {
     @Path("/logar")
     public Object logar(Login log) {
         User user = userService.findUsername(log.username);
-        if(user == null || !user.password.equals(log.password)) {
-            return false;
+        if(user != null) {
+            BCrypt.Result result = BCrypt.verifyer().verify(log.password.toCharArray(), user.password);
+
+            if(result.verified) {
+                String token = service.generateUserToken(user.email, log.username, user.role.toString());
+                log.token = token;
+                log.cpf = user.cpf.toString();
+                return log;
+            } else {
+                return false;
+            }
         } else {
-            String token = service.generateUserToken(user.email, log.username, user.role.toString());
-            log.token = token;
-            log.cpf = user.cpf.toString();
-            return log;
+            return false;
         }
     }
 
@@ -107,8 +118,10 @@ public class AuthController {
     public Object userLogged() {
         Login log = new Login();
         log.username = jwt.getName();
-        log.token = jwt.getRawToken();
+        Set<String> groups = jwt.getGroups();
+        log.role = String.join(", ", groups);
 
         return log;
     }
+    
 }

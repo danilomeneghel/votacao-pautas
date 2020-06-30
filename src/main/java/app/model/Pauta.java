@@ -17,6 +17,7 @@ import app.enumerator.converter.StatusPautaEnumConverter;
 import java.util.Date;
 
 @Entity
+@Table(name = "pauta")
 @RegisterForReflection
 public class Pauta extends PanacheEntity {
 

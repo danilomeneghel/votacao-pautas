@@ -15,6 +15,7 @@
       <th scope="col" >Nome</th>
       <th scope="col" class="fit">E-mail</th>
       <th scope="col" class="fit">CPF</th>
+      <th scope="col" class="fit">Senha</th>
       <th scope="col" class="fit">Data Criação</th>
       <th scope="col" class="fit text-center">Açőes</th>
     </tr>
@@ -22,7 +23,7 @@
 
   {#if users.size == 0}
   <tr>
-    <td colspan="6">Nenhum registro cadastrado.</td>
+    <td colspan="7">Nenhum registro cadastrado.</td>
   </tr>
   {#else}
 
@@ -37,6 +38,9 @@
     </td>
     <td>
       {user.cpf}
+    </td>
+    <td>
+      {user.password}
     </td>
     <td>
       {user.dtCreated}

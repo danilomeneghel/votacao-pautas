@@ -64,8 +64,8 @@
 							</a>
 	
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="#">Perfil</a></li>
-								<li><a href="#">Sair</a></li>
+								<li><a href="/users/perfil">Perfil</a></li>
+								<li><a href="#" onClick="sair()">Sair</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -102,5 +102,12 @@ $(document).ready(function() {
       $("#content").html("Você não possui autorização para visualizar.");
     }
 });
+
+function sair() {
+	localStorage.removeItem("token");
+	localStorage.removeItem("username");
+	localStorage.removeItem("cpf");
+	location.reload("/auth/login");
+}
 </script>
 </html>

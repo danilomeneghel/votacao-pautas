@@ -15,7 +15,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
 
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import app.enumerator.StatusSessaoEnum;
@@ -50,6 +52,9 @@ public class SessaoController {
     @Inject
     Template sessoesList;
     
+    @Inject
+    JsonWebToken jwt;
+    
     @GET
     @PermitAll
     @Consumes(MediaType.TEXT_HTML)
@@ -59,20 +64,24 @@ public class SessaoController {
     }
     
     @GET
-    @Path("/content")
-    @RolesAllowed("ASSOC")
+    @RolesAllowed({"ADMIN", "ASSOC"})
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("/content")
     public Object listSessoes(@QueryParam("filter") String filter) {
+        Set<String> groups = jwt.getGroups();
+        String role = String.join(", ", groups);
+        
         return sessoesList.data("sessoes", find(filter))
+            .data("role", role)
             .data("filter", filter)
             .data("filtered", filter != null && !filter.isEmpty());
     }
 
     @GET
-    @Path("/list")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("/list")
     public List<Sessao> listSessoesJson() {
         return sessaoService.findAllSessoes();
     }
@@ -89,9 +98,9 @@ public class SessaoController {
     }
 
     @GET
-    @Path("/id/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("/id/{id}")
     public Object getIdJson(@PathParam("id") Long id) {
     	return sessaoService.findSessao(id);
     }

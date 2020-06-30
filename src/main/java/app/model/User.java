@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Table(name = "user")
 @RegisterForReflection
 public class User extends PanacheEntity {
 

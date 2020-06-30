@@ -11,13 +11,16 @@ import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
+
 import java.net.URI;
 import java.util.List;
 
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
+import at.favre.lib.crypto.bcrypt.BCrypt;
 
 import app.enumerator.RoleUserEnum;
 import app.enumerator.StatusUserEnum;
@@ -54,19 +57,28 @@ public class UserController {
     @Inject
     Template usersList;
     
+    @Inject
+    Template perfil;
+    
+    @Inject
+    Template perfilForm;
+    
+    @Inject
+    JsonWebToken jwt;
+    
     @GET
     @PermitAll
     @Consumes(MediaType.TEXT_HTML)
     @Produces(MediaType.TEXT_HTML)
-    public TemplateInstance pautas() {
+    public TemplateInstance users() {
         return users.instance();
     }
     
     @GET
-    @Path("/content")
-    @RolesAllowed("ASSOC")
+    @RolesAllowed("ADMIN")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("/content")
     public Object listUsers(@QueryParam("filter") String filter) {
         return usersList.data("users", find(filter))
             .data("filter", filter)
@@ -74,9 +86,9 @@ public class UserController {
     }
 
     @GET
-    @Path("/list")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("/list")
     public List<User> listUsersJson() {
         return userService.findAllUsers();
     }
@@ -93,10 +105,10 @@ public class UserController {
     }
 
     @GET
-    @Path("/cpf/{cpf}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Object getIdJson(@PathParam("cpf") Long cpf) {
+    @Path("/cpf/{cpf}")
+    public Object getCpfJson(@PathParam("cpf") Long cpf) {
     	User user = userService.findUserCpf(cpf);
     	if (user == null) {
             return error.data("error", "Usuário com CPF " + cpf + " não encontrado.");
@@ -109,7 +121,7 @@ public class UserController {
     
     @GET
     @Path("/view/{id}")
-    public TemplateInstance getCpf(@PathParam("id") Long id) {
+    public TemplateInstance getId(@PathParam("id") Long id) {
     	User user = userService.findUser(id);
     	if (user == null) {
             return error.data("error", "Usuário com id " + id + " não encontrado.");
@@ -119,7 +131,7 @@ public class UserController {
     	
     	return userView.data("user", user);
     }
-
+   
     @GET
     @Path("/new")
     public TemplateInstance addForm() {
@@ -136,6 +148,7 @@ public class UserController {
     	if (loaded != null) {
             return error.data("error", "CPF " + user.cpf + " já cadastrado.");
         } else {
+            user.password = BCrypt.withDefaults().hashToString(12, user.password.toCharArray());
         	boolean validaCpf = CpfValidate.isCPF(user.cpf.toString());
         	if(validaCpf)
         		userService.insert(user);
@@ -152,11 +165,51 @@ public class UserController {
     @Transactional
     @Path("/add")
     public Object add(User user) {
+        user.password = BCrypt.withDefaults().hashToString(12, user.password.toCharArray());
     	userService.insert(user);    	
     	
     	return user;
     }
     
+    @GET
+    @Path("/perfil")
+    public TemplateInstance perfil() {
+        return perfil.instance();
+    }
+    
+    @GET
+    @RolesAllowed({"ADMIN", "ASSOC"})
+    @Path("/perfil/content")
+    public Object perfilForm() {
+        String username = jwt.getName();
+
+        User loaded = userService.findUsername(username);
+        if (loaded == null) {
+            return perfilForm.data("error", "Usuário não encontrado.");
+        }
+		
+        return perfilForm.data("user", loaded)
+            .data("error", null);
+    }
+    
+    @POST
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    @Path("/perfil/edit/")
+    public Object updatePerfil(@MultipartForm @Valid User user) {
+        User loaded = userService.findUsername(user.username);
+
+        if (loaded == null) {
+            return perfil.data("error", "Usuário não encontrado.");
+        } else {
+            user.password = BCrypt.withDefaults().hashToString(12, user.password.toCharArray());
+            userService.update(loaded, user);
+            return perfil.data("success", "Perfil atualizado com sucesso!")
+                .data("error", null);
+        }
+    }
+
     @GET
     @Path("/edit/{id}")
     public TemplateInstance updateForm(@PathParam("id") long id) {
@@ -166,6 +219,7 @@ public class UserController {
         }
 		
         return userForm.data("user", loaded)
+            .data("roles", RoleUserEnum.values())
             .data("update", true);
     }
 
@@ -179,6 +233,7 @@ public class UserController {
         if (loaded == null) {
             return error.data("error", "Usuário com id " + id + " não encontrado.");
         } else {
+            user.password = BCrypt.withDefaults().hashToString(12, user.password.toCharArray());
         	boolean validaCpf = CpfValidate.isCPF(user.cpf.toString());
         	if(validaCpf)
         		userService.update(loaded, user);

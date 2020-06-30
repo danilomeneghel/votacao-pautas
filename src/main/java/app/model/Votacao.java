@@ -15,6 +15,7 @@ import app.enumerator.converter.VotoEnumConverter;
 import java.util.Date;
 
 @Entity
+@Table(name = "votacao")
 @RegisterForReflection
 public class Votacao extends PanacheEntity {
 

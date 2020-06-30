@@ -2,6 +2,8 @@ package app.controller;
 
 import io.quarkus.qute.Template;
 
+import java.util.List;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -12,7 +14,6 @@ import javax.ws.rs.core.MediaType;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import app.model.Votacao;
-import app.enumerator.StatusUserEnum;
 import app.model.Sessao;
 import app.model.User;
 
@@ -20,6 +21,8 @@ import app.service.VotacaoService;
 import app.service.PautaService;
 import app.service.SessaoService;
 import app.service.UserService;
+
+import app.enumerator.StatusUserEnum;
 import app.util.ExternalApi;
 
 @Path("/votacao")
@@ -48,6 +51,14 @@ public class VotacaoController {
     @Inject
     Template pautas;
 	
+	@GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/list")
+    public List<Votacao> listVotacoesJson() {
+        return votacaoService.findAllVotacoes();
+    }
+    
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
