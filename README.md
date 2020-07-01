@@ -6,8 +6,11 @@ Avaliação técnica de um sistema de votação de Pautas, desenvolvido em Java 
 
 - CRUD
 - API RESTful
+- ACL
 - Validation
 - Filter
+- Login
+- JWT
 - Responsive
 - JUnit
 
@@ -64,22 +67,16 @@ http://votacao-pautas.herokuapp.com/ <br>
 
 Projeto licenciado sob <a href="LICENSE">Apache License</a>.
 
-## Melhorias a fazer
-
-- Criação da tela de Login
-- Autenticação de usuário
-- Permissões de acesso
-- Pegar o CPF do usuário logado para votar
-
 ## Testes
 
-Execute o seguinte comando no terminal: <br>
+Para testar, execute o seguinte comando no terminal: <br>
 
 ```
 $ mvn test
 ```
 
-
+<br>
+<br>
 Desenvolvido por<br>
 Danilo Meneghel<br>
 danilo.meneghel@gmail.com<br>
