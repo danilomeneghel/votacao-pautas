@@ -16,6 +16,7 @@ import javax.annotation.security.RolesAllowed;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
@@ -80,7 +81,11 @@ public class UserController {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/content")
     public Object listUsers(@QueryParam("filter") String filter) {
+        Set<String> groups = jwt.getGroups();
+        String role = String.join(", ", groups);
+
         return usersList.data("users", find(filter))
+            .data("role", role)
             .data("filter", filter)
             .data("filtered", filter != null && !filter.isEmpty());
     }

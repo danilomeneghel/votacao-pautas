@@ -81,10 +81,11 @@ public class PautaController {
         String role = String.join(", ", groups);
         
         User user = userService.findUsername(username);
+        Long cpf = (user != null) ? user.cpf : 0;
 
         return pautasList.data("pautas", find(filter))
             .data("role", role)
-            .data("cpf", user.cpf)
+            .data("cpf", cpf)
             .data("filter", filter)
             .data("filtered", filter != null && !filter.isEmpty());
     }

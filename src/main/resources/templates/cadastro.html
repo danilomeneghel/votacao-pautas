@@ -5,7 +5,7 @@
     <div class="container-cadastro">
         <div class="panel panel-default">
             <div class="panel-body box-login">
-                <h2>{#if update}Editar Perfil #{user.id}{#else}Cadastro{/if}</h2>
+                <h2 class="title-login">Cadastro</h2>
                 {#if error != null}<div class="alert alert-danger" role="alert">{error}</div>{/if}
                 <div class="panel panel-default">
                     <form action="/auth/{#if update}edit/{user.id}{#else}cadastrar{/if}" method="POST" name="userForm" enctype="multipart/form-data">
@@ -31,7 +31,7 @@
                             <input type="password" name="password" class="form-control" id="password" placeholder="Senha" required autofocus value="">
                         </div>
                         <a class="btn btn-default" href="#" onclick="history.go(-1);" role="button" up-target=".container">Voltar</a>
-                        <button type="submit" class="btn btn-primary">{#if update}Editar{#else}Cadastrar{/if}</button>
+                        <button type="submit" class="btn btn-primary">Cadastrar</button>
                     </div>
                     </form>
                 </div>

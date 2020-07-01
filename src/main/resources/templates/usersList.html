@@ -1,5 +1,5 @@
 <div class="row">
-  <a class="btn btn-primary btn-sm" href="/users/new" role="button" up-modal=".modalenabled">Adicionar</a>
+  {#if role == 'ADMIN'}<a class="btn btn-primary btn-sm" href="/users/new" role="button" up-modal=".modalenabled">Adicionar</a>{/if}
   <div class="search-right">
     <form action="/users" method="GET" name="search" up-target=".container">
        <input type="text" name="filter" class="form-control" id="filter" placeholder="Localizar por Nome" {#if filtered}value="{filter}"{/if}>
@@ -15,7 +15,6 @@
       <th scope="col" >Nome</th>
       <th scope="col" class="fit">E-mail</th>
       <th scope="col" class="fit">CPF</th>
-      <th scope="col" class="fit">Senha</th>
       <th scope="col" class="fit">Data Criação</th>
       <th scope="col" class="fit text-center">Açőes</th>
     </tr>
@@ -23,7 +22,7 @@
 
   {#if users.size == 0}
   <tr>
-    <td colspan="7">Nenhum registro cadastrado.</td>
+    <td colspan="6">Nenhum registro cadastrado.</td>
   </tr>
   {#else}
 
@@ -40,16 +39,13 @@
       {user.cpf}
     </td>
     <td>
-      {user.password}
-    </td>
-    <td>
       {user.dtCreated}
     </td>
     <td class="fit">
       <form action="/users/delete/{user.id}" method="POST" name="delete-{user.id}" up-target=".container">
       	<a class="btn btn-default btn-sm" href="/users/view/{user.id}" role="button" up-modal=".modalenabled">Visualizar</a>
-        <a class="btn btn-primary btn-sm" href="/users/edit/{user.id}" role="button" up-modal=".modalenabled">Editar</a>
-        <button type="submit" onClick="location.href='/users'" class="btn btn-danger btn-sm">Excluir</button>
+        {#if role == 'ADMIN'}<a class="btn btn-primary btn-sm" href="/users/edit/{user.id}" role="button" up-modal=".modalenabled">Editar</a>
+        <button type="submit" onClick="location.href='/users'" class="btn btn-danger btn-sm">Excluir</button>{/if}
       </form>
     </td>
   </tr>

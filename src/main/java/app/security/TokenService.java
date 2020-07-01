@@ -17,14 +17,14 @@ public class TokenService {
         return generateToken(email, username, role);
     }
 
-    public String generateToken(String subject, String name, String... roles) {
+    public String generateToken(String subject, String username, String... roles) {
         try {
             JwtClaims jwtClaims = new JwtClaims();
             jwtClaims.setIssuer("JWT"); 
             jwtClaims.setJwtId(UUID.randomUUID().toString());
             jwtClaims.setSubject(subject);
-            jwtClaims.setClaim(Claims.upn.name(), subject);
-            jwtClaims.setClaim(Claims.preferred_username.name(), name); 
+            jwtClaims.setClaim(Claims.upn.name(), username);
+            jwtClaims.setClaim(Claims.preferred_username.name(), username); 
             jwtClaims.setClaim(Claims.groups.name(), Arrays.asList(roles));
             jwtClaims.setAudience("using-jwt");
             jwtClaims.setExpirationTimeMinutesInTheFuture(60); 

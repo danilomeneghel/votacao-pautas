@@ -31,7 +31,7 @@ h3, .h3 {
 
 .bg-login {
     background-color: #e4e4e4;
-    height: 1750px !important;
+    min-height: 816px !important;
 }
 .bg-login .container-login {
     max-width: 350px;
@@ -83,13 +83,13 @@ h3, .h3 {
 
 /*input {
     border-radius: 30px 30px 30px 30px !important;
-}
+}*/
 input:focus {
-    box-shadow: 1px 1px 5px #f7c551 !important;
-    border: 1px solid #ECA80B !important;
+    box-shadow: 1px 1px 5px #54AA358F !important;
+    border: 1px solid #0f7307 !important;
 }
 
-select {
+/*select {
 	border-radius: 30px 30px 30px 30px !important;
 }*/
 
@@ -153,11 +153,11 @@ fieldset {
 }
 
 .btn-login {
-    background-color: #ECA80B !important;
+    background-color: #299338 !important;
 	color: #fff !important;
-	border: 1px solid #FDB713 !important;
+	border: 1px solid #0f7307 !important;
 	/*border-radius: 30px 30px 30px 30px !important;*/
-	box-shadow: 1px 3px 5px 0px rgba(181, 138, 57, 0.5);
+	box-shadow: 1px 3px 5px 0px #54AA358F;
 }
 .btn-logout {
     background-color: #ECA80B !important;
@@ -175,17 +175,17 @@ fieldset {
 }
 .btn-default {
     background-color: #fff !important;
-    color: #2e6da4 !important;
-    border: 1px solid #2e6da4 !important;
+    color: #299338 !important;
+    border: 1px solid #0f7307 !important;
     /*border-radius: 30px 30px 30px 30px !important;*/
     box-shadow: 1px 3px 5px 0px rgb(44,108,160,0.5);
 }
 .btn-primary {
-    background-color: #337ab7;
-    color: #fff;
-    border: 1px solid #2e6da4 !important;
-    /*border-radius: 30px 30px 30px 30px !important;*/
-    box-shadow: 1px 3px 5px 0px rgb(44,108,160,0.5);
+    background-color: #299338 !important;
+	color: #fff !important;
+	border: 1px solid #0f7307 !important;
+	/*border-radius: 30px 30px 30px 30px !important;*/
+	box-shadow: 1px 3px 5px 0px #54AA358F;
 }
 .btn-danger {
     background-color: #d9534f;

@@ -1,5 +1,5 @@
 <div class="row">
-  <a class="btn btn-primary btn-sm" href="/pautas/new" role="button" up-modal=".modalenabled">Adicionar</a>
+  {#if role == 'ADMIN'}<a class="btn btn-primary btn-sm" href="/pautas/new" role="button" up-modal=".modalenabled">Adicionar</a>{/if}
   <div class="search-right">
     <form action="/pautas" method="GET" name="search" up-target=".container">
        <input type="text" name="filter" class="form-control" id="filter" placeholder="Localizar por Titulo" {#if filtered}value="{filter}"{/if}>

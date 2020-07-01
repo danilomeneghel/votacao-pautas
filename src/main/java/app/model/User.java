@@ -1,6 +1,6 @@
 package app.model;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
 import javax.persistence.*;
@@ -23,8 +23,12 @@ import java.util.List;
 @Entity
 @Table(name = "user")
 @RegisterForReflection
-public class User extends PanacheEntity {
+public class User  extends PanacheEntityBase {
 
+	@Id 
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	public Long id;
+	
 	@Size(min = 3, max = 60)
 	@FormParam("name")
 	public String name;
