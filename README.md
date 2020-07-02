@@ -53,6 +53,22 @@ Após concluído, abra o seu navegador o seguinte endereço: <br>
 
 http://localhost:8080/
 
+## JWT
+
+Para gerar novas chaves privada e pública, execute o seguinte comando: 
+
+- Chave Privada:
+```
+openssl req -newkey rsa:2048 -new -nodes -keyout privatekey.pem -out csr.pem
+```
+
+- Chave Pública:
+```
+openssl rsa -in privatekey.pem -pubout > publickey.pem
+```
+
+Após feito isso, copie os arquivos privatekey.pem e publickey.pem para a pasta "src/main/resources".
+
 ## Swagger 
 
 Documentação da API RESTful: <br>
@@ -67,6 +83,17 @@ http://votacao-pautas.herokuapp.com/ <br>
 
 Projeto licenciado sob <a href="LICENSE">Apache License</a>.
 
+## Screenshots
+
+![Screenshots](screenshots/screenshot01.png)<br><br>
+![Screenshots](screenshots/screenshot02.png)<br><br>
+![Screenshots](screenshots/screenshot03.png)<br><br>
+![Screenshots](screenshots/screenshot04.png)<br><br>
+![Screenshots](screenshots/screenshot05.png)<br><br>
+![Screenshots](screenshots/screenshot06.png)<br><br>
+![Screenshots](screenshots/screenshot07.png)<br><br>
+![Screenshots](screenshots/screenshot08.png)<br><br>
+
 ## Testes
 
 Para testar, execute o seguinte comando no terminal: <br>
@@ -75,8 +102,7 @@ Para testar, execute o seguinte comando no terminal: <br>
 $ mvn test
 ```
 
-<br>
-<br>
+
 Desenvolvido por<br>
 Danilo Meneghel<br>
 danilo.meneghel@gmail.com<br>

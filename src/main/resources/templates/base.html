@@ -3,7 +3,8 @@
   <head>
     <!-- Required meta tags -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="cache-control" content="no-cache" />
+	<meta http-equiv="pragma" content="no-cache">
     
     <!-- CSS -->
     <link type="text/css" rel="stylesheet" href="/assets/css/bootstrap.min.css" />
@@ -91,6 +92,7 @@ $(document).ready(function() {
 			$.ajax({
 				url: location.pathname+"/content",
 				type: "GET",
+				cache: false,
 				contentType: "application/json",
 				headers: {
 					"Authorization": "Bearer "+localStorage.getItem("token")
@@ -107,12 +109,12 @@ $(document).ready(function() {
 				url: location.pathname+"/content",
 				type: "GET",
 				data: "filter="+filter,
+				cache: false,
 				contentType: "application/json",
 				headers: {
 					"Authorization": "Bearer "+localStorage.getItem("token")
 				},
 				success: function(result) { 
-					console.log(result);
 					$("#content").html(result);
 				},
 				error: function() { 
@@ -124,6 +126,15 @@ $(document).ready(function() {
       $("#content").html("Você não possui autorização para visualizar.");
     }
 });
+
+function reload() {
+	var url = location.href;
+	var page = url.replace("/new", "");
+
+	setTimeout(function(){
+		location.replace(page);
+	}, 2000);
+}
 
 function sair() {
 	localStorage.removeItem("token");
