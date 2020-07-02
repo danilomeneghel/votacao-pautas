@@ -82,7 +82,7 @@ public class AuthController {
 
     @GET
     @PermitAll
-    @Path("/login")
+    @Path("/")
     public TemplateInstance login() {
         return login.instance();
     }

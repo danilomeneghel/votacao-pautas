@@ -18,7 +18,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			if(localStorage.getItem("token") == null) {
-				location.replace("/auth/login");
+				location.replace("/auth");
 				return false;
 			}
 		});
@@ -82,15 +82,36 @@
 $(document).ready(function() {
 	if(localStorage.getItem("token") != null) {
 		$(".username").text(localStorage.getItem("username"));
-		if(location.pathname != "/") {
+		const queryString = location.search;
+		const urlParams = new URLSearchParams(queryString);
+		var filter = urlParams.get("filter");
+
+		if(location.pathname != "/" && filter == null) {
 			$.ajax({
-				url: location.href+"/content/",
+				url: location.pathname+"/content",
 				type: "GET",
 				contentType: "application/json",
 				headers: {
 					"Authorization": "Bearer "+localStorage.getItem("token")
 				},
 				success: function(result) { 
+					$("#content").html(result);
+				},
+				error: function() { 
+					$("#content").text("Erro ao carregar ou você não possui autorização para visualizar.");
+				}
+			});
+		} else {
+			$.ajax({
+				url: location.pathname+"/content",
+				type: "GET",
+				data: "filter="+filter,
+				contentType: "application/json",
+				headers: {
+					"Authorization": "Bearer "+localStorage.getItem("token")
+				},
+				success: function(result) { 
+					console.log(result);
 					$("#content").html(result);
 				},
 				error: function() { 
@@ -107,7 +128,7 @@ function sair() {
 	localStorage.removeItem("token");
 	localStorage.removeItem("username");
 	localStorage.removeItem("cpf");
-	location.reload("/auth/login");
+	location.reload("/auth");
 }
 </script>
 </html>

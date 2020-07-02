@@ -36,20 +36,14 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    if(location.port != null && location.port != 80)
-        var url = location.protocol+"//"+location.hostname+":"+location.port;
-    else
-        var url = location.protocol+"//"+location.hostname;
-    window.history.pushState("", "", url+"/auth/login");
-    
     $("form").submit(function(event){
         var data = {
             username: $("#username").val(),
             password: $("#password").val()
-        }
+        };
 
         $.ajax({
-            url: url+"/auth/logar/",
+            url: location.href+"/logar",
             data: JSON.stringify(data),
             type: "POST",
             contentType: "application/json",
@@ -64,14 +58,14 @@ $(document).ready(function() {
                     localStorage.setItem("cpf", result.cpf);
                 }
                 $.ajax({
-                    url: url,
+                    url: "/",
                     type: "GET",
                     contentType: "application/json",
                     headers: {
                         "Authorization": "Bearer "+result.token
                     },
                     success: function(data) { 
-                        location.replace(url);
+                        location.replace("/");
                     },
                     error: function() { 
                         $("#error").text("Erro ao tentar abrir a página. Tente novamente.").addClass("alert alert-danger");
