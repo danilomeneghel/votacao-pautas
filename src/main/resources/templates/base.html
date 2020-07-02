@@ -16,12 +16,13 @@
     <script type="text/javascript" src="/assets/js/unpoly.min.js"></script>
 
 	<script type="text/javascript">
-		$(document).ready(function() {
+		window.onload = verifyToken();
+		function verifyToken() {
 			if(localStorage.getItem("token") == null) {
 				location.replace("/auth");
 				return false;
 			}
-		});
+		}
 	</script>
 	
     <title>{#insert title}Votação de Pautas{/}</title>

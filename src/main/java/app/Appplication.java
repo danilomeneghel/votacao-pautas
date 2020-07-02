@@ -19,7 +19,6 @@ public class Appplication {
         Template index;
         
         @GET
-        @Path("/")
         public TemplateInstance index() {
                 return index.instance();
         }
