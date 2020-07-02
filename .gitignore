@@ -1,21 +1,22 @@
 # Compiled class file
-*.class
+*.class/
 
 # Log file
-*.log
+*.log/
 
 # BlueJ files
-*.ctxt
+*.ctxt/
 
 # Mobile Tools for Java (J2ME)
-.mtj.tmp/
+.mtj/
+.tmp/
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# virtual machine
 hs_err_pid*
 
 # Eclipse
-.project
-.classpath
+.project/
+.classpath/
 .settings/
 bin/
 
@@ -29,10 +30,10 @@ bin/
 nb-configuration.xml
 
 # Visual Studio Code
-.vscode
+.vscode/
 
 # OSX
-.DS_Store
+.DS_Store/
 
 # Vim
 *.swp
@@ -51,6 +52,6 @@ release.properties
 
 lsp/
 
-/.java-version
+.java-version/
 
-*.sts4-cache
+*.sts4-cache/
