@@ -104,7 +104,7 @@ $(document).ready(function() {
 					$("#content").text("Erro ao carregar ou você não possui autorização para visualizar.");
 				}
 			});
-		} else {
+		} else if(filter != null) {
 			$.ajax({
 				url: location.pathname+"/content",
 				type: "GET",
