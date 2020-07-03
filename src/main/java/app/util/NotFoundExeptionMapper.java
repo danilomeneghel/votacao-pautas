@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
@@ -25,6 +26,6 @@ public class NotFoundExeptionMapper implements ExceptionMapper<NotFoundException
 			e.printStackTrace();
 		}
 
-        return Response.ok().entity(text).build();
+        return Response.status(Status.INTERNAL_SERVER_ERROR).entity(text).build();
     }    
 }
