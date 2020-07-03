@@ -10,7 +10,6 @@ Avaliação técnica de um sistema de votação de Pautas, desenvolvido em Java 
 - Validation
 - Filter
 - Login
-- JWT
 - Responsive
 - JUnit
 
@@ -25,8 +24,9 @@ Avaliação técnica de um sistema de votação de Pautas, desenvolvido em Java 
 - Maven
 - Quarkus
 - Hibernate
+- JWT
 - Qute
-- JAX-WS
+- JAX-RS
 - OpenAPI
 - Swagger
 - CSS
@@ -101,6 +101,8 @@ Para testar, execute o seguinte comando no terminal: <br>
 ```
 $ mvn test
 ```
+
+![Screenshots](screenshots/test.png)<br><br>
 
 
 Desenvolvido por<br>

@@ -19,7 +19,7 @@ public class UserControllerTest {
     @Test
     public void testAdd() {
         given()
-            .body("{\"name\": \"Carlos\", \"email\": \"carlos@carlos.com\", \"cpf\": \"39828275074\"}")
+            .body("{\"name\": \"Carlos\", \"email\": \"carlos@carlos.com\", \"cpf\": \"39828275074\", \"username\": \"carlos\", \"password\": \"123456\", \"role\": \"ASSOC\"}")
             .header("Content-Type", MediaType.APPLICATION_JSON)
         .when()
             .post("/users/add")
@@ -34,10 +34,12 @@ public class UserControllerTest {
              .get("/users/list")
           .then()
              .statusCode(200)
-             .body("$.size()", is(1),
-                     "name", containsInAnyOrder("Carlos"),
-                     "email", containsInAnyOrder("carlos@carlos.com"),
-                     "cpf", containsInAnyOrder(Long.valueOf("39828275074")));
+             .body("$.size()", is(2),
+                     "name", containsInAnyOrder("Administrador", "Carlos"),
+                     "email", containsInAnyOrder("admin@admin.com", "carlos@carlos.com"),
+                     "cpf", containsInAnyOrder(Long.valueOf("24405779015"), Long.valueOf("39828275074")),
+                     "username", containsInAnyOrder("admin", "carlos"),
+                     "role", containsInAnyOrder("ADMIN", "ASSOC"));
     }
     
     @Test
