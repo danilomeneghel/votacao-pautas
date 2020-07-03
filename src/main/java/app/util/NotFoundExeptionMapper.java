@@ -23,9 +23,9 @@ public class NotFoundExeptionMapper implements ExceptionMapper<NotFoundException
 		try {
 			text = Resources.toString(url, StandardCharsets.UTF_8);
 		} catch (IOException e) {
-			e.printStackTrace();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(text).build();
 		}
 
-        return Response.status(Status.INTERNAL_SERVER_ERROR).entity(text).build();
+        return Response.status(Status.NOT_FOUND).entity(text).build();
     }    
 }
