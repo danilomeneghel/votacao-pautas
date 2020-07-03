@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.SecurityContext;
+import javax.ws.rs.core.Response.Status;
 
 import java.net.URI;
 import java.util.List;
@@ -76,6 +77,9 @@ public class PautaController {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/content")
     public Object listPautas(@QueryParam("filter") String filter) {
+        if(jwt.getName() == null)
+            return Response.status(Status.UNAUTHORIZED).build();
+
         String username = jwt.getName();
         Set<String> groups = jwt.getGroups();
         String role = String.join(", ", groups);
@@ -103,8 +107,7 @@ public class PautaController {
 
         if (filter != null && !filter.isEmpty()) {
             return Pauta.find("LOWER(titulo) LIKE LOWER(?1)", sort, "%" + filter + "%").list();
-        }
-        else {
+        } else {
             return Pauta.findAll(sort).list();
         }
     }

@@ -13,6 +13,8 @@ import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
 import java.net.URI;
 import java.util.List;
 import java.util.Set;
@@ -69,6 +71,9 @@ public class SessaoController {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/content")
     public Object listSessoes(@QueryParam("filter") String filter) {
+        if(jwt.getName() == null)
+            return Response.status(Status.UNAUTHORIZED).build();
+
         Set<String> groups = jwt.getGroups();
         String role = String.join(", ", groups);
         
@@ -91,8 +96,7 @@ public class SessaoController {
 
         if (filter != null && !filter.isEmpty()) {
             return Sessao.find("LOWER(nome) LIKE LOWER(?1)", sort, "%" + filter + "%").list();
-        }
-        else {
+        } else {
             return Sessao.findAll(sort).list();
         }
     }

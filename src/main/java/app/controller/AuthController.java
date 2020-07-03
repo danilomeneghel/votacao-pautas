@@ -13,6 +13,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
@@ -116,6 +118,9 @@ public class AuthController {
     @Path("/user")
     public Object userLogged() {
         Login log = new Login();
+        if(jwt.getName() == null)
+            return Response.status(Status.UNAUTHORIZED).build();
+        
         log.username = jwt.getName();
         Set<String> groups = jwt.getGroups();
         log.role = String.join(", ", groups);

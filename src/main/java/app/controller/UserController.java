@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 
@@ -81,6 +82,9 @@ public class UserController {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/content")
     public Object listUsers(@QueryParam("filter") String filter) {
+        if(jwt.getName() == null)
+            return Response.status(Status.UNAUTHORIZED).build();
+
         Set<String> groups = jwt.getGroups();
         String role = String.join(", ", groups);
 
@@ -103,8 +107,7 @@ public class UserController {
 
         if (filter != null && !filter.isEmpty()) {
             return User.find("LOWER(name) LIKE LOWER(?1)", sort, "%" + filter + "%").list();
-        }
-        else {
+        } else {
             return User.findAll(sort).list();
         }
     }
@@ -186,6 +189,9 @@ public class UserController {
     @RolesAllowed({"ADMIN", "ASSOC"})
     @Path("/perfil/content")
     public Object perfilForm() {
+        if(jwt.getName() == null)
+            return Response.status(Status.UNAUTHORIZED).build();
+        
         String username = jwt.getName();
 
         User loaded = userService.findUsername(username);
