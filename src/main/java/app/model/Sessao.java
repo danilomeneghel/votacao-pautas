@@ -7,12 +7,15 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.FormParam;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import app.enumerator.StatusSessaoEnum;
 import app.enumerator.converter.StatusSessaoEnumConverter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -31,13 +34,15 @@ public class Sessao extends PanacheEntity {
 	@NotNull(message = "Informe a duração")
 	public Integer duracao = 1;
 
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	@Column(name = "data_inicio_sessao")
 	@FormParam("data_inicio_sessao")
-	public String dataInicioSessao;
-
+	public LocalDate dataInicioSessao;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	@Column(name = "data_fim_sessao")
 	@FormParam("data_fim_sessao")
-	public String dataFimSessao;
+	public LocalDate dataFimSessao;
 
 	@Convert(converter = StatusSessaoEnumConverter.class)
 	@FormParam("status")
