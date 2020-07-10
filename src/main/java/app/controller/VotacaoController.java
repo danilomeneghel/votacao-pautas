@@ -2,6 +2,7 @@ package app.controller;
 
 import io.quarkus.qute.Template;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -67,27 +68,34 @@ public class VotacaoController {
     public Object votar(@MultipartForm @Valid Votacao votacao) {
     	Sessao sessao = sessaoService.findSessaoPauta(votacao.idpauta);
     	User user = userService.findUserCpf(votacao.cpf);
-    	
-    	if(sessao != null && sessao.status.getValor() == 1) {
-    		//Pega o status do CPF da API externa para verificar se está habilitado para votar
-    		StatusUserEnum statusCpf = ExternalApi.getStatusCpf(votacao.cpf);
-    		
-			if(statusCpf != null && statusCpf.toString().equals("ABLE_TO_VOTE")) {
-				Votacao votacaoDetalhes = votacaoService.findByIdpautaAndIduser(votacao.idpauta, user.id);
-				if (votacaoDetalhes != null) {
-					return error.data("error", "Pauta já votada!");
-				} else {
-					votacao.iduser = user.id;					
-					votacaoService.insert(votacao);
-					pautaService.updateVoto(votacao.idpauta, votacao.voto.getValor());
-					return success.data("success", "Voto realizado com sucesso!");
-				}
-			} else {
-				return error.data("error", "Usuário não habilitado para votar.");
-	    	}
-    	} else {
-    		return error.data("error", "Sessão não está aberta para votar.");
-    	}
+        LocalDate dtIn = sessao.dataInicioSessao;
+        LocalDate dtFi = sessao.dataFimSessao;
+        LocalDate dtAtual = LocalDate.now();
+
+        if((dtIn.isBefore(dtAtual) || dtIn.isEqual(dtAtual)) && (dtFi.isAfter(dtAtual) || dtFi.isEqual(dtAtual))) {
+            if(sessao != null && sessao.status.getValor() == 1) {
+                //Pega o status do CPF da API externa para verificar se está habilitado para votar
+                StatusUserEnum statusCpf = ExternalApi.getStatusCpf(votacao.cpf);
+                
+                if(statusCpf != null && statusCpf.toString().equals("ABLE_TO_VOTE")) {
+                    Votacao votacaoDetalhes = votacaoService.findByIdpautaAndIduser(votacao.idpauta, user.id);
+                    if (votacaoDetalhes != null) {
+                        return error.data("error", "Pauta já votada!");
+                    } else {
+                        votacao.iduser = user.id;					
+                        votacaoService.insert(votacao);
+                        pautaService.updateVoto(votacao.idpauta, votacao.voto.getValor());
+                        return success.data("success", "Voto realizado com sucesso!");
+                    }
+                } else {
+                    return error.data("error", "Usuário não habilitado para votar.");
+                }
+            } else {
+                return error.data("error", "Sessão não está aberta para votar.");
+            }
+        } else {
+            return error.data("error", "Pauta fora do prazo para votar.");
+        }
     }
     
 }

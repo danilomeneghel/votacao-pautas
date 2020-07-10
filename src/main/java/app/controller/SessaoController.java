@@ -27,12 +27,11 @@ import app.model.Pauta;
 import app.model.Sessao;
 import app.service.PautaService;
 import app.service.SessaoService;
-import app.util.LocalDateReader;
 
 @Path("/sessoes")
 @Produces(MediaType.TEXT_HTML)
 @ApplicationScoped
-public class SessaoController extends LocalDateReader {
+public class SessaoController {
 
     @Inject
     SessaoService sessaoService;

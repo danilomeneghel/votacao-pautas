@@ -8,10 +8,11 @@ import java.util.List;
 import static javax.transaction.Transactional.TxType.REQUIRED;
 
 import app.model.Sessao;
+import app.util.LocalDateReader;
 
 @ApplicationScoped
 @Transactional(REQUIRED)
-public class SessaoService {
+public class SessaoService extends LocalDateReader {
 	
 	@Transactional()
     public List<Sessao> findAllSessoes() {

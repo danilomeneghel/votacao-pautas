@@ -7,8 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.FormParam;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -34,12 +32,10 @@ public class Sessao extends PanacheEntity {
 	@NotNull(message = "Informe a duração")
 	public Integer duracao = 1;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	@Column(name = "data_inicio_sessao")
 	@FormParam("data_inicio_sessao")
 	public LocalDate dataInicioSessao;
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	@Column(name = "data_fim_sessao")
 	@FormParam("data_fim_sessao")
 	public LocalDate dataFimSessao;
