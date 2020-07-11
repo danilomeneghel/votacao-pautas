@@ -1,4 +1,4 @@
-# Votação Pautas
+# Votação de Pautas
 
 Avaliação técnica de um sistema de votação de Pautas, desenvolvido em Java com Quarkus.
 
