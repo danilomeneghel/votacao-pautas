@@ -1,18 +1,17 @@
-{@app.model.Pauta pauta}
-{#include base.html} 
-{#contents}
-<div class="modalenabled">
-  <h2>{#if update}Editar Pauta #{pauta.id}{#else}Adicionar Pauta{/if}</h2>
+<div class="panel">
+  <h3>{#if update}Editar Pauta #{pauta.id}{#else}Adicionar Pauta{/if}</h3>
+  {#if error}<div class="alert alert-danger">{error}</div>{/if}
+  <div id="msg"></div>
   <div class="panel panel-default">
-    <form action="/pautas/{#if update}edit/{pauta.id}{#else}new{/if}" method="POST" name="pautaForm" onsubmit="reload()" enctype="multipart/form-data">
+    <form method="POST" name="pautaForm" id="pautaForm" enctype="multipart/form-data">
       <div class="form-panel">
         <div class="form-group">
             <label class="sr-only" for="titulo">Titulo</label>
-            <input type="text" name="titulo" class="form-control" id="titulo" placeholder="Titulo" required autofocus {#if update}value="{pauta.titulo}"{/if}>
+            <input type="text" name="titulo" class="form-control" id="titulo" placeholder="Titulo" required="true" autofocus {#if update}value="{pauta.titulo}"{/if}>
         </div>
         <div class="form-group">
             <label class="sr-only" for="descricao">Descrição</label>
-            <textarea name="descricao" class="form-control" id="descricao" placeholder="Descrição" required autofocus>{#if update}{pauta.descricao}{/if}</textarea>
+            <textarea name="descricao" class="form-control" id="descricao" placeholder="Descrição" required="true" autofocus>{#if update}{pauta.descricao}{/if}</textarea>
         </div>
         <div class="form-group">
 	        <select class="custom-select" name="status" id="status">
@@ -22,10 +21,7 @@
 	          {/for}
 	        </select>
         </div>
-        <button type="submit" class="btn btn-primary">{#if update}Editar{#else}Adicionar{/if}</button>
       </div>
     </form>
   </div>
 </div>
-{/contents}
-{/include}

@@ -43,9 +43,6 @@ public class UserController {
 
     @Inject
     TokenService service;
-
-    @Inject
-    Template error;
     
     @Inject
     Template userForm;
@@ -119,7 +116,7 @@ public class UserController {
     public Object getCpfJson(@PathParam("cpf") Long cpf) {
     	User user = userService.findUserCpf(cpf);
     	if (user == null) {
-            return error.data("error", "Usuário com CPF " + cpf + " não encontrado.");
+            return userForm.data("error", "Usuário com CPF " + cpf + " não encontrado.");
         }
     	StatusUserEnum statusCpf = ExternalApi.getStatusCpf(user.cpf);
     	user.status = statusCpf;
@@ -132,14 +129,14 @@ public class UserController {
     public TemplateInstance getId(@PathParam("id") Long id) {
     	User user = userService.findUser(id);
     	if (user == null) {
-            return error.data("error", "Usuário com id " + id + " não encontrado.");
+            return userView.data("error", "Usuário com id " + id + " não encontrado.");
         }
     	StatusUserEnum statusCpf = ExternalApi.getStatusCpf(user.cpf);
     	user.status = statusCpf;
     	
     	return userView.data("user", user);
     }
-   
+
     @GET
     @Path("/new")
     public TemplateInstance addForm() {
@@ -147,24 +144,24 @@ public class UserController {
     }
 
     @POST
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     @Path("/new")
     public Object addUser(@MultipartForm @Valid User user) {
     	User loaded = userService.findUserCpf(user.cpf);
     	if (loaded != null) {
-            return error.data("error", "CPF " + user.cpf + " já cadastrado.");
+            return userForm.data("error", "CPF " + user.cpf + " já cadastrado.");
         } else {
             user.password = BCrypt.withDefaults().hashToString(12, user.password.toCharArray());
         	boolean validaCpf = CpfValidate.isCPF(user.cpf.toString());
         	if(validaCpf)
         		userService.insert(user);
         	else
-        		return error.data("error", "Usuário com CPF inválido!");
+        		return userForm.data("error", "Usuário com CPF inválido!");
         }
     	
-    	return Response.seeOther(URI.create("/users")).build();
+    	return Response.seeOther(URI.create("/users/content")).build();
     }
     
     @POST
@@ -226,7 +223,7 @@ public class UserController {
     public TemplateInstance updateForm(@PathParam("id") long id) {
         User loaded = userService.findUser(id);
         if (loaded == null) {
-            return error.data("error", "Usuário com id " + id + " não encontrado.");
+            return userForm.data("error", "Usuário com id " + id + " não encontrado.");
         }
 		
         return userForm.data("user", loaded)
@@ -235,24 +232,24 @@ public class UserController {
     }
 
     @POST
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     @Path("/edit/{id}")
     public Object updateUser(@PathParam("id") long id, @MultipartForm @Valid User user) {
     	User loaded = userService.findUser(id);    	
         if (loaded == null) {
-            return error.data("error", "Usuário com id " + id + " não encontrado.");
+            return userForm.data("error", "Usuário com id " + id + " não encontrado.");
         } else {
             user.password = BCrypt.withDefaults().hashToString(12, user.password.toCharArray());
         	boolean validaCpf = CpfValidate.isCPF(user.cpf.toString());
         	if(validaCpf)
         		userService.update(loaded, user);
         	else
-        		return error.data("error", "Usuário com CPF inválido!");
+        		return userForm.data("error", "Usuário com CPF inválido!");
         }
     	
-        return Response.seeOther(URI.create("/users")).build();
+        return Response.seeOther(URI.create("/users/content")).build();
     }
 
     @POST

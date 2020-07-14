@@ -40,9 +40,6 @@ public class SessaoController {
     PautaService pautaService;
 
     @Inject
-    Template error;
-    
-    @Inject
     Template sessaoForm;
     
     @Inject
@@ -114,41 +111,42 @@ public class SessaoController {
     public TemplateInstance getId(@PathParam("id") Long id) {
         Sessao sessao = sessaoService.findSessao(id);
         if (sessao == null) {
-            return error.data("error", "Sessao com id " + id + " não encontrada.");
+            return sessaoView.data("error", "Sessao com id " + id + " não encontrada.");
         }
         
-        return sessaoView.data("sessao", sessao)
-        		.data("status", StatusSessaoEnum.values());
+        return sessaoView.data("sessao", sessao);
     }
 
     @GET
     @Path("/new")
     public TemplateInstance addForm() {
+        String error = null;
     	List<Pauta> pautas = pautaService.findPautasAtivas();
     	if(pautas.isEmpty()) {
-    		return error.data("error", "É preciso ter pelo menos uma Pauta ativa");
-    	}
+    		error = "É preciso ter pelo menos uma Pauta ativa";
+        }
         return sessaoForm.data("status", StatusSessaoEnum.values())
-        		.data("pautas", pautas);
+                        .data("pautas", pautas)
+                        .data("error", error);
     }
 
     @POST
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     @Path("/new")
     public Object addSessao(@MultipartForm @Valid Sessao sessao) {
-    	if(sessao.idpauta != null) {
-	    	Sessao loaded = sessaoService.findSessaoPauta(sessao.idpauta);
-	    	if (loaded != null) {
-	            return error.data("error", "Sessao já criada para essa Pauta de id " + sessao.idpauta);
-	        }    	
-	    	sessaoService.insert(sessao);
-    	} else {
-    		return error.data("error", "É necessário ter uma Pauta selecionada");
+        if (sessao.idpauta != null) {
+            Sessao loaded = sessaoService.findSessaoPauta(sessao.idpauta);
+            if (loaded != null) {
+                return sessaoForm.data("error", "Sessao já criada para essa Pauta de id " + sessao.idpauta);
+            }
+            sessaoService.insert(sessao);
+        } else {
+            return sessaoForm.data("error", "É necessário ter uma Pauta selecionada");
     	}
     	
-    	return Response.seeOther(URI.create("/sessoes")).build();
+    	return Response.seeOther(URI.create("/sessoes/content")).build();
     }
     
     @POST
@@ -167,34 +165,32 @@ public class SessaoController {
     public TemplateInstance updateForm(@PathParam("id") long id) {
     	List<Pauta> pautas = pautaService.findPautasAtivas();
     	if(pautas.isEmpty()) {
-    		return error.data("error", "É preciso ter pelo menos uma Pauta ativa");
-    	}
-    	
+    		return sessaoForm.data("error", "É preciso ter pelo menos uma Pauta ativa");
+        }
+
         Sessao loaded = sessaoService.findSessao(id);
         if (loaded == null) {
-            return error.data("error", "Sessao com id " + id + " não encontrada.");
+            return sessaoForm.data("error", "Sessao com id " + id + " não encontrada.");
         }
-		
-        return sessaoForm.data("sessao", loaded)
-        	.data("status", StatusSessaoEnum.values())
-        	.data("pautas", pautas)
-            .data("update", true);
+
+        return sessaoForm.data("sessao", loaded).data("status", StatusSessaoEnum.values()).data("pautas", pautas)
+                .data("update", true);
     }
 
     @POST
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     @Path("/edit/{id}")
     public Object updateSessao(@PathParam("id") long id, @MultipartForm @Valid Sessao sessao) {
-    	Sessao loaded = sessaoService.findSessao(id);    	
+        Sessao loaded = sessaoService.findSessao(id);
         if (loaded == null) {
-            return error.data("error", "Sessao com id " + id + " não encontrada.");
+            return sessaoForm.data("error", "Sessao com id " + id + " não encontrada.");
         }
 
         sessaoService.update(loaded, sessao);
 
-        return Response.seeOther(URI.create("/sessoes")).build();
+        return Response.seeOther(URI.create("/sessoes/content")).build();
     }
 
     @POST

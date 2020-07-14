@@ -1,28 +1,23 @@
-{@app.model.User user}
-{#include base.html} 
-{#contents}
-<div class="modalenabled">
-  <h2>User #{user.id}</h2>
+<div class="panel">
+  {#if error}<div class="alert alert-danger">{error}</div>{/if}
   <div class="panel panel-default">
       <div class="form-panel">
+        <h3>Usuário #{user.id}</h3>
         <div class="form-group">
-            <label class="sr-only" for="name">Nome</label>
-            {user.name}
+            Nome: {user.name}
         </div>
         <div class="form-group">
-            <label class="sr-only" for="email">E-mail</label>
-            {user.email}
+            E-mail: {user.email}
         </div>
         <div class="form-group">
-            <label class="sr-only" for="cpf">CPF</label>
-            {user.cpf}
+            CPF: {user.cpf}
         </div>
         <div class="form-group">
-            <label class="sr-only" for="status">Status</label>
-            {user.status.descricao}
+            Função: {user.role.descricao}
+        </div>
+        <div class="form-group">
+            Status: {user.status.descricao}
         </div>
       </div>
   </div>
 </div>
-{/contents}
-{/include}

@@ -1,11 +1,8 @@
-{@app.model.Pauta pauta}
-{#include base.html} 
-{#contents}
-<div class="modalenabled">
-  <h2>Pauta #{pauta.id}</h2>
+<div class="panel">
+  {#if error}<div class="alert alert-danger">{error}</div>{/if}
   <div class="panel panel-default">
       <div class="form-panel">
-        <h2>{pauta.titulo}</h2>
+        <h3>{pauta.titulo}</h3>
         <div class="form-group">
             {pauta.descricao}
         </div>
@@ -24,5 +21,3 @@
       </div>
   </div>
 </div>
-{/contents}
-{/include}

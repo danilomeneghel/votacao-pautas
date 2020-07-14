@@ -1,28 +1,23 @@
-{@app.model.Sessao sessao}
-{#include base.html} 
-{#contents}
-<div class="modalenabled">
-  <h2>Sessão #{sessao.id}</h2>
+<div class="panel">
+  {#if error}<div class="alert alert-danger">{error}</div>{/if}
   <div class="panel panel-default">
       <div class="form-panel">
-        <h2>{sessao.nome}</h2>
+        <h3>{sessao.nome}</h3>
         <div class="form-group">
-            {sessao.idpauta}
+            Id Pauta: {sessao.idpauta}
         </div>
         <div class="form-group">
-            {sessao.duracao}
+            Duração: {sessao.duracao}
         </div>
         <div class="form-group">
-            {sessao.dataInicioSessao}
+            Data Início Sessão: <span class="date">{sessao.dataInicioSessao}</span>
         </div>
         <div class="form-group">
-            {sessao.dataFimSessao}
+            Data Fim Sessão: <span class="date">{sessao.dataFimSessao}</span>
         </div>
         <div class="form-group">
-            {sessao.status.descricao}
+            Status: {sessao.status.descricao}
         </div>
       </div>
   </div>
 </div>
-{/contents}
-{/include}

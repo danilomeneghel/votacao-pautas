@@ -1,5 +1,5 @@
 <div class="row">
-  {#if role == 'ADMIN'}<a class="btn btn-primary btn-sm" href="/sessoes/new" role="button" up-modal=".modalenabled">Adicionar</a>{/if}
+  {#if role == 'ADMIN'}<a class="btn btn-primary btn-sm modal-form" href="/sessoes/new" role="button">Adicionar</a>{/if}
   <div class="search-right">
     <form method="GET" name="search" id="search">
        <input type="text" name="filter" class="form-control" id="filter" placeholder="Localizar por Nome" {#if filtered}value="{filter}"{/if}>
@@ -46,8 +46,9 @@
       {sessao.status.descricao}
     </td>
     <td class="fit">
-      <form action="/sessoes/delete/{sessao.id}" method="POST" name="delete-{sessao.id}" up-target=".container">
-        {#if role == 'ADMIN'}<a class="btn btn-primary btn-sm" href="/sessoes/edit/{sessao.id}" role="button" up-modal=".modalenabled">Editar</a>
+      <form action="/sessoes/delete/{sessao.id}" method="POST" name="delete-{sessao.id}">
+        <a class="btn btn-default btn-sm modal-view" href="/sessoes/view/{sessao.id}" role="button">Visualizar</a>
+        {#if role == 'ADMIN'}<a class="btn btn-primary btn-sm modal-form" href="/sessoes/edit/{sessao.id}" role="button">Editar</a>
         <button type="submit" onClick="location.href='/sessoes'" class="btn btn-danger btn-sm">Excluir</button>{/if}
       </form>
     </td>
@@ -55,3 +56,5 @@
   {/for}
   {/if}
 </table>
+
+<script type="text/javascript" src="/assets/js/modal.js"></script>

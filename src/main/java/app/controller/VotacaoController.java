@@ -44,10 +44,7 @@ public class VotacaoController {
     UserService userService;
 
     @Inject
-	Template error;
-	
-    @Inject
-    Template success;
+    Template pautaView;
     
     @Inject
     Template pautas;
@@ -80,21 +77,21 @@ public class VotacaoController {
                 if(statusCpf != null && statusCpf.toString().equals("ABLE_TO_VOTE")) {
                     Votacao votacaoDetalhes = votacaoService.findByIdpautaAndIduser(votacao.idpauta, user.id);
                     if (votacaoDetalhes != null) {
-                        return error.data("error", "Pauta já votada!");
+                        return pautaView.data("error", "Pauta já votada!");
                     } else {
                         votacao.iduser = user.id;					
                         votacaoService.insert(votacao);
                         pautaService.updateVoto(votacao.idpauta, votacao.voto.getValor());
-                        return success.data("success", "Voto realizado com sucesso!");
+                        return pautaView.data("success", "Voto realizado com sucesso!");
                     }
                 } else {
-                    return error.data("error", "Usuário não habilitado para votar.");
+                    return pautaView.data("error", "Usuário não habilitado para votar.");
                 }
             } else {
-                return error.data("error", "Sessão não está aberta para votar.");
+                return pautaView.data("error", "Sessão não está aberta para votar.");
             }
         } else {
-            return error.data("error", "Pauta fora do prazo para votar.");
+            return pautaView.data("error", "Pauta fora do prazo para votar.");
         }
     }
     

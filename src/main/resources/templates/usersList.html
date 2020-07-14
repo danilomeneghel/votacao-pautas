@@ -1,5 +1,5 @@
 <div class="row">
-  {#if role == 'ADMIN'}<a class="btn btn-primary btn-sm" href="/users/new" role="button" up-modal=".modalenabled">Adicionar</a>{/if}
+  {#if role == 'ADMIN'}<a class="btn btn-primary btn-sm modal-form" href="/users/new" role="button">Adicionar</a>{/if}
   <div class="search-right">
     <form method="GET" name="search" id="search">
        <input type="text" name="filter" class="form-control" id="filter" placeholder="Localizar por Nome" {#if filtered}value="{filter}"{/if}>
@@ -42,9 +42,9 @@
       {user.dtCreated}
     </td>
     <td class="fit">
-      <form action="/users/delete/{user.id}" method="POST" name="delete-{user.id}" up-target=".container">
-      	<a class="btn btn-default btn-sm" href="/users/view/{user.id}" role="button" up-modal=".modalenabled">Visualizar</a>
-        {#if role == 'ADMIN'}<a class="btn btn-primary btn-sm" href="/users/edit/{user.id}" role="button" up-modal=".modalenabled">Editar</a>
+      <form action="/users/delete/{user.id}" method="POST" name="delete-{user.id}">
+      	<a class="btn btn-default btn-sm modal-view" href="/users/view/{user.id}" role="button">Visualizar</a>
+        {#if role == 'ADMIN'}<a class="btn btn-primary btn-sm modal-form" href="/users/edit/{user.id}" role="button">Editar</a>
         <button type="submit" onClick="location.href='/users'" class="btn btn-danger btn-sm">Excluir</button>{/if}
       </form>
     </td>
@@ -52,3 +52,5 @@
   {/for}
   {/if}
 </table>
+
+<script type="text/javascript" src="/assets/js/modal.js"></script>
