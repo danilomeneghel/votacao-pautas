@@ -46,11 +46,9 @@
       {sessao.status.descricao}
     </td>
     <td class="fit">
-      <form action="/sessoes/delete/{sessao.id}" method="POST" name="delete-{sessao.id}">
         <a class="btn btn-default btn-sm modal-view" href="/sessoes/view/{sessao.id}" role="button">Visualizar</a>
         {#if role == 'ADMIN'}<a class="btn btn-primary btn-sm modal-form" href="/sessoes/edit/{sessao.id}" role="button">Editar</a>
-        <button type="submit" onClick="location.href='/sessoes'" class="btn btn-danger btn-sm">Excluir</button>{/if}
-      </form>
+        <a class="btn btn-danger btn-sm modal-delete" href="/sessoes/delete/{sessao.id}" role="button">Excluir</a>{/if}
     </td>
   </tr>
   {/for}

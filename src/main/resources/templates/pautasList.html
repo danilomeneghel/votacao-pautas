@@ -46,11 +46,9 @@
       {pauta.dtCreated}
     </td>
     <td class="fit">
-      <form action="/pautas/delete/{pauta.id}" method="POST" name="delete-{pauta.id}">
-        <a class="btn btn-default btn-sm modal-view" href="/pautas/view/{pauta.id}/{cpf}" role="button">Votar</a>
+        <a class="btn btn-default btn-sm modal-form" href="/pautas/view/{pauta.id}/{cpf}" role="button">Votar</a>
         {#if role == 'ADMIN'}<a class="btn btn-primary btn-sm modal-form" href="/pautas/edit/{pauta.id}" role="button">Editar</a>
-        <button type="submit" onClick="location.href='/pautas'" class="btn btn-danger btn-sm">Excluir</button>{/if}
-      </form>
+        <a class="btn btn-danger btn-sm modal-delete" href="/pautas/delete/{pauta.id}" role="button">Excluir</a>{/if}
     </td>
   </tr>
   {/for}

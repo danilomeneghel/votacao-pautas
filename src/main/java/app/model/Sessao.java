@@ -33,11 +33,11 @@ public class Sessao extends PanacheEntity {
 	public Integer duracao = 1;
 
 	@Column(name = "data_inicio_sessao")
-	@FormParam("data_inicio_sessao")
+	@FormParam("dataInicioSessao")
 	public LocalDate dataInicioSessao;
 	
 	@Column(name = "data_fim_sessao")
-	@FormParam("data_fim_sessao")
+	@FormParam("dataFimSessao")
 	public LocalDate dataFimSessao;
 
 	@Convert(converter = StatusSessaoEnumConverter.class)

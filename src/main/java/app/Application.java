@@ -13,7 +13,7 @@ import javax.enterprise.context.ApplicationScoped;
 @Path("/")
 @Produces(MediaType.TEXT_HTML)
 @ApplicationScoped
-public class Appplication {
+public class Application {
         
         @Inject
         Template index;

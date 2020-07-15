@@ -24,22 +24,26 @@ $(document).ready(function() {
             },
             callback: function($this, type, ev){
                 if (type === 'load'){
-                var formDataObj = {};
-                (function(){
-                    $("form").find(":input").not("[type='submit']").each(function(){
-                    formDataObj[$(this).attr("name")] = $(this).val();
+                    var urlSubmit = ($("#votacao").val() != undefined) ? "/votacao/votar" : url;
+                    var formDataObj = {};
+                    (function(){
+                        $("form").find(":input").not("[type='submit']").each(function(){
+                            if($(this).attr("type") == "radio" || $(this).attr("type") == "checkbox") 
+                                formDataObj[$(this).attr("name")] = $("input[name='"+$(this).attr("name")+"']:checked").val();
+                            else
+                                formDataObj[$(this).attr("name")] = $(this).val();
+                        });
+                    })();
+                    var data = JSON.stringify(formDataObj);
+                    var validated = true;
+                    $("form").find("input[required=true], textarea[required=true]").each(function(){
+                        if($(this).val() == ""){
+                        $("#msg").text("O campo '" + $(this).attr('id') + "' é obrigatório!").addClass("alert alert-danger");
+                        validated = false;
+                        } 
                     });
-                })();
-                var data = JSON.stringify(formDataObj);
-                var validated = true;
-                $("form").find("input[required=true], textarea[required=true]").each(function(){
-                    if($(this).val() == ""){
-                    $("#msg").text("O campo '" + $(this).attr('id') + "' é obrigatório!").addClass("alert alert-danger");
-                    validated = false;
-                    } 
-                });
-                if(validated)
-                    submitted(url, data);
+                    if(validated)
+                        submitted(urlSubmit, data);
                 }
             }
         });
@@ -55,33 +59,39 @@ $(document).ready(function() {
 
     function submitted(url, data) {
         $.ajax({
-        url: url,
-        data: data,
-        type: "POST",
-        contentType: "application/json",
-        headers: {
-            "Authorization": "Bearer "+localStorage.getItem("token")
-        },
-        success: function(result) { 
-            $(".lobibox-window").remove();
-            $(".lobibox-backdrop").remove();
-            $("#content").html(result);
-            dateFormat();
-            Lobibox.notify("success", {
-            title: "Sucesso!",
-            msg: "Cadastro salvo com sucesso.",
-            sound: false,
-            });
-        },
-        error: function() { 
-            $(".lobibox-window").remove();
-            $(".lobibox-backdrop").remove();
-            Lobibox.notify("error", {
-            title: "Erro!",
-            msg: "Ocorreu um erro ou você não possui autorização para cadastrar.",
-            sound: false,
-            });
-        }
+            url: url,
+            data: data,
+            type: "POST",
+            contentType: "application/json",
+            headers: { "Authorization": "Bearer "+localStorage.getItem("token") },
+            success: function(result) { 
+                console.log(result);
+                $(".lobibox-window").remove();
+                $(".lobibox-backdrop").remove();
+                Lobibox.notify(result.type, {
+                    title: result.title,
+                    msg: result.description,
+                });
+
+                $.ajax({
+                    url: location.href+"/content",
+                    type: "GET",
+                    contentType: "application/json",
+                    headers: { "Authorization": "Bearer "+localStorage.getItem("token") },
+                    success: function(result) {
+                        $("#content").html(result);
+                        dateFormat();
+                    }
+                });
+            },
+            error: function() { 
+                $(".lobibox-window").remove();
+                $(".lobibox-backdrop").remove();
+                Lobibox.notify("error", {
+                    title: "Erro!",
+                    msg: "Ocorreu um erro ou você não possui autorização para cadastrar.",
+                });
+            }
         });
         return false;
     }
@@ -97,6 +107,20 @@ $(document).ready(function() {
             },
             width: 440,
             height: 470
+        });
+
+        event.preventDefault();
+    });
+
+    $(".modal-delete").on("click", function(event){
+        var url = $(this).attr("href");
+
+        Lobibox.confirm({
+            msg: "Tem certeza que deseja excluir esse item?",
+            callback: function($this, type, ev){
+                if (type === 'yes')
+                    submitted(url, null);
+            }
         });
 
         event.preventDefault();

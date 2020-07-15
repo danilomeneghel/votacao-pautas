@@ -4,8 +4,6 @@ import io.quarkus.panache.common.Sort;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -13,11 +11,10 @@ import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.Response.Status;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Set;
 
@@ -26,6 +23,7 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import app.enumerator.StatusPautaEnum;
 import app.enumerator.VotoEnum;
+import app.model.Message;
 import app.model.Pauta;
 import app.model.User;
 import app.service.PautaService;
@@ -54,12 +52,11 @@ public class PautaController {
     @Inject
     Template pautasList;
     
-    @Context
-    SecurityContext securityContext;
-
     @Inject
     JsonWebToken jwt;
     
+    public Message message = new Message();
+
     @GET
     @PermitAll
     @Consumes(MediaType.TEXT_HTML)
@@ -153,7 +150,10 @@ public class PautaController {
         }
     	pautaService.insert(pauta);    	
     	
-    	return Response.seeOther(URI.create("/pautas/content")).build();
+    	message.type = "success";
+        message.title = "Sucesso!";
+        message.description = "Pauta cadastrada com sucesso.";
+        return Response.ok(message).build();
     }
     
     @POST
@@ -193,7 +193,10 @@ public class PautaController {
 
         pautaService.update(loaded, pauta);
 
-        return Response.seeOther(URI.create("/pautas/content")).build();
+        message.type = "success";
+        message.title = "Sucesso!";
+        message.description = "Pauta editada com sucesso.";
+        return Response.ok(message).build();
     }
 
     @POST
@@ -203,6 +206,9 @@ public class PautaController {
     public Response deletePauta(@PathParam("id") long id) {
         Pauta.delete("id", id);
 
-        return Response.seeOther(URI.create("/pautas")).build();
+        message.type = "success";
+        message.title = "Sucesso!";
+        message.description = "Pauta excluida com sucesso.";
+        return Response.ok(message).build();
     }
 }

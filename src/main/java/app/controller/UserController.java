@@ -15,7 +15,6 @@ import javax.ws.rs.core.Response.Status;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Set;
 
@@ -26,6 +25,7 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 
 import app.enumerator.RoleUserEnum;
 import app.enumerator.StatusUserEnum;
+import app.model.Message;
 import app.model.User;
 import app.service.UserService;
 import app.util.CpfValidate;
@@ -64,6 +64,8 @@ public class UserController {
     
     @Inject
     JsonWebToken jwt;
+    
+    public Message message = new Message();
     
     @GET
     @PermitAll
@@ -161,7 +163,10 @@ public class UserController {
         		return userForm.data("error", "Usuário com CPF inválido!");
         }
     	
-    	return Response.seeOther(URI.create("/users/content")).build();
+    	message.type = "success";
+        message.title = "Sucesso!";
+        message.description = "Usuário cadastrado com sucesso.";
+        return Response.ok(message).build();
     }
     
     @POST
@@ -249,7 +254,10 @@ public class UserController {
         		return userForm.data("error", "Usuário com CPF inválido!");
         }
     	
-        return Response.seeOther(URI.create("/users/content")).build();
+        message.type = "success";
+        message.title = "Sucesso!";
+        message.description = "Usuário editado com sucesso.";
+        return Response.ok(message).build();
     }
 
     @POST
@@ -259,7 +267,10 @@ public class UserController {
     public Response deleteUser(@PathParam("id") long id) {
         User.delete("id", id);
 
-        return Response.seeOther(URI.create("/users")).build();
+        message.type = "success";
+        message.title = "Sucesso!";
+        message.description = "Usuário excluído com sucesso.";
+        return Response.ok(message).build();
     }
     
 }

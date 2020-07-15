@@ -42,11 +42,9 @@
       {user.dtCreated}
     </td>
     <td class="fit">
-      <form action="/users/delete/{user.id}" method="POST" name="delete-{user.id}">
       	<a class="btn btn-default btn-sm modal-view" href="/users/view/{user.id}" role="button">Visualizar</a>
         {#if role == 'ADMIN'}<a class="btn btn-primary btn-sm modal-form" href="/users/edit/{user.id}" role="button">Editar</a>
-        <button type="submit" onClick="location.href='/users'" class="btn btn-danger btn-sm">Excluir</button>{/if}
-      </form>
+        <a class="btn btn-danger btn-sm modal-delete" href="/users/delete/{user.id}" role="button">Excluir</a>{/if}
     </td>
   </tr>
   {/for}

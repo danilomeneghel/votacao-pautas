@@ -1,8 +1,8 @@
 package app.controller;
 
-import java.util.Set;
+import io.quarkus.qute.Template;
+import io.quarkus.qute.TemplateInstance;
 
-import javax.annotation.security.PermitAll;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -15,14 +15,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import javax.annotation.security.PermitAll;
+
+import java.util.Set;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
-import io.quarkus.qute.Template;
-import io.quarkus.qute.TemplateInstance;
 
 import app.enumerator.RoleUserEnum;
 import app.model.Login;
