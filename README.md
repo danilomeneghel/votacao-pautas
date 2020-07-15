@@ -7,9 +7,11 @@ Avaliação técnica de um sistema de votação de Pautas, desenvolvido em Java 
 - CRUD
 - API RESTful
 - ACL
+- Login
 - Validation
 - Filter
-- Login
+- Modal
+- Notification
 - Responsive
 - JUnit
 
@@ -31,6 +33,7 @@ Avaliação técnica de um sistema de votação de Pautas, desenvolvido em Java 
 - Swagger
 - CSS
 - Jquery
+- Lobibox
 - Bootstrap
 - H2
 
