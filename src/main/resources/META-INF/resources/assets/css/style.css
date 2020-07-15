@@ -135,7 +135,7 @@ fieldset {
 .fa-user {
     float: left;
     position: relative;
-    color: #ECA80B !important;
+    color: #299338 !important;
     font-size: 16px !important;
     top: 25px;
     left: 12px;
@@ -144,7 +144,7 @@ fieldset {
 .fa-lock {
     float: left;
     position: relative;
-    color: #ECA80B !important;
+    color: #299338 !important;
     font-size: 16px !important;
     top: 25px;
     left: 12px;
@@ -162,16 +162,16 @@ fieldset {
 	box-shadow: 1px 3px 5px 0px #54AA358F;
 }
 .btn-logout {
-    background-color: #ECA80B !important;
+    background-color: #299338 !important;
     color: #fff !important;
-    border: 1px solid #ECA80B !important;
+    border: 1px solid #299338 !important;
     /*border-radius: 30px 30px 30px 30px !important;*/
-    box-shadow: 1px 3px 5px 0px #f7c551;
+    box-shadow: 1px 3px 5px 0px #41be51;
 }
 .btn-success {
-    background-color: #ECA80B !important;
+    background-color: #299338 !important;
     color: #fff !important;
-    border: 1px solid #ECA80B !important;
+    border: 1px solid #299338 !important;
     /*border-radius: 30px 30px 30px 30px !important;*/
     box-shadow: 1px 3px 5px 0px #f7c551;
 }
@@ -409,6 +409,11 @@ fieldset {
 .table td.fit, .table th.fit {
     white-space: nowrap;
     width: 1%;
+}
+
+.formatted-text {
+    white-space: pre-line;
+    margin-top: -10px;
 }
 
 .completed {

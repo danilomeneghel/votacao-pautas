@@ -86,7 +86,7 @@ public class VotacaoController {
                         
                         message.type = "success";
                         message.title = "Sucesso!";
-                        message.description = "Voto realizado com sucesso.";
+                        message.description = "Voto confirmado com sucesso.";
                         return Response.ok(message).build();
                     } else {
                         message.type = "warning";

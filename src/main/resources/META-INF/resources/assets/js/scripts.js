@@ -56,7 +56,7 @@ function logoff() {
 function dateFormat() {
     $(".date").each(function() {
         var dateText = $.trim($(this).text());
-        var value = new Date(dateText).toLocaleDateString('pt-br');
+        var value = new Date(dateText).toLocaleDateString("pt-br", {timeZone: "UTC"});
         $(this).text(value);
     });
 }

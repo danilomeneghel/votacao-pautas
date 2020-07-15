@@ -2,22 +2,25 @@
   {#if error}<div class="alert alert-danger">{error}</div>{/if}
   <div class="panel panel-default">
       <div class="form-panel">
-        <h3>{pauta.titulo}</h3>
+        <h3>Votar</h3>
         <div class="form-group">
+            {pauta.titulo}
+        </div>
+        <div class="form-group formatted-text">
             {pauta.descricao}
         </div>
         <form method="POST" name="votacaoForm" id="votacaoForm" enctype="multipart/form-data">
 	      	<input type="hidden" name="votacao" id="votacao" value="true">
 	      	<input type="hidden" name="idpauta" id="idpauta" value="{pauta.id}">
 	      	<input type="hidden" name="cpf" id="cpf" value="{cpf}">
-	        <div class="form-group">Voto<br>
+	        <div class="form-group">Seu Voto: <br>
 	          {#for vt in voto}
                	<input type="radio" name="voto" value="{vt}"> {vt.descricao} 
 			      {/for}
           </div>
         </form>
-        <br><br>
-        <div class="form-group">Obs: Ao votar, aguarde a validação do CPF para confirmar o voto.</div>
+        <br>
+        <div class="form-group">Obs: Ao enviar, aguarde seu voto ser confirmado.</div>
       </div>
   </div>
 </div>

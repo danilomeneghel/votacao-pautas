@@ -5,18 +5,14 @@ $(document).ready(function() {
 
         Lobibox.window({
             title: title,
-            content: function(){
-                loadModal(url);
-            },
+            content: function(){ loadModal(url); },
             width: 440,
             height: 470,
             url: url,
             autoload: false,
             loadMethod: "POST",
             buttons: {
-                load: {
-                    text: 'Enviar'
-                },
+                load: { text: 'Enviar' },
                 close: {
                     text: 'Fechar',
                     closeOnClick: true
@@ -38,8 +34,8 @@ $(document).ready(function() {
                     var validated = true;
                     $("form").find("input[required=true], textarea[required=true]").each(function(){
                         if($(this).val() == ""){
-                        $("#msg").text("O campo '" + $(this).attr('id') + "' é obrigatório!").addClass("alert alert-danger");
-                        validated = false;
+                            $("#msg").text("O campo '" + $(this).attr('id') + "' é obrigatório!").addClass("alert alert-danger");
+                            validated = false;
                         } 
                     });
                     if(validated)
@@ -52,12 +48,13 @@ $(document).ready(function() {
     });
     
     function loadModal(url) {
-        $.get(url, function(data, status){
+        $.get(url, function(data){
             $(".lobibox-body").html(data);
         });
     }
 
     function submitted(url, data) {
+        $(".lobibox-body").html("<div class='alert alert-info'>Carregando...</div>");
         $.ajax({
             url: url,
             data: data,
@@ -65,12 +62,12 @@ $(document).ready(function() {
             contentType: "application/json",
             headers: { "Authorization": "Bearer "+localStorage.getItem("token") },
             success: function(result) { 
-                console.log(result);
                 $(".lobibox-window").remove();
                 $(".lobibox-backdrop").remove();
                 Lobibox.notify(result.type, {
                     title: result.title,
                     msg: result.description,
+                    sound: false
                 });
 
                 $.ajax({
@@ -90,6 +87,7 @@ $(document).ready(function() {
                 Lobibox.notify("error", {
                     title: "Erro!",
                     msg: "Ocorreu um erro ou você não possui autorização para cadastrar.",
+                    sound: false
                 });
             }
         });
@@ -102,8 +100,9 @@ $(document).ready(function() {
 
         Lobibox.window({
             title: title,
-            content: function(){
-                loadModal(url);
+            content: function(){ 
+                loadModal(url); 
+                return "<div class='alert alert-info'>Carregando...</div>";
             },
             width: 440,
             height: 470
@@ -116,7 +115,12 @@ $(document).ready(function() {
         var url = $(this).attr("href");
 
         Lobibox.confirm({
-            msg: "Tem certeza que deseja excluir esse item?",
+            title: "Alerta",
+            msg: "Você tem certeza que deseja excluir esse item?",
+            buttons: {
+                yes: { text: 'Sim' },
+                no: { text: 'Não' }
+            },
             callback: function($this, type, ev){
                 if (type === 'yes')
                     submitted(url, null);

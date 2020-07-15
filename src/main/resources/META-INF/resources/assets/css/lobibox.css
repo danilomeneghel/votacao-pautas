@@ -304,7 +304,7 @@ body.lobibox-open {
   position: relative;
   width: 100%;
   padding: 15px 20px;
-  background-color: rgba(255, 255, 255, 0.98);
+  background-color: #FFF;
   font-size: 16px;
 }
 .lobibox .lobibox-body .lobibox-icon-wrapper {
@@ -344,13 +344,13 @@ body.lobibox-open {
 }
 .lobibox.lobibox-confirm .lobibox-header {
   color: #eeeeee;
-  background-color: #3C2D2D;
+  background-color: #39B54A;
 }
 .lobibox.lobibox-confirm .lobibox-body .lobibox-icon {
-  color: #3C2D2D;
+  color: #39B54A;
 }
 .lobibox.lobibox-confirm .lobibox-footer {
-  background-color: #594343;
+  background-color: #FFF;
 }
 .lobibox.lobibox-success {
   border: 1px solid #29B87E;
@@ -409,7 +409,7 @@ body.lobibox-open {
 }
 .lobibox.lobibox-prompt .lobibox-header {
   color: #eeeeee;
-  background-color: #3c2d2d;
+  background-color: #39b54a;
 }
 .lobibox.lobibox-prompt .lobibox-body {
   padding: 20px;
@@ -435,7 +435,7 @@ body.lobibox-open {
   color: #DC2B2A;
 }
 .lobibox.lobibox-prompt .lobibox-footer {
-  background-color: #594343;
+  background-color: #39B54A;
 }
 .lobibox.lobibox-progress .lobibox-header {
   background-color: #2F5D6D;
@@ -556,8 +556,8 @@ fieldset[disabled] .lobibox .lobibox-btn.lobibox-btn-cancel.active {
 }
 .lobibox .lobibox-btn.lobibox-btn-yes {
   color: #FFF;
-  background-color: #29B87E;
-  border-color: #29B87E;
+  background-color: #299338;
+  border-color: #0f7307;
 }
 .lobibox .lobibox-btn.lobibox-btn-yes:hover,
 .lobibox .lobibox-btn.lobibox-btn-yes:focus,
@@ -566,8 +566,8 @@ fieldset[disabled] .lobibox .lobibox-btn.lobibox-btn-cancel.active {
 .lobibox .lobibox-btn.lobibox-btn-yes.active,
 .open > .dropdown-toggle.lobibox .lobibox-btn.lobibox-btn-yes {
   color: #FFF;
-  background-color: #208e61;
-  border-color: #1e865c;
+  background-color: #299338;
+  border-color: #0f7307;
 }
 .lobibox .lobibox-btn.lobibox-btn-yes:active,
 .lobibox .lobibox-btn.lobibox-btn-yes.active,
@@ -600,9 +600,9 @@ fieldset[disabled] .lobibox .lobibox-btn.lobibox-btn-yes.active {
   background-color: #FFF;
 }
 .lobibox .lobibox-btn.lobibox-btn-no {
-  color: #FFF;
-  background-color: #299338;
-  border-color: #299338;
+  color: #299338;
+  background-color: #FFF;
+  border-color: #0f7307;
 }
 .lobibox .lobibox-btn.lobibox-btn-no:hover,
 .lobibox .lobibox-btn.lobibox-btn-no:focus,
@@ -610,9 +610,9 @@ fieldset[disabled] .lobibox .lobibox-btn.lobibox-btn-yes.active {
 .lobibox .lobibox-btn.lobibox-btn-no:active,
 .lobibox .lobibox-btn.lobibox-btn-no.active,
 .open > .dropdown-toggle.lobibox .lobibox-btn.lobibox-btn-no {
-  color: #FFF;
-  background-color: #299338;
-  border-color: #299338;
+  color: #299338;
+  background-color: #FFF;
+  border-color: #0f7307;
 }
 .lobibox .lobibox-btn.lobibox-btn-no:active,
 .lobibox .lobibox-btn.lobibox-btn-no.active,
