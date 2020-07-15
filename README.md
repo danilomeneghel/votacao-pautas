@@ -93,6 +93,7 @@ Projeto licenciado sob <a href="LICENSE">Apache License</a>.
 ![Screenshots](screenshots/screenshot06.png)<br><br>
 ![Screenshots](screenshots/screenshot07.png)<br><br>
 ![Screenshots](screenshots/screenshot08.png)<br><br>
+![Screenshots](screenshots/screenshot09.png)<br><br>
 
 ## Testes
 

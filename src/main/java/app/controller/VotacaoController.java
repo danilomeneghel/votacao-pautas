@@ -91,7 +91,7 @@ public class VotacaoController {
                     } else {
                         message.type = "warning";
                         message.title = "Alerta!";
-                        message.description = "Pauta já votada.";
+                        message.description = "Essa Pauta já foi votada.";
                         return Response.ok(message).build();
                     }
                 } else {
@@ -103,13 +103,13 @@ public class VotacaoController {
             } else {
                 message.type = "warning";
                 message.title = "Alerta!";
-                message.description = "Pauta fora do prazo para votar.";
+                message.description = "Essa Pauta está fora do prazo para votar.";
                 return Response.ok(message).build();
             }
         } else {
             message.type = "warning";
             message.title = "Alerta!";
-            message.description = "Sessão não está aberta para votar.";
+            message.description = "Sessão não está aberta para votar nessa Pauta.";
             return Response.ok(message).build();
         }
     }
