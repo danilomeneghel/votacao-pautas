@@ -1,13 +1,14 @@
 $(document).ready(function() {
     if(localStorage.getItem("token") != null) {
         $(".username").text(localStorage.getItem("username"));
+        var page = (location.pathname == "/users/perfil/edit") ? "/users/perfil" : location.pathname;
         const queryString = location.search;
         const urlParams = new URLSearchParams(queryString);
         var filter = urlParams.get("filter");
 
-        if(location.pathname != "/" && filter == null) {
+        if(page != "/" && filter == null) {
             $.ajax({
-                url: location.pathname+"/content",
+                url: page+"/content",
                 type: "GET",
                 cache: false,
                 contentType: "application/json",
@@ -24,7 +25,7 @@ $(document).ready(function() {
             });
         } else if(filter != null) {
             $.ajax({
-                url: location.pathname+"/content",
+                url: page+"/content",
                 type: "GET",
                 data: "filter="+filter,
                 cache: false,

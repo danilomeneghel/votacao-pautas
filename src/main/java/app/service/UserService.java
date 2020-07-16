@@ -35,6 +35,11 @@ public class UserService {
     public User findUserCpf(Long cpf) {
     	return User.find("cpf", cpf).firstResult();
     }
+    
+    @Transactional()
+    public User findUsernameCpf(User user) {
+    	return User.find("username = '"+user.username+"' OR "+"cpf = "+user.cpf).firstResult();
+    }
 
     public User insert(User user) {
     	user.persist();

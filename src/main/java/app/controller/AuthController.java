@@ -67,9 +67,9 @@ public class AuthController {
     @PermitAll
     @Path("/cadastrar")
     public Object cadastrarUser(@MultipartForm @Valid User user) {
-    	User loaded = userService.findUserCpf(user.cpf);
+    	User loaded = userService.findUsernameCpf(user);
     	if (loaded != null) {
-            return cadastro.data("error", "CPF " + user.cpf + " já cadastrado.");
+            return login.data("error", "CPF ou Usuário já cadastrado.");
         } else {
         	boolean validaCpf = CpfValidate.isCPF(user.cpf.toString());
         	if(validaCpf) {
@@ -78,7 +78,7 @@ public class AuthController {
                 userService.insert(user);
                 return login.data("success", "Cadastro realizado com sucesso!");
             } else {
-                return cadastro.data("error", "Usuário com CPF inválido!");
+                return login.data("error", "Usuário com CPF inválido!");
             }
         }
     }

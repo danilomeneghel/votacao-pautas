@@ -1,6 +1,6 @@
 html {
     font-size: 14px !important;
-    line-height: 1.42857143 !important;
+    line-height: 1.40 !important;
 }
 body {
     color: #333333;
@@ -22,7 +22,7 @@ h2, .h2 {
 }
 h3, .h3 {
     margin-top: 10px !important;
-    padding-bottom: 10px !important;
+    padding-bottom: 8px !important;
     font-size: 24px;
 }
 
@@ -33,12 +33,11 @@ h3, .h3 {
 
 .bg-login {
     background-color: #e4e4e4;
-    min-height: 816px !important;
 }
 .bg-login .container-login {
     max-width: 350px;
     margin: 0px auto !important;
-    padding-top: 90px !important;
+    padding-top: 80px !important;
 }
 .bg-login .container-cadastro {
     max-width: 350px;
@@ -53,7 +52,11 @@ h3, .h3 {
     text-align: center;
     padding-bottom: 25px;
 }
-
+.login-teste {
+    font-weight: bold;
+    margin-top: -3px;
+    padding-bottom: 6px;
+}
 .modal-header {
     border-bottom: none !important;
 }
@@ -131,6 +134,34 @@ fieldset {
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    margin-top: -10px !important;
+}
+.fa-user-circle {
+    float: left;
+    position: relative;
+    color: #299338 !important;
+    font-size: 14px !important;
+    top: 24px;
+    left: 12px;
+    z-index: 2;
+}
+.fa-id-card {
+    float: left;
+    position: relative;
+    color: #299338 !important;
+    font-size: 14px !important;
+    top: 24px;
+    left: 12px;
+    z-index: 2;
+}
+.fa-envelope {
+    float: left;
+    position: relative;
+    color: #299338 !important;
+    font-size: 14px !important;
+    top: 24px;
+    left: 12px;
+    z-index: 2;
 }
 .fa-user {
     float: left;
@@ -149,6 +180,9 @@ fieldset {
     top: 25px;
     left: 12px;
     z-index: 2;
+}
+.input-cadastro {
+    padding-left: 34px !important;
 }
 .input-login {
     padding-left: 34px !important;

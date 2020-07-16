@@ -21,6 +21,16 @@
           <label class="sr-only" for="password">Senha</label>
           <input type="password" name="password" class="form-control" id="password" placeholder="Senha" required autofocus value="">
       </div>
+      {#if role == 'ADMIN'}
+      <div class="form-group">
+        <select class="custom-select" name="role" id="role">
+          <option disabled value="">Função</option>
+          {#for rl in roles}
+          <option value="{rl}" {#if user.role == rl}selected{/if}>{rl.descricao}</option>
+          {/for}
+        </select>
+      </div>
+      {/if}
       <button type="submit" class="btn btn-primary">Atualizar</button>
     </div>
   </form>

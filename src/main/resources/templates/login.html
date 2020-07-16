@@ -1,16 +1,16 @@
 {#include baseLogin.html}
 {#title}Login{/}
 {#contents}
-<div class="bg-login">
-    <div class="container-login">
-        <div class="logo-login">
-            <img src="/assets/images/logo.png" width="200">
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-body box-login">
-                <h3 class="title-login">Login</h3>
-                {#if success != null}<div class="alert alert-success" role="alert">{success}</div>{/if}
-                <form method="POST" name="loginForm" enctype="multipart/form-data">
+<div class="container-login">
+    <div class="logo-login">
+        <img src="/assets/images/logo.png" width="200">
+    </div>
+    <div id="card" class="panel panel-default">
+        <div class="panel-body box-login front">
+            <h3 class="title-login">Login</h3>
+            {#if success != null}<div class="alert alert-success" role="alert">{success}</div>{/if}
+            <div class="form-panel">
+                <form method="POST" name="loginForm" id="loginForm" enctype="multipart/form-data">
                     <div class="form-group">
                         <i class="fa fa-user"></i>
                         <input type="text" name="username" id="username" class="form-control input-login" autofocus="autofocus" placeholder="Usuário"/>
@@ -23,23 +23,74 @@
                         <input type="submit" id="login" value="Login" class="btn btn-login btn-lg btn-block"/>
                     </div>
                 </form>
-                <a href="/auth/cadastro">Cadastrar</a>
+                <a href="#" id="flip-btn">Cadastrar</a>
+                {#if error != null}<div class="alert alert-danger" role="alert">{error}</div>{/if}
                 <div id="error"></div>
+                <br />
+                <div class="text-center">
+                    <div class="login-teste">Login de Teste:</div>
+                    Usuário: admin<br />
+                    Senha: admin<br />
+                </div>
             </div>
         </div>
-        <div class="text-center">
-            <strong>Login de Teste:</strong><br /><br />
-            Usuário: admin<br />
-            Senha: admin<br />
+
+        <div class="panel-body box-login back">
+            <h3 class="title-login">Cadastro</h3>
+            {#if error != null}<div class="alert alert-danger" role="alert">{error}</div>{/if}
+            <div class="form-panel">
+                <form action="/auth/cadastrar" method="POST" name="userForm" id="userForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label class="sr-only" for="name">Nome</label>
+                        <i class="fa fa-user-circle"></i>
+                        <input type="text" name="name" class="form-control input-cadastro" id="name" placeholder="Nome" required autofocus value="">
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="cpf">CPF</label>
+                        <i class="fa fa-id-card"></i>
+                        <input type="number" name="cpf" class="form-control input-cadastro" id="cpf" placeholder="CPF" required autofocus value="">
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="email">E-mail</label>
+                        <i class="fa fa-envelope"></i>
+                        <input type="text" name="email" class="form-control input-cadastro" id="email" placeholder="E-mail" required autofocus value="">
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="username">Usuário</label>
+                        <i class="fa fa-user"></i>
+                        <input type="text" name="username" class="form-control input-cadastro" id="username" placeholder="Usuário" required autofocus value="">
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="password">Senha</label>
+                        <i class="fa fa-lock"></i>
+                        <input type="password" name="password" class="form-control input-cadastro" id="password" placeholder="Senha" required autofocus value="">
+                    </div>
+                    <a class="btn btn-default" href="#" id="unflip-btn" role="button">Voltar</a>
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                </form>
+            </div>
         </div>
-        <br /><br />
     </div>
 </div>
 
 <script type="text/javascript">
 $(document).ready(function() {
+    $("#card").flip({
+        trigger: 'manual'
+    });
+    
+    $("#flip-btn").click(function(){
+        $("#card").flip(true);
+    });
+    $("#unflip-btn").click(function(){
+        $("#card").flip(false);
+    });
+
+    if($(".alert-danger").text() != "")
+        $("#card").flip(true);
+
     window.history.pushState("", "", "/auth");
-    $("form").submit(function(event){
+    $("#loginForm").submit(function(event){
         var data = {
             username: $("#username").val(),
             password: $("#password").val()

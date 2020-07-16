@@ -195,6 +195,8 @@ public class UserController {
             return Response.status(Status.UNAUTHORIZED).build();
         
         String username = jwt.getName();
+        Set<String> groups = jwt.getGroups();
+        String role = String.join(", ", groups);
 
         User loaded = userService.findUsername(username);
         if (loaded == null) {
@@ -202,6 +204,8 @@ public class UserController {
         }
 		
         return perfilForm.data("user", loaded)
+            .data("role", role)
+            .data("roles", RoleUserEnum.values())
             .data("error", null);
     }
     
