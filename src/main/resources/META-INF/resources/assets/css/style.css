@@ -35,9 +35,9 @@ h3, .h3 {
     background-color: #e4e4e4;
 }
 .bg-login .container-login {
-    max-width: 350px;
+    max-width: 345px;
     margin: 0px auto !important;
-    padding-top: 80px !important;
+    padding-top: 60px !important;
 }
 .bg-login .container-cadastro {
     max-width: 350px;
