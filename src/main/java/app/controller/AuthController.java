@@ -43,23 +43,13 @@ public class AuthController {
 
     @Inject
     TokenService service;
-    
-    @Inject
-    Template cadastro;
-    
+        
     @Inject
     Template login;
     
     @Inject
     JsonWebToken jwt;
-    
-    @GET
-    @PermitAll
-    @Path("/cadastro")
-    public TemplateInstance cadastroForm() {
-        return cadastro.instance();
-    }
-    
+        
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
