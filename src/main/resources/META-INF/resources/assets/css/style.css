@@ -25,6 +25,12 @@ h3, .h3 {
     padding-bottom: 8px !important;
     font-size: 24px;
 }
+a:hover {
+    text-decoration: underline !important;
+}
+a:hover.btn {
+    text-decoration: none !important;
+}
 
 .container-fluid {
     padding-left: 45px !important;
@@ -269,6 +275,9 @@ fieldset {
     padding-right: 5px !important;
 }
 
+.navbar-nav .dropdown a:hover {
+    text-decoration: none !important;
+}
 .navbar-nav .open .dropdown-menu {
     background-color: #299338 !important;
     color: #ffffff !important;
@@ -276,6 +285,7 @@ fieldset {
 .navbar-nav .dropdown-menu > li > a, .navbar-nav .dropdown-menu > li > a:hover {
     background-color: #299338 !important;
     color: #ffffff !important;
+    text-decoration: none !important;
 }
 
 .navbar-toggle {
@@ -292,6 +302,7 @@ fieldset {
 .menu-item a:hover {
     color: #fff !important;
     background-color: #299338 !important;
+    text-decoration: none !important;
 }
 
 .menubar {
@@ -359,7 +370,7 @@ fieldset {
 }
 
 .form-panel {
-    padding: 15px !important;
+    padding: 12px !important;
 }
 
 .modal-content {

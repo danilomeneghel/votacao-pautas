@@ -54,7 +54,7 @@ $(document).ready(function() {
     }
 
     function submitted(url, data) {
-        $(".lobibox-body").html("<div class='alert alert-info'>Carregando...</div>");
+        $(".lobibox-body").html("<div class='alert alert-warning'>Carregando...</div>");
         $.ajax({
             url: url,
             data: data,
@@ -102,7 +102,7 @@ $(document).ready(function() {
             title: title,
             content: function(){ 
                 loadModal(url); 
-                return "<div class='alert alert-info'>Carregando...</div>";
+                return "<div class='alert alert-warning'>Carregando...</div>";
             },
             width: 440,
             height: 470

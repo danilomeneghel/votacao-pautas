@@ -16,8 +16,8 @@ $(document).ready(function() {
     window.history.pushState("", "", "/auth");
     $("#loginForm").submit(function(event){
         var data = {
-            username: $("#username").val(),
-            password: $("#password").val()
+            username: $("#user").val(),
+            password: $("#pass").val()
         };
 
         $.ajax({
@@ -26,9 +26,13 @@ $(document).ready(function() {
             type: "POST",
             cache: false,
             contentType: "application/json",
+            beforeSend: function() {
+                if($("#user").val() != null && $("#pass").val() != null)
+                    $("#alert").text("Carregando...").removeClass().addClass("alert alert-warning");
+            },
             success: function(result) { 
                 if(!result) {
-                    $("#error").text("Usuário ou senha inválido.").addClass("alert alert-danger");
+                    $("#alert").text("Usuário ou senha inválido.").addClass("alert alert-danger");
                     $(".alert-success").remove();
                     return false;
                 } else {
