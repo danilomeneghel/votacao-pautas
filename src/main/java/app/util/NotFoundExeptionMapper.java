@@ -17,7 +17,7 @@ public class NotFoundExeptionMapper implements ExceptionMapper<NotFoundException
     
     @Override
     public Response toResponse(NotFoundException exception) {
-        URL url = Resources.getResource("/templates/pageNotFound.html");
+        URL url = Resources.getResource("templates/pageNotFound.html");
         String text = null;
 
 		try {
